@@ -1,0 +1,51 @@
+/* Background colors*/
+
+$bg-red: #F44336;
+$bg-pink: #E91E63;
+$bg-purple: #9C27B0;
+$bg-deep-purple: #673AB7;
+$bg-indigo: #3F51B5;
+$bg-blue: #2196F3;
+$bg-light-blue: #03A9F4;
+$bg-cyan: #00BCD4;
+$bg-teal: #009688;
+$bg-green: #4CAF50;
+$bg-light-green: #8BC34A;
+$bg-lime: #CDDC39;
+$bg-yellow: #FFEB3B;
+$bg-amber: #FFC107;
+$bg-orange: #FF9800;
+$bg-deep-orange: #FF5722;
+$bg-brown: #795548;
+$bg-grey: #9E9E9E;
+$bg-blue-grey: #607D8B;
+$bg-black: #000000;
+$bg-white: #FFFFFF;
+
+/* color values black and white */
+$color-black: #000000;
+$color-white: #FFFFFF;
+
+
+/* background css classes using the colors above */
+.bg-red { background-color: $bg-red; }
+.bg-pink { background-color: $bg-pink; }
+.bg-purple { background-color: $bg-purple; }
+.bg-deep-purple { background-color: $bg-deep-purple; }
+.bg-indigo { background-color: $bg-indigo; }
+.bg-blue { background-color: $bg-blue; }
+.bg-light-blue { background-color: $bg-light-blue; }
+.bg-cyan { background-color: $bg-cyan; }
+.bg-teal { background-color: $bg-teal; }
+.bg-green { background-color: $bg-green; }
+.bg-light-green { background-color: $bg-light-green; }
+.bg-lime { background-color: $bg-lime; }
+.bg-yellow { background-color: $bg-yellow; }
+.bg-amber { background-color: $bg-amber; }
+.bg-orange { background-color: $bg-orange; }
+.bg-deep-orange { background-color: $bg-deep-orange; }
+.bg-brown { background-color: $bg-brown; }
+.bg-grey { background-color: $bg-grey; }
+.bg-blue-grey { background-color: $bg-blue-grey; }
+.bg-black { background-color: $bg-black; }
+.bg-white { background-color: $bg-white; }

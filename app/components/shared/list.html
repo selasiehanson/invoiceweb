@@ -1,0 +1,20 @@
+<ui-view></ui-view>
+
+<ax-block-header title="{{ ap.currentRouteName }}"></ax-block-header>
+<ax-card title="" ng-if="!appIndex.templateUrl">
+  <div class="card-left-padding">
+    <a class="action-new" href="#/app/{{ appIndex.model }}/new"> Add </a>
+ </div>
+  <ax-table
+    headers="appIndex.headers" 
+    content="appIndex.records" 
+    sortable="appIndex.sortable" 
+    filters="ap.search"
+    custom-class="ap.custom" 
+    count="appIndex.count">
+  </ax-table>
+</ax-card>
+
+<ax-card title="" ng-if="appIndex.templateUrl">
+  <div ng-include src="appIndex.templateUrl"></div>  
+</ax-card>

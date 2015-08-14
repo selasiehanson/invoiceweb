@@ -1,0 +1,21 @@
+<div>
+  <div id="ax-header" ng-include="'app/components/shared/header.html'"></div>
+  <section id="main">
+    <aside id="ax-sidenav" class="ax-sidenav">
+      <ul class="elements">
+        <li ng-repeat="nav in ap.navs" >
+          <a href="#{{ nav.route }}" ng-class="ap.currentRouteName == nav.name ? 'active' : '' " class="">
+            <i class="md {{nav.icon}}"></i>
+            {{ nav.name }} </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- main content -->
+    <section id="content" class="content">
+      <div class="container">
+        <ui-view></ui-view>
+      </div>
+    </section>
+  </section>
+</div>

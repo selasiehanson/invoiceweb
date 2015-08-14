@@ -1,0 +1,52 @@
+.ax-sidenav {
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+  box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  position: fixed;
+  top: 56px;
+  height: calc(100% - 65px);
+  background: #FFFFFF;
+
+  .elements {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+
+    .active {
+      background-color: #E7E7E7 !important;
+    }
+    li{
+      margin: 0;
+      padding: 0;
+
+      a{
+        padding: 14px 20px 14px 52px;
+        font-size: 14px;
+        text-align: left;
+        font-weight: 400;
+        color: #4c4c4c;
+        position: relative;
+        text-decoration: none;
+        display: block;
+        font-weight: bold;
+        text-transform:capitalize;
+
+        &:hover {
+          background-color: #F7F7F7;
+        }
+        i{
+          position: absolute;
+          left: 15px;
+          font-size: 20px;
+          top: 0;
+          width: 25px;
+          text-align: center;
+          padding: 9px 0;
+        }
+    }
+  }
+}
+}

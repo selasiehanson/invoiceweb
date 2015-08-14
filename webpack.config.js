@@ -11,7 +11,10 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
+    alias: {
+      'font-awesome': process.cwd() + '/node_modules/font-awesome/css/font-awesome.css'
+    }
   },
   plugins: [
     //new webpack.optimize.UglifyJSPlugin()
@@ -20,7 +23,7 @@ module.exports = {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     })
-  ],
+  ],  
   module: {
     loaders: [
      // { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },

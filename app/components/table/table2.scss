@@ -1,0 +1,111 @@
+@mixin first-child {
+  padding-left: 30px;
+}
+
+
+/* move this button stuff later */
+.round-button {
+  width: 40px;
+  height: 40px;
+  line-height: 38px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  z-index: 1;
+  padding: 0;
+  background-color: #ccc;
+}
+
+
+$cell-border-color: #F0F0F0;
+$row-hover-background-color: #F5F5F5;
+
+.ax-table {
+
+  .table {
+     thead  { 
+      tr { 
+        th:first-child {
+        @include first-child;
+      }
+
+      th {
+        background-color: #FFF;
+        vertical-align: middle;
+        font-weight: 500;
+        border-width: 1px;
+        border-color: $cell-border-color;
+
+          a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+          }
+       }
+     }
+    }
+
+    tbody {
+      tr {
+
+        td:first-child {
+          @include first-child;
+        }
+
+        &:hover{
+          background-color: $row-hover-background-color;
+        }
+
+        td {
+          border-color: $cell-border-color;
+        }
+      }
+    }
+  }
+
+  .table-footer {
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 40px;
+    padding-bottom: 50px;
+    .ax-pager {
+      .btn {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .round-button {
+        color: #7E7E7E;
+        background-color: #E2E2E2;
+        border: 1px solid #FFFFFF; 
+        font-size: 14px;
+      }
+
+      .table-active-page {
+        color: white;
+        background-color: #00BCD4;
+        font-weight: bold;
+      }
+
+      .md {
+        font-size: 22px !important;
+      }
+    }
+      .ax-table-count-info {
+        line-height: 40px;
+      }
+
+      .ax-table-footer-item {
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+      }
+
+      .ax-table-active-page {
+        font-weight: 700;
+      }
+
+
+  }
+
+}
+
