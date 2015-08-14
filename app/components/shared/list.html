@@ -4,17 +4,15 @@
 <ax-card title="" ng-if="!appIndex.templateUrl">
   <div class="card-left-padding">
     <a class="action-new" href="#/app/{{ appIndex.model }}/new"> Add </a>
- </div>
-  <ax-table
-    headers="appIndex.headers" 
-    content="appIndex.records" 
-    sortable="appIndex.sortable" 
-    filters="ap.search"
-    custom-class="ap.custom" 
-    count="appIndex.count">
+  </div>
+  <ax-table headers="appIndex.headers" content="appIndex.records" sortable="appIndex.sortable" filters="ap.search" custom-class="ap.custom"
+  count="appIndex.count">
   </ax-table>
+  <nav mfb-menu position="br" effect="zoomin" label="hover here" active-icon="ion-edit" resting-icon="ion-plus-round" toggling-method="click">
+    <button mfb-button icon="paper-airplane" label="menu item"></button>
+  </nav>
 </ax-card>
 
 <ax-card title="" ng-if="appIndex.templateUrl">
-  <div ng-include src="appIndex.templateUrl"></div>  
+  <div ng-include src="appIndex.templateUrl"></div>
 </ax-card>

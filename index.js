@@ -10,6 +10,8 @@ require('angular-aria');
 require('angular-animate');
 require('angular-ui-router');
 require('font-awesome');
+require('mfbjs');
+require('mfbcss');
 //require('angular-formly');
 require('angular-sanitize');
 //require('angular-formly-templates-bootstrap');

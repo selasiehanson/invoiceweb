@@ -13,7 +13,10 @@ module.exports = {
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
     alias: {
-      'font-awesome': process.cwd() + '/node_modules/font-awesome/css/font-awesome.css'
+      'font-awesome': process.cwd() + '/node_modules/font-awesome/css/font-awesome.css',
+      'mfbjs': process.cwd() + "/node_modules/ng-material-floating-button/src/mfb-directive.js",
+      'mfbcss': process.cwd() + "/node_modules/ng-material-floating-button/mfb/src/mfb.scss",
+      
     }
   },
   plugins: [

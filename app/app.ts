@@ -16,7 +16,8 @@ import { Card } from './components/card/card'
 import { AxForm } from './components/forms/form'
 
 var app = angular.module("sample", [
-    'ui.router'
+    'ui.router',
+    'ng-mfb'
 ]);
 
 app.service("app.services.UserService", UserService);
