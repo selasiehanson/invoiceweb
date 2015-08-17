@@ -22,7 +22,6 @@ interface INav {
 class MasterCtrl {
 
 	state: ng.ui.IStateService;
-	
 	navs: Array<INav>;
 	loggedIn: boolean;
 	currentRouteName: string;
@@ -37,31 +36,31 @@ class MasterCtrl {
 		this.navs = [
 			{
 				name: 'home',
-				icon: 'md-home',
+				icon: 'zmdi-home',
 				route: '/app/dashboard'
 			},
 			{
 				name: 'clients',
-				icon: 'md-people',
+				icon: 'zmdi-people',
 				route: "/app/clients"
 			},
 			{
 				name: 'sales',
-				icon: 'md-attach-money',
+				icon: 'zmdi-attach-money',
 				route: "/app/sales"
 			},
 			{
 				name: 'products',
-				icon: 'md-add-shopping-cart',
+				icon: 'zmdi-add-shopping-cart',
 				route: "/app/products"
 			}, {
 				name: 'companies',
-				icon: 'md-contacts',
+				icon: 'zmdi-contacts',
 				route: "/app/companies"
 			},
 			{
 				name: 'reports',
-				icon: 'md-trending-up',
+				icon: 'zmdi-trending-up',
 				route: "/app/reports"
 			}
 		];

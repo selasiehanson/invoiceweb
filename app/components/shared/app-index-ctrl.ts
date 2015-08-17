@@ -52,6 +52,10 @@ class AppIndexController {
       this.records = res.data;
     });
   }
+  
+  goToNew() {
+    this.state.go('.new');
+  }
 }
 
 AppIndexController.$inject = ['$state', '$stateParams', '$http'];
