@@ -1,9 +1,5 @@
 'use strict';
 
-/** CSS Stuff **/
-//require("./assets/css/bootstrap.css");
-//require("./assets/css/index.scss");
-
 /** JS Stuff **/
 require('angular');
 require('angular-aria');
@@ -12,12 +8,21 @@ require('angular-ui-router');
 require('font-awesome');
 require('mfbjs');
 require('mfbcss');
-//require('angular-formly');
+require('angular-formly');
 require('angular-sanitize');
-//require('angular-formly-templates-bootstrap');
-//require('ui-select');
+require('angular-formly-templates-bootstrap');
+require('ui-select');
+
+require('./assets/js/libs/bootstrap-growl.js');
+require('./assets/js/libs/pnotify.custom.js')
+
+//css
+require("bootstrap-sass!./assets/js/bootstrap-sass-config.js");
+require("./assets/css/vendor/pnotify.custom.css");
+
+
 document.write(require("./base.html"));
-var app  = require('./app/app');
+var app = require('./app/app');
 
 angular.element(document).ready(function () {  
   angular.bootstrap(document, [app.app.name], {

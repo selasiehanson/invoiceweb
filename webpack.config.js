@@ -2,7 +2,7 @@
 var webpack = require("webpack");
 module.exports = {  
   entry: [
-    "bootstrap-sass!./assets/js/bootstrap-sass-config.js",
+    // "bootstrap-sass!./assets/js/bootstrap-sass-config.js",
     './index.js'
   ],
   output: {
@@ -16,7 +16,7 @@ module.exports = {
       'font-awesome': process.cwd() + '/node_modules/font-awesome/css/font-awesome.css',
       'mfbjs': process.cwd() + "/node_modules/ng-material-floating-button/src/mfb-directive.js",
       'mfbcss': process.cwd() + "/node_modules/ng-material-floating-button/mfb/src/mfb.scss",
-      
+      'formly': __dirname + '/node_modules/angular-formly/dist/formly.js'
     }
   },
   plugins: [
@@ -29,7 +29,7 @@ module.exports = {
   ],  
   module: {
     loaders: [
-     // { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
+      { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
       { test: /\.ts$/, loader: 'awesome-typescript-loader' },
       { test: /\.html/, loader: 'raw' },
       { test: /\.css$/, loader: "style-loader!css-loader" },

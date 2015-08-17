@@ -4,10 +4,7 @@ import { Schema }  from './schema';
 import { ITableHeader }  from './schema';
 let _ = require('lodash');
 let inflection = require('inflection');
-
-interface IAppStateParams extends angular.ui.IStateParamsService {
-  url: string
-}
+import { IAppStateParams } from './controller-interfaces';
 
 class AppIndexController {
 

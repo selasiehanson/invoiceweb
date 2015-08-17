@@ -25,6 +25,12 @@
     },
     "inflection/inflection.d.ts": {
       "commit": "e95958ac847d9a343bdc8d7cbc796a5f6da29f71"
+    },
+    "angular-formly/angular-formly.d.ts": {
+      "commit": "5109e1269d6ab8e8e73b1a5e85d8ceb836d3099f"
+    }, 
+    "jquery.pnotify/jquery.pnotify.d.ts" : {
+      "commit": "d271513e241397c9e334d679a6c53d7c4d7b6fbd"
     }
   }
 }

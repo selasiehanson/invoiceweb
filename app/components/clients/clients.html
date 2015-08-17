@@ -1,0 +1,10 @@
+<div layout="column" layout-align="space-around end" class="button-top-right">
+  <md-button class="md-fab" md-whiteframe-z1 ng-click="ap.openNewClientWindow($event)">
+    <md-icon md-font-icon="fa fa-pencil"></i></md-icon>
+  </md-button>
+</div>
+
+<md-table
+  headers="appIndex.headers" content="appIndex.records" sortable="appIndex.sortable" filters="ap.search"
+  custom-class="ap.custom" count="appIndex.count">
+</md-table>

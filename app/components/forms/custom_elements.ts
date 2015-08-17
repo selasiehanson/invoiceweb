@@ -1,4 +1,9 @@
-let CustomElement = {};
+/// <reference path="../../../typings/tsd.d.ts" />
+
+interface ICustonElement{
+  [key: string]: AngularFormly.ITypeOptions
+}
+
 
 let selectTemplate = `
   <ui-select 
@@ -19,10 +24,13 @@ let selectTemplate = `
   </ui-select>
 `;
 
-CustomElement.UISelect= {
-  extends: 'select',
-  name: 'ui-select',
-  template: selectTemplate
+const CustomElement: ICustonElement = {
+  UISelect: {
+    extends: 'select',
+    name: 'ui-select',
+    template: selectTemplate  
+  }
+  
 };
 
 export { CustomElement };

@@ -1,12 +1,24 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
+interface ItemplateOptions {
+  label?:string, 
+  required?: boolean
+}
+
+interface ITemplate{
+  key: string,
+  type: string;
+  className?: string
+  templateOptions: ItemplateOptions
+}
+
 class Templater {
   output: Array<string>
   constructor(){
     this.output = [];
   }
 
-  createForm(config){
+  createForm(config: Array<any>){
     config = config || [];
     this.output = [];
     if(config.length === 0) return;
@@ -23,7 +35,7 @@ class Templater {
     return this.output.join('\n');
   }
 
-  addToPipeline(item){
+  addToPipeline(item: ITemplate){
     switch (item.type) {
       case 'textarea':
         this.output.push(this.textarea(item));

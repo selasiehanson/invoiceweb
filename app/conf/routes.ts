@@ -1,5 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
+import { AuthInterceptor}  from '../components/shared/auth-interceptor';
+
 let Routes = ($stateProvider: ng.ui.IStateProvider, 
 	$urlRouterProvider: ng.ui.IUrlRouterProvider, 
 	$httpProvider: angular.IHttpProvider) => {
@@ -29,7 +31,7 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 		.state('app.index.new', {
 			url: '/new?view',
 			templateUrl: function(state: ng.ui.IState) {
-				return '../components/shared/new.html';
+				return '/app/components/shared/new.html';
 			},
 			controller: 'AppFormController',
       controllerAs: 'appForm'
@@ -45,14 +47,14 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 		.state('app.index.edit', {
 			url: '/:id/edit?view',
 			templateUrl: function(stateParams: ng.ui.IStateParamsService) {
-				return '../components/shared/new.html';
+				return '/app/components/shared/new.html';
 			},
 			controller: 'AppFormController',
 			controllerAs: 'appForm'
 		});
 
 	$urlRouterProvider.otherwise('app/dashboard');
-  	//$httpProvider.interceptors.push('AuthInterceptor');
+  	$httpProvider.interceptors.push('AuthInterceptor');
 };
 
 export { Routes };

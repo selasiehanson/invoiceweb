@@ -4,12 +4,20 @@ interface ITableHeader {
 	sort?: boolean;
 }
 
+interface IModelViewConfig {
+	defaultNew?: boolean;
+	defaultList?: boolean;
+	defaultEdit?: boolean;
+}
+
+interface ISchemaDefinition {
+	headers?: Array<ITableHeader>
+	views?: IModelViewConfig,
+	custom?: any
+}
+
 interface ISchema {
-	[key: string]: { 
-		headers?: Array<ITableHeader>
-		views?: any,
-		custom?: any
-	};
+	[key: string]: ISchemaDefinition
 }
 
 const Schema: ISchema = {
@@ -37,9 +45,9 @@ const Schema: ISchema = {
 		// custom: {
 		// 	name: 'bold'
 		// },
-		// views: {
-		// 	defaultNew: false
-		// }
+		views: {
+			defaultNew: false
+		}
     },
     sales: {
 		headers: [
@@ -116,4 +124,4 @@ const Schema: ISchema = {
 //by setting a view type to true indicates that we can should not use the generic
 //one but rather look for a view in the apropriate folder
 // { views: { useList: true, useNew: true, useShow: true, useEdit: true}}
-export { Schema, ITableHeader };
+export { Schema, ITableHeader, IModelViewConfig, ISchema, ISchemaDefinition };

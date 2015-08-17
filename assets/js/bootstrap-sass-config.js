@@ -6,7 +6,17 @@ module.exports = {
   styleLoader: "style-loader!css-loader!sass-loader", // see example for the ExtractTextPlugin
   scripts: {
     // add every bootstrap script you need
-    'transition': true
+    'transition': true,
+    'dropdown': true,
+    'modal': true,
+    'scrollspy': true,
+    'tab': true,
+    'tooltip': true,
+    'alert': true,
+    'button': true,
+    'collapse': true,
+    'carousel': true,
+    'affix': true
   },
   styles: {
     // add every bootstrap style you need

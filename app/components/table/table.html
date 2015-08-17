@@ -1,0 +1,55 @@
+<div id="ax-table-template" class="ax-table">
+  <table ax-colresize="ax-colresize" class="table">
+    <thead>
+      <tr class="ax-table-headers-row">
+        <th ng-repeat="h in headers" class="ax-table-header">
+          <a href="#" ng-if="handleSort(h.field)" ng-click="reverse=!reverse;order(h.field,reverse)">
+            {{h.name}}
+            <i ng-show="reverse &amp;&amp; h.field == predicate" class="ion-android-arrow-dropup"></i>
+            <i ng-show="!reverse &amp;&amp; h.field == predicate" class="ion-android-arrow-dropdown"></i>
+          </a>
+          <span ng-if="!handleSort(h.field)">{{h.name}}</span>
+        </th>
+        <th class="ax-table-header"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="c in content | filter:filters | startFrom:tablePage*count | limitTo: count" class="ax-table-content-row">
+        <td  ng-repeat="h in headers" ng-if="h.field == thumbs" class="ax-table-thumbs">
+          <div>
+            <div style="background-image:url({{c.thumb}})"></div>
+          </div>
+        </td>
+        <td ng-repeat="h in headers" ng-class="customClass[h.field]" ng-if="h.field != thumbs" class="ax-table-content">
+          {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
+        </td>
+        <td class="ax-table-td-more">
+          <ax-button aria-label="Info"><i class="ion-android-more-vertical"></i></ax-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div layout="row" class="table-footer clearfix">
+    <span class="ax-table-count-info">
+      Rows per page :
+      <a href="#" ng-click="goToPage(0); count=10">10</a>,
+      <a href="#" ng-click="goToPage(0); count=25">25</a>,
+      <a href="#" ng-click="goToPage(0); count=50">50</a>,
+      <a href="#" ng-click="goToPage(0); count=100">100</a>
+      (current is {{count}})
+    </span>
+    <span ng-hide="numPages == 0" class="pull-right ax-pager">
+      <a ng-disabled="tablePage==0" ng-click="tablePage=tablePage-1" aria-label="Previous Page" class="btn round-button">
+        <i style="font-size:16px;" class="md md-chevron-left"></i>
+      </a>
+      <a ng-class="{ 'table-active-page': tablePage==$index}" class="btn round-button" href="#" ng-repeat="i in getNumber(numPages) track by $index"
+         ng-click="goToPage($index)" class="ax-primary ax-hue-2 ax-table-footer-item">
+          <span >{{$index+1}}</span>
+      </a>
+      <a  ng-disabled="tablePage==numPages-1" ng-click="tablePage=tablePage+1" aria-label="Next Page" class="btn round-button">
+        <i style="font-size:16px;" class="md md-chevron-right"></i>
+      </a>
+    </span>
+  </div>
+</div>
