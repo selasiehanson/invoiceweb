@@ -20,6 +20,8 @@
 $cell-border-color: #F0F0F0;
 $row-hover-background-color: #F5F5F5;
 
+$tableFontSize: 14px;
+
 .ax-table {
 
   .table {
@@ -30,6 +32,7 @@ $row-hover-background-color: #F5F5F5;
       }
 
       th {
+        font-size: $tableFontSize;
         background-color: #FFF;
         vertical-align: middle;
         font-weight: 500;
@@ -58,6 +61,7 @@ $row-hover-background-color: #F5F5F5;
 
         td {
           border-color: $cell-border-color;
+          font-size: $tableFontSize;
         }
       }
     }

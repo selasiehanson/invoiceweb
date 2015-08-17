@@ -24,13 +24,28 @@ let selectTemplate = `
   </ui-select>
 `;
 
+let datePicker = `
+  <input ng-model="model[options.key]"
+    data-provide="datepicker"
+    data-date-format="yyyy-mm-dd"
+    data-date-enable-on-readonly="false"
+    data-date-calendar-weeks="true"
+    data-date-today-btn="true"
+    data-date-autoclose="true"
+    class="form-control">
+`;
+
 const CustomElement: ICustonElement = {
   UISelect: {
     extends: 'select',
     name: 'ui-select',
     template: selectTemplate  
+  },
+  DatePicker: {
+    name: 'datepicker',
+    extends: 'input',
+    template: datePicker
   }
-  
 };
 
 export { CustomElement };

@@ -17,7 +17,10 @@ module.exports = {
       'mfbjs': process.cwd() + "/node_modules/ng-material-floating-button/src/mfb-directive.js",
       'mfbcss': process.cwd() + "/node_modules/ng-material-floating-button/mfb/src/mfb.scss",
       'formly': __dirname + '/node_modules/angular-formly/dist/formly.js',
-      'ui-select-css': process.cwd() + '/node_modules/ui-select/dist/select.css'
+      'ui-select-css': process.cwd() + '/node_modules/ui-select/dist/select.css',
+      'angular-loading-bar-css': process.cwd() + '/node_modules/angular-loading-bar/build/loading-bar.css',
+      'bs-datepicker': process.cwd() + '/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+      'bs-datepicker-css': process.cwd() + '/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.css'
     }
   },
   plugins: [

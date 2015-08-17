@@ -23,6 +23,15 @@ const Company: IExtendFormlyObject   = {
             label: 'Contact Person',
             required: true
           }
+        },
+        {
+          key: 'date_created',
+          type: 'datepicker',
+          className: 'col-xs-4',
+          templateOptions: {
+            label: 'Date Created',
+            required: true
+          }
         }
       ]
     }

@@ -7,9 +7,12 @@ import { Routes } from "./conf/routes";
 import { RouteFinder } from './components/shared/route-finder';
 import { AuthToken } from './components/shared/auth-token';
 import { AuthInterceptor } from './components/shared/auth-interceptor';
+
+//shared controllers
+import { LoginCtrl } from './components/shared/login';
 import { MasterCtrl } from './components/master/master';
-import { AppIndexController } from './components/shared/app-index-ctrl'
-import { AppFormController } from './components/shared/app-form-ctrl'
+import { AppIndexController } from './components/shared/app-index-ctrl';
+import { AppFormController } from './components/shared/app-form-ctrl';
 
 //components
 import { BlockHeader } from './components/block-header/block-header';
@@ -24,7 +27,8 @@ var app = angular.module("sample", [
 	'ui.select',
 	'formlyBootstrap',
 	'ngSanitize',
-    'ng-mfb'
+    'ng-mfb',
+	'angular-loading-bar'
 ]);
 
 app.service("app.services.UserService", UserService);
@@ -126,8 +130,13 @@ app.filter('startFrom', function() {
 export { app };
 
 app.config(Routes);
+app.config(['cfpLoadingBarProvider', (cfpLoadingBarProvider:any) => {
+  cfpLoadingBarProvider.includeSpinner = false;
+}])
 
 app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
+	console.log(CustomElement);
 	formlyConfig.setType(CustomElement['UISelect']);
+	formlyConfig.setType(CustomElement['DatePicker']);
     console.log("Application Started");
 });
