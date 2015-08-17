@@ -44,8 +44,7 @@ class AppIndexController {
     _.extend(viewProps, modelProps.views);
     if (!viewProps.defaultList) {
       this.templateUrl = `/app/components/${this.model}/list.html`;
-    }
-    
+    }    
   }
 
   getRecords() {

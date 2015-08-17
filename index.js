@@ -19,6 +19,7 @@ require('./assets/js/libs/pnotify.custom.js')
 //css
 require("bootstrap-sass!./assets/js/bootstrap-sass-config.js");
 require("./assets/css/vendor/pnotify.custom.css");
+require('ui-select-css');
 
 
 document.write(require("./base.html"));

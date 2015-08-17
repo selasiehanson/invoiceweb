@@ -21,6 +21,7 @@ import { MsgBox } from './components/shared/msg-box';
 var app = angular.module("sample", [
     'ui.router',
 	'formly',
+	'ui.select',
 	'formlyBootstrap',
 	'ngSanitize',
     'ng-mfb'
