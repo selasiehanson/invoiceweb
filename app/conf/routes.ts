@@ -54,7 +54,7 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 	});
 
 	$urlRouterProvider.otherwise('app/dashboard');
-  	// $httpProvider.interceptors.push('AuthInterceptor');
+  	$httpProvider.interceptors.push('AuthInterceptor');
 };
 
 export { Routes };

@@ -39,14 +39,14 @@ const Schema: ISchema = {
 			},
 			{
 				name: 'Contact',
-				field: 'contactNumber'
+				field: 'phone'
 			}
 		],
 		// custom: {
 		// 	name: 'bold'
 		// },
 		views: {
-			defaultNew: false
+			defaultNew: true
 		}
     },
     sales: {

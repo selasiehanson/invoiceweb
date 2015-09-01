@@ -3,13 +3,11 @@
 //import { AuthEvents } from '../components/shared/auth_events';
 // import { AuthToken }  from '../components/shared/auth_token';
 
-import { RouteFinder } from '../shared/route-finder';
 import { AuthEvents } from '../shared/auth-events';
 import { AuthToken } from '../shared/auth-token';
 
 let http : angular.IHttpService;
 let client = Object;
-let routeFinder: RouteFinder;
 let rootScope: angular.IRootScopeService;
 let authToken: AuthToken;
 
@@ -21,16 +19,14 @@ interface INav {
 
 class MasterCtrl {
 
-	state: ng.ui.IStateService;
+	state: angular.ui.IStateService;
 	navs: Array<INav>;
 	loggedIn: boolean;
 	currentRouteName: string;
 	
-	
-	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService , _RouteFinder: RouteFinder, _authToken: AuthToken) {
+	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService , _authToken: AuthToken) {
 		http = _http;
 		this.state = _state;
-		routeFinder = _RouteFinder;
 		authToken = _authToken;
 
 		this.navs = [
@@ -65,14 +61,7 @@ class MasterCtrl {
 			}
 		];
 
-		rootScope = _rootScope;
-
-		for (let nav of this.navs) {
-			routeFinder.put(nav.route, nav.name);
-			routeFinder.put(`${nav.route}/new`, nav.name);
-			//todo: add the route for edit on the resource as well
-			//soln: use substring or string.contains to determine if a the current route is a child route
-		}
+		rootScope = _rootScope;		
 
 		this.loggedIn = true;
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
@@ -89,9 +78,7 @@ class MasterCtrl {
 		});
 
 		rootScope.$on('$stateChangeSuccess', (event: angular.IAngularEvent) => {
-			let hash = window.location.hash;
-			let routeName = routeFinder.getRoute(hash);
-			this.currentRouteName = routeName;
+			
 		});
 	}
 
@@ -99,7 +86,11 @@ class MasterCtrl {
 		authToken.destroyT();
 		rootScope.$broadcast(AuthEvents.logoutSuccess);
 	}	
+	
+	pathContains (routeId: string){	  
+      return window.location.hash.indexOf(routeId) >= 0;
+    }
 }
 
-MasterCtrl.$inject = ['$http', '$rootScope', '$state', 'RouteFinder', 'AuthToken'];
+MasterCtrl.$inject = ['$http', '$rootScope', '$state', 'AuthToken'];
 export { MasterCtrl };

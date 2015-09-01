@@ -46,7 +46,7 @@ class AppIndexController {
       this.templateUrl = `/app/components/${this.model}/list.html`;
     }    
   }
-
+    
   getRecords() {
     this.http.get(`/api/${this.model}`).then((res: angular.IHttpPromiseCallbackArg<any[]>) => {
       this.records = res.data;

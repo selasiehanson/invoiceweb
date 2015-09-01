@@ -29,7 +29,6 @@ class AppFormController {
     let modelProps: ISchemaDefinition = Schema[this.stateParams.url];
     this.model = this.stateParams.url;
     http = _http;
-
     let viewProps = {
       defaultNew: true
     };
@@ -51,6 +50,11 @@ class AppFormController {
   save(){
     // console.log(this.record);   
     console.log(this.form.$valid);
+    if(this.form.$valid){
+      http.post(`/api/${this.model}`, this.record).then((res:any) => this.state.go('^'));
+    }else {
+      //todo: show errors
+    }
   }
 
   cancel(){

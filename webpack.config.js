@@ -42,5 +42,11 @@ module.exports = {
         loader: 'file-loader?name=res/[name].[ext]?[hash]'
       },
     ]
+  },
+  devServer :{
+    proxy: {
+      '/auth/*': 'http://localhost:3050',
+      '/api/*' : 'http://localhost:3050'
+    },
   }
 }

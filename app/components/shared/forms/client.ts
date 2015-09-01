@@ -6,20 +6,20 @@ const Clients: IExtendFormlyObject = {
       className : 'row',
       fieldGroup: [
         {
-          key: 'first_name',
+          key: 'name',
           type: 'input',
           className: 'col-xs-4',
           templateOptions: {
-            label: 'First Name',
+            label: 'Name',
             required: true
           }
         },
         {
-          key: 'last_name',
+          key: 'contact_person',
           type: 'input',
           className: 'col-xs-4',
           templateOptions: {
-            label: 'Last Name',
+            label: 'Contact Person',
             required: true
           }
         },
@@ -39,7 +39,7 @@ const Clients: IExtendFormlyObject = {
       className : 'row',
       fieldGroup: [
         {
-          key: 'phone_number',
+          key: 'phone',
           type: 'input',
           className: 'col-xs-4',
           templateOptions: {

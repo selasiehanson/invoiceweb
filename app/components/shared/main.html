@@ -4,7 +4,7 @@
     <aside id="ax-sidenav" class="ax-sidenav">
       <ul class="elements">
         <li ng-repeat="nav in ap.navs" >
-          <a href="#{{ nav.route }}" ng-class="ap.currentRouteName == nav.name ? 'active' : '' " class="">
+          <a href="#{{ nav.route }}" ng-class="ap.pathContains(nav.route) ? 'active' : '' " class="">
             <i class="md {{nav.icon}}"></i>
             {{ nav.name }} </a>
         </li>

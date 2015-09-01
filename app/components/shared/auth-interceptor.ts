@@ -8,7 +8,7 @@ let _ = require('lodash');
 
 let _injector : angular.auto.IInjectorService;
 let _q: angular.IQService;
-let _msgBox: MsgBox;
+
 
 function buildMessage(res: angular.IHttpPromiseCallbackArg<any>) {
   if (res.data.success) {
@@ -25,10 +25,10 @@ interface IHttpPromiseWithAuthArg<T> extends angular.IHttpPromiseCallbackArg<T> 
 
 class AuthInterceptor {
 
-  constructor(q:angular.IQService, injector: angular.auto.IInjectorService , msgBox: MsgBox) {
+  static $inject = ['$q', '$injector'];
+  constructor(q:angular.IQService, injector: angular.auto.IInjectorService) {
     _injector = injector;
     _q = q;
-    _msgBox = msgBox;
   }
 
   request(config: angular.IRequestConfig): angular.IRequestConfig | angular.IPromise<angular.IRequestConfig> {
@@ -42,10 +42,10 @@ class AuthInterceptor {
   }
 
   response(res: angular.IHttpPromiseCallbackArg<any>) {
-    if (res.status === 200 && _.startsWith('res.config.url','/api')) {
+    if (res.status === 200 && _.startsWith(res.config.url,'/api')) {
       var message = buildMessage(res);
       if (res.headers()['content-type'] === 'application/json') {
-        _msgBox.success(message);
+        MsgBox.success(message);
       }
     }
     return res || _q.when(res);
@@ -66,14 +66,13 @@ class AuthInterceptor {
     if (!matchesAuthenticatePath) {
       var rootScope = <angular.IRootScopeService>_injector.get('$rootScope')
       rootScope.$broadcast(HttpStatus[response.status], response);      
-      _msgBox.error("Request " + response.statusText);
+      MsgBox.error("Request " + response.statusText);
     } else {      
-      _msgBox.error(response.data.message || response.statusText);
+      MsgBox.error(response.data.message || response.statusText);
     }
     return _q.reject(response);
   }
 }
 
-AuthInterceptor.$inject = ['$q', '$injector', 'MsgBox'];
 
 export { AuthInterceptor };
