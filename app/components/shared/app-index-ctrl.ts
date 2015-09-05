@@ -35,7 +35,7 @@ class AppIndexController {
     //fetch records
     this.records = [];
     this.getRecords();
-    this.titleSingular = inflection.singularize(this.model);
+    this.titleSingular = inflection.  singularize(this.model);
 
     let modelProps = Schema[this.stateParams.url];
     let viewProps = {

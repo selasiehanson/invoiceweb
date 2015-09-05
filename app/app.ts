@@ -2,6 +2,7 @@
 
 import { PeopleCtrl } from "./controllers/people";
 import { UserService } from "./services/people";
+import { Fetcher } from './services/fetcher';
 import { Routes } from "./conf/routes";
 
 import { RouteFinder } from './components/shared/route-finder';
@@ -36,6 +37,7 @@ app.service("RouteFinder", RouteFinder);
 app.service("AuthToken", AuthToken);
 app.service("MsgBox", MsgBox);
 app.service('AuthInterceptor', AuthInterceptor);
+app.service('Fetcher',Fetcher);
 app.controller("PeopleController", PeopleCtrl);
 app.controller("AppIndexController", AppIndexController);
 app.controller("AppFormController", AppFormController);

@@ -71,11 +71,8 @@ class MasterCtrl {
 			}
 		];
 
-		rootScope = _rootScope;	
-		
-		// this.model = this.stateParams;
-		console.log(this.stateParams);	
-		// console.log(_state)
+		rootScope = _rootScope;			
+		console.log(this.stateParams);		
 
 		this.loggedIn = true;
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
