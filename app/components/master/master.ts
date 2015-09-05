@@ -5,6 +5,9 @@
 
 import { AuthEvents } from '../shared/auth-events';
 import { AuthToken } from '../shared/auth-token';
+let _ = require('lodash');
+let inflection = require('inflection');
+import { IAppStateParams } from '../shared/controller-interfaces';
 
 let http : angular.IHttpService;
 let client = Object;
@@ -20,13 +23,20 @@ interface INav {
 class MasterCtrl {
 
 	state: angular.ui.IStateService;
+	stateParams: angular.ui.IStateParamsService;
 	navs: Array<INav>;
 	loggedIn: boolean;
 	currentRouteName: string;
+	model: string;
+	pageTitle: string;
 	
-	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService , _authToken: AuthToken) {
+	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'AuthToken'];
+	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, 
+		_state: angular.ui.IStateService, _stateParams: angular.ui.IStateParamsService, _authToken: AuthToken) {
+			
 		http = _http;
 		this.state = _state;
+		this.stateParams = _stateParams;		
 		authToken = _authToken;
 
 		this.navs = [
@@ -41,9 +51,9 @@ class MasterCtrl {
 				route: "/app/clients"
 			},
 			{
-				name: 'sales',
+				name: 'jobs',
 				icon: 'zmdi-attach-money',
-				route: "/app/sales"
+				route: "/app/jobs"
 			},
 			{
 				name: 'products',
@@ -61,7 +71,11 @@ class MasterCtrl {
 			}
 		];
 
-		rootScope = _rootScope;		
+		rootScope = _rootScope;	
+		
+		// this.model = this.stateParams;
+		console.log(this.stateParams);	
+		// console.log(_state)
 
 		this.loggedIn = true;
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
@@ -77,8 +91,12 @@ class MasterCtrl {
 		  this.state.go('login');        
 		});
 
-		rootScope.$on('$stateChangeSuccess', (event: angular.IAngularEvent) => {
-			
+		rootScope.$on('$stateChangeSuccess', (event: angular.IAngularEvent, toState: angular.ui.IStateService, 
+			toStateParams: IAppStateParams) => {
+			console.log(toStateParams);
+			if(toStateParams.url) {				
+				this.pageTitle = inflection.titleize(toStateParams.url);
+			}
 		});
 	}
 
@@ -92,5 +110,4 @@ class MasterCtrl {
     }
 }
 
-MasterCtrl.$inject = ['$http', '$rootScope', '$state', 'AuthToken'];
 export { MasterCtrl };

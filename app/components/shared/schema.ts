@@ -49,30 +49,27 @@ const Schema: ISchema = {
 			defaultNew: true
 		}
     },
-    sales: {
+    jobs: {
 		headers: [
 			{
-				name: 'Name',
-				field: 'name',
+				name: 'Title',
+				field: 'title',
 				sort: true
 			},
 			{
-				name: 'Email',
-				field: 'email',
+				name: 'Client',
+				field: 'client',
 				sort: true,
 			},
 			{
-				name: 'Address',
-				field: 'address'
+				name: '% Completion',
+				field: 'completion'
 			},
 			{
-				name: 'Contact',
-				field: 'contactNumber'
+				name: 'Status',
+				field: 'status'
 			}
-		],
-		custom: {
-			name: 'bold'
-		}
+		]
     },
     products: {
 		headers: [
