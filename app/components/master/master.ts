@@ -8,11 +8,13 @@ import { AuthToken } from '../shared/auth-token';
 let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams } from '../shared/controller-interfaces';
+import { Fetcher } from '../../services/fetcher'
 
 let http : angular.IHttpService;
 let client = Object;
 let rootScope: angular.IRootScopeService;
 let authToken: AuthToken;
+let fetcher: Fetcher;
 
 interface INav {
 	name: string;
@@ -30,14 +32,16 @@ class MasterCtrl {
 	model: string;
 	pageTitle: string;
 	
-	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'AuthToken'];
+	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'AuthToken', 'Fetcher'];
 	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, 
-		_state: angular.ui.IStateService, _stateParams: angular.ui.IStateParamsService, _authToken: AuthToken) {
+		_state: angular.ui.IStateService, _stateParams: angular.ui.IStateParamsService, 
+		_authToken: AuthToken, _fetcher: Fetcher) {
 			
 		http = _http;
 		this.state = _state;
 		this.stateParams = _stateParams;		
 		authToken = _authToken;
+		fetcher = _fetcher;
 
 		this.navs = [
 			{
@@ -95,7 +99,10 @@ class MasterCtrl {
 				this.pageTitle = inflection.titleize(toStateParams.url);
 			}
 		});
+		
+		// this.handleDelete();
 	}
+	
 
 	signout() {
 		authToken.destroyT();

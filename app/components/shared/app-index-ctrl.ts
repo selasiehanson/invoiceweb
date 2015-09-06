@@ -4,13 +4,14 @@ import { Schema }  from './schema';
 import { ITableHeader }  from './schema';
 let _ = require('lodash');
 let inflection = require('inflection');
-import { IAppStateParams } from './controller-interfaces';
+import { IAppStateParams,IModelEventArgs } from './controller-interfaces';
 import { Fetcher} from '../../services/fetcher'
 import { EditStates} from './edit-states'
 
 let rootScope: angular.IRootScopeService;
 let fetcher: Fetcher;
-let state: angular.ui.IStateService
+let state: angular.ui.IStateService;
+
 class AppIndexController {
 
   http: angular.IHttpService;
@@ -75,6 +76,22 @@ class AppIndexController {
     this.handleDelete();
   }
   
+  handleDelete() {
+    	rootScope.$on('model:pre-delete', (ev:any, args:IModelEventArgs ) => {
+        if(args.model !== this.model){
+          return;
+        }
+        fetcher.remove(`${args.model}`,args.id).then(() => {
+          let found = this.records.filter(x => x.id === args.id);
+          if(found){
+            let idx = this.records.indexOf(found[0]);
+            this.records.splice(idx,1);          
+            //todo fire post delete message
+          }
+        });
+    	});
+  	}
+  
   handleEdit(){
     //redirect to edit page
     rootScope.$on('model:pre-edit',  (ev, args) => {
@@ -84,21 +101,7 @@ class AppIndexController {
       }
       state.go(nextState,args);
     });
-  }
-
-  handleDelete() {
-    rootScope.$on('model:pre-delete', (ev, args) => {
-      fetcher.remove(`${this.model}`,args.id).then(() => {
-        let found = this.records.filter(x => x.id === args.id);
-        if(found){
-          let idx = this.records.indexOf(found[0]);
-          this.records.splice(idx,1);
-          // rootScope.$apply();
-          //todo fire post delete message
-        }
-      });
-    });
-  }
+  }  
 }
 
 export { AppIndexController };

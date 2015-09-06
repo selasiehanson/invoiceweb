@@ -5,8 +5,14 @@
   <!--<div class="card-left-padding">
     <a class="action-new" href="#/app/{{ appIndex.model }}/new"> Add </a>
   </div>-->
-  <ax-table headers="appIndex.headers" content="appIndex.records" sortable="appIndex.sortable" filters="ap.search" custom-class="ap.custom"
-  count="appIndex.count">
+  <ax-table 
+    headers="appIndex.headers" 
+    content="appIndex.records" 
+    sortable="appIndex.sortable" 
+    filters="ap.search" 
+    custom-class="ap.custom"
+    model="appIndex.model"
+    count="appIndex.count">
   </ax-table>
   <nav mfb-menu position="br" effect="zoomin" label="" 
     active-icon="fa fa-pencil" 

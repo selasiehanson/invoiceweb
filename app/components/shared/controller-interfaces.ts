@@ -9,4 +9,9 @@ interface IHttpStatus{
   [key: string]: string
 }
 
-export { IAppStateParams, IHttpStatus };
+interface IModelEventArgs {
+  id: number;
+  model: string
+}
+
+export { IAppStateParams, IHttpStatus , IModelEventArgs};

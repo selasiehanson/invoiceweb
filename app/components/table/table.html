@@ -27,7 +27,7 @@
           {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
         </td>
         <td class="ax-table-td-more" ng-show="_showActions">
-          <a class="" href="" ng-click="edit(c)"> <i class="fa fa-edit"   ng-show="actionPermissions.edit"></i> </a>
+          <a class="" href="" ng-click="edit(c)" style="margin-right: 5px"> <i class="fa fa-edit"   ng-show="actionPermissions.edit"></i> </a>
           <a class="" href="" ng-click="trash(c)"> <i class="fa fa-trash" ng-show="actionPermissions.remove"></i></a>
         </td>
       </tr>
