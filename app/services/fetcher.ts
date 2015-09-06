@@ -12,14 +12,14 @@ class Fetcher {
 	}
 			
 	remove(resource: string, id: number) {
-		return this.http.delete(`/api/${resource}`, {id: id});
+		return this.http.delete(`/api/${resource}/${id}`);
 	}
 	
 	save(resource: string, args: any) {
 		if(args.id) {
-			return this.http.post(`/api/${resource}`, args);	
+			return this.http.put(`/api/${resource}/${args.id}`, args);	
 		}else {
-			return this.http.put(`/api/${resource}`, args);
+			return this.http.post(`/api/${resource}`, args);
 		}
 			
 	}
