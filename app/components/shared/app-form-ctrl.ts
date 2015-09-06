@@ -8,9 +8,10 @@ let _ = require('lodash');
 //import  { ModelValidator } from './model_validator';
 import  { Validators } from './validators';
 import { IAppStateParams } from './controller-interfaces';
+import  { Fetcher } from '../../services/fetcher';
 
 let http: angular.IHttpService;
-
+let fetcher: Fetcher;
 class AppFormController {
   
   record: any;  
@@ -21,14 +22,18 @@ class AppFormController {
   fields: AngularFormly.IFieldConfigurationObject;
   dependencies: Array<string>;
   form: any;
-
-  constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, _http: angular.IHttpService){
+  operation: string;
+  handlerText: string;
+    
+  static $inject = ['$state', '$stateParams', 'Fetcher'];
+  constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
+    _fetcher: Fetcher){
     this.record = {};
+    fetcher = _fetcher;
     this.state = _state;
     this.stateParams = _stateParams;
     let modelProps: ISchemaDefinition = Schema[this.stateParams.url];
     this.model = this.stateParams.url;
-    http = _http;
     let viewProps = {
       defaultNew: true
     };
@@ -45,13 +50,22 @@ class AppFormController {
         this.dependencies = form.dependencies;
       }
     }
+    
+    if(this.stateParams.id) {
+      this.operation = 'Edit';
+      this.handlerText = "Update";
+      fetcher.query(`${this.model}/${this.stateParams.id}`).then((res: angular.IHttpPromiseCallbackArg<{}>) => {
+        this.record = res.data;
+      });
+    }else {
+      this.operation = 'New';
+      this.handlerText = "Create";
+    }
   }
 
   save(){
-    // console.log(this.record);   
-    console.log(this.form.$valid);
-    if(this.form.$valid){
-      http.post(`/api/${this.model}`, this.record).then((res:any) => this.state.go('^'));
+    if(this.form.$valid){            
+        fetcher.save(`${this.model}`, this.record).then((res:any) => this.state.go('^'));             
     }else {
       //todo: show errors
     }
@@ -62,5 +76,4 @@ class AppFormController {
   }
 }
 
-AppFormController.$inject = ['$state', '$stateParams', '$http'];
 export { AppFormController};

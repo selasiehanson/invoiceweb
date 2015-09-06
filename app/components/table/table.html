@@ -2,6 +2,7 @@
   <table ax-colresize="ax-colresize" class="table">
     <thead>
       <tr class="ax-table-headers-row">
+        <th class="ax-grid-action-1"></th>
         <th ng-repeat="h in headers" class="ax-table-header">
           <a href="#" ng-if="handleSort(h.field)" ng-click="reverse=!reverse;order(h.field,reverse)">
             {{h.name}}
@@ -10,11 +11,13 @@
           </a>
           <span ng-if="!handleSort(h.field)">{{h.name}}</span>
         </th>
-        <th class="ax-table-header"></th>
+        <!--<th class="ax-table-header"></th>-->
+        <th class="grid-action-2" ng-show="_showActions"></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="c in content | filter:filters | startFrom:tablePage*count | limitTo: count" class="ax-table-content-row">
+        <td> {{ $index + 1 }}. </td>
         <td  ng-repeat="h in headers" ng-if="h.field == thumbs" class="ax-table-thumbs">
           <div>
             <div style="background-image:url({{c.thumb}})"></div>
@@ -23,8 +26,9 @@
         <td ng-repeat="h in headers" ng-class="customClass[h.field]" ng-if="h.field != thumbs" class="ax-table-content">
           {{(h.field.indexOf('date') > 0) ? $filter('date')(c[h.field]) : c[h.field];}}
         </td>
-        <td class="ax-table-td-more">
-          <ax-button aria-label="Info"><i class="ion-android-more-vertical"></i></ax-button>
+        <td class="ax-table-td-more" ng-show="_showActions">
+          <a class="" href="" ng-click="edit(c)"> <i class="fa fa-edit"   ng-show="actionPermissions.edit"></i> </a>
+          <a class="" href="" ng-click="trash(c)"> <i class="fa fa-trash" ng-show="actionPermissions.remove"></i></a>
         </td>
       </tr>
     </tbody>

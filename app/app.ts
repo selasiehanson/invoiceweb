@@ -55,6 +55,15 @@ interface ITableScope extends angular.IScope{
     numPages: number,
     tablePage: number,
     count: number,
+	idField: string;
+	actions: {};
+	model: string;
+	showActions: string;
+	_showActions: boolean;
+	actionPermissions: any;
+	permissions: any;
+	edit(record: any): void;
+	trash(record: any): void;
     nbOfPages(): number;
 	predicate: boolean;
     handleSort(field: string): boolean;
@@ -66,25 +75,53 @@ app.directive('axTable', function() {
 	return {
 		restrict: 'E',
 		scope: {
+			model: '=',
 			headers: '=',
 			content: '=',
 			sortable: '=',
 			filters: '=',
 			customClass: '=customClass',
 			thumbs: '=',
-			count: '='
+			count: '=',
+			showActions: '@',
+			permissions: '=',
+			idField: '@'
 		},
 		controller: function($scope : ITableScope, $filter: angular.IFilterService, $window: angular.IWindowService) {
 			var orderBy = $filter('orderBy');
 			$scope.content = $scope.content || [];
 			$scope.numPages = 0;
 			$scope.tablePage = 0;
+			$scope.idField = $scope.idField || 'id';
+			$scope.actions = $scope.actions ||  {};
+      		$scope._showActions = ($scope.showActions) === 'false' ? false : true;
 
 			$scope.$watch('content', function(val: Array<any>) {
 				if (val) {
 					$scope.numPages = Math.ceil(val.length / $scope.count);
 				}
 			});
+			
+			$scope.actionPermissions = {};
+			var perm = $scope.permissions || {};
+			$scope.actionPermissions.edit = (perm.edit === false) ? false : true;
+			$scope.actionPermissions.remove = (perm.remove === false) ? false : true;
+		
+			$scope.edit =  function (record){
+				$scope.$emit('model:pre-edit', {
+					model: $scope.model,
+					data: record,
+					id: record[$scope.idField]
+				});
+			};
+		
+			$scope.trash =  function (record){
+				$scope.$emit('model:pre-delete', {
+					model: $scope.model,
+					data: record,
+					id: record[$scope.idField]
+				});
+			};
 
 			$scope.nbOfPages = function():number {
 				if (!$scope.content) {

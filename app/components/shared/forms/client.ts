@@ -15,7 +15,7 @@ const Clients: IExtendFormlyObject = {
           }
         },
         {
-          key: 'contact_person',
+          key: 'contactPerson',
           type: 'input',
           className: 'col-xs-4',
           templateOptions: {

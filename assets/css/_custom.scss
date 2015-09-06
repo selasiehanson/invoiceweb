@@ -177,12 +177,22 @@ $primaryFontColor: #536E7A;
   .mb-20 {
     margin-bottom: 20px;
   }
+  
 
   .action-new {
     font-size: 18px;
     text-decoration: none;
     text-transform: uppercase;
   }
+}
+
+
+.ax-grid-action-1 {
+  width: 16px; 
+ }
+
+.ax-grid-action-2 {
+  width: 50px; 
 }
 
 ui-select-focusser.ui-select-offscreen {

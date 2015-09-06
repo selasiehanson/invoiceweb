@@ -5,7 +5,12 @@ import { ITableHeader }  from './schema';
 let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams } from './controller-interfaces';
+import { Fetcher} from '../../services/fetcher'
+import { EditStates} from './edit-states'
 
+let rootScope: angular.IRootScopeService;
+let fetcher: Fetcher;
+let state: angular.ui.IStateService
 class AppIndexController {
 
   http: angular.IHttpService;
@@ -20,18 +25,24 @@ class AppIndexController {
   titleSingular: string;
   templateUrl: string;
 
-  constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, _http: angular.IHttpService) {
+  static $inject = ['$rootScope', '$state', '$stateParams', '$http', 'Fetcher'];
+  constructor( _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService,
+    _stateParams: IAppStateParams, _http: angular.IHttpService, _fetcher: Fetcher) {
+      
     this.http = _http;
-    this.state = _state;
+    state = _state;
     this.stateParams = _stateParams;
     this.model = this.stateParams.url;    
     this.headers = Schema[this.model].headers;
     this.custom = Schema[this.model].custom;
     this.sortable = [];
+    rootScope = _rootScope;
+    fetcher = _fetcher;
+    
     if (this.headers) {
       this.sortable = _.pluck(this.headers.filter((h: ITableHeader) => { return h.sort; }), 'field');
     }
-    this.count = 3;
+    this.count = 25;
     //fetch records
     this.records = [];
     this.getRecords();
@@ -44,7 +55,9 @@ class AppIndexController {
     _.extend(viewProps, modelProps.views);
     if (!viewProps.defaultList) {
       this.templateUrl = `/app/components/${this.model}/list.html`;
-    }    
+    } 
+    
+    this.setupListeners();   
   }
     
   getRecords() {
@@ -54,9 +67,38 @@ class AppIndexController {
   }
   
   goToNew() {
-    this.state.go('.new');
+    state.go('.new');
+  }
+  
+  setupListeners() {
+    this.handleEdit();
+    this.handleDelete();
+  }
+  
+  handleEdit(){
+    //redirect to edit page
+    rootScope.$on('model:pre-edit',  (ev, args) => {
+      let nextState = EditStates[this.model];
+      if(!nextState){
+        nextState = 'app.index.edit';
+      }
+      state.go(nextState,args);
+    });
+  }
+
+  handleDelete() {
+    rootScope.$on('model:pre-delete', (ev, args) => {
+      fetcher.remove(`${this.model}`,args.id).then(() => {
+        let found = this.records.filter(x => x.id === args.id);
+        if(found){
+          let idx = this.records.indexOf(found[0]);
+          this.records.splice(idx,1);
+          // rootScope.$apply();
+          //todo fire post delete message
+        }
+      });
+    });
   }
 }
 
-AppIndexController.$inject = ['$state', '$stateParams', '$http'];
 export { AppIndexController };
