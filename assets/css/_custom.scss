@@ -61,15 +61,27 @@ $primaryFontColor: #536E7A;
         padding: 35px 55px 35px;
 
         .btn-login {
-          top: 35%;
-          margin-top: 0px;
-          right: -25px;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+          // top: 35%;
+          // margin-top: 0px;
+          // right: -25px;
+          // box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+          padding: 6px 55px;
+          margin-right: -15px;
         }
         
         .remember-me {
-          margin: 5px 0 0 -15px;
+          margin: 25px 0 0 -15px;
           text-align: left;
+        }
+        
+        .form-links {
+          margin-left: -15px; 
+          margin-top: -5px;
+          .links {
+            margin-right: 15px;
+            margin-top: 10px;
+            display: inline-block;
+          }
         }
       }
     }
