@@ -1,3 +1,4 @@
+<div class="login-top-bar"></div>
 <div class="login">
   <div class='login-box md-whiteframe-z1'>
     <form class="form-horizontal body">
@@ -12,10 +13,15 @@
             <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="login.user.password">
           </div>
         </div>
+        <div class="remember-me">
+          <label for="">
+            <input type="checkbox"> Remember me
+          </label>
+        </div>
       </fieldset>
         <a ng-click="login.signin()" href=""
           class="btn btn-login btn-danger btn-float waves-effect waves-button waves-float">
-          <i class="md md-arrow-forward"></i>
+          <i class="zmdi zmdi-arrow-forward"></i>
         </a>
     </form>
   </div>

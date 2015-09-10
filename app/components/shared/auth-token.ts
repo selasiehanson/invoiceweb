@@ -1,5 +1,12 @@
 let tokenName = "app_token";
-class AuthToken {
+
+interface IAuthToken {
+  setT(value: string):void;  
+  getT(): string;
+  destroyT(): void;
+}
+
+class AuthToken implements IAuthToken{
   constructor() {
   }
 
@@ -17,4 +24,4 @@ class AuthToken {
 }
 
 AuthToken.$inject = [];
-export {AuthToken};
+export { AuthToken , IAuthToken};

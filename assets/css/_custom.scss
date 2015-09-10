@@ -25,7 +25,7 @@ $primaryFontColor: #536E7A;
     position: absolute;
     top: 0;
     left: 0;
-    background: #00bcd4;
+    // background: #00bcd4;
     content: "";
     z-index: 0;
   }
@@ -35,7 +35,12 @@ $primaryFontColor: #536E7A;
     font-family: roboto ;
     font-size: 13px;
     background-color: #EDECEC;
-    padding-top: 56px;
+    // padding-top: 56px;
+    
+    .login-top-bar {
+      height: 5px;
+      background: $primaryFontColor;
+    }
 
     .login {
       overflow: hidden;
@@ -56,10 +61,15 @@ $primaryFontColor: #536E7A;
         padding: 35px 55px 35px;
 
         .btn-login {
-          top: 50%;
+          top: 35%;
           margin-top: 0px;
           right: -25px;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+        }
+        
+        .remember-me {
+          margin: 5px 0 0 -15px;
+          text-align: left;
         }
       }
     }

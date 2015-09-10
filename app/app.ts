@@ -6,7 +6,7 @@ import { Fetcher } from './services/fetcher';
 import { Routes } from "./conf/routes";
 
 import { RouteFinder } from './components/shared/route-finder';
-import { AuthToken } from './components/shared/auth-token';
+import { AuthToken, IAuthToken } from './components/shared/auth-token';
 import { AuthInterceptor } from './components/shared/auth-interceptor';
 
 //shared controllers
@@ -41,6 +41,7 @@ app.service('Fetcher',Fetcher);
 app.controller("PeopleController", PeopleCtrl);
 app.controller("AppIndexController", AppIndexController);
 app.controller("AppFormController", AppFormController);
+app.controller("LoginCtrl", LoginCtrl);
 
 app.controller('MasterCtrl', MasterCtrl);
 //directives
@@ -179,3 +180,13 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 	formlyConfig.setType(CustomElement['DatePicker']);
     console.log("Application Started");
 });
+
+app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
+AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+      if(!AuthToken.getT()) {
+        $location.path('/login');
+      }
+    });
+});
+
