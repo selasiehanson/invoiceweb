@@ -59,15 +59,15 @@ class MasterCtrl {
 				icon: 'zmdi-attach-money',
 				route: "/app/jobs"
 			},
-			{
-				name: 'products',
-				icon: 'zmdi-add-shopping-cart',
-				route: "/app/products"
-			}, {
-				name: 'companies',
-				icon: 'zmdi-contacts',
-				route: "/app/companies"
-			},
+			// {
+			// 	name: 'products',
+			// 	icon: 'zmdi-add-shopping-cart',
+			// 	route: "/app/products"
+			// }, {
+			// 	name: 'companies',
+			// 	icon: 'zmdi-contacts',
+			// 	route: "/app/companies"
+			// },
 			{
 				name: 'reports',
 				icon: 'zmdi-trending-up',

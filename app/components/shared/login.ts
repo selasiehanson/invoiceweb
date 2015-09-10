@@ -32,10 +32,10 @@ class LoginCtrl {
   signin(){
     let data = this.user;
     console.log(data);
-    this.http.post('/auth/sign_in',{ user: data} ).then((response: angular.IHttpPromiseCallbackArg<any>) => {
+    this.http.post('/api/auth/sign_in',{ user: data} ).then((response: angular.IHttpPromiseCallbackArg<any>) => {
     console.log(response);
-     if(response.status === 200 ) {
-       authToken.setT(response.data.auth_token);
+     if(response.status === 200 && response.data.token) {
+       authToken.setT(response.data.token);
        rootScope.$broadcast(AuthEvents.loginSuccess, response.data);
       //this.scope.$emit('login:state', {user: true});
      } else if(response.status === 401) {
