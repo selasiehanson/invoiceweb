@@ -8,10 +8,22 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 	
   $stateProvider.state('login', {
       url:'/login',
-      template:  require('../components/shared/login.html'),
+      template:  require('../components/login/login.html'),
       controller: 'LoginCtrl',
       controllerAs: 'login'
     })
+	.state('/signup', {
+		url:'/signup',
+		template:  require('../components/login/signup.html'),
+      	controller: 'LoginCtrl',
+      	controllerAs: 'login'
+	})
+	.state('/password_recovery', {
+		url:'/password_recovery',
+		template:  require('../components/login/password_recovery.html'),
+      	controller: 'LoginCtrl',
+      	controllerAs: 'login'
+	})
 	.state('app', {
 		url: '/:app',
 		template: require('../components/shared/main.html'),

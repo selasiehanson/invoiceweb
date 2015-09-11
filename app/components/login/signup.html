@@ -1,0 +1,45 @@
+<div class="login-top-bar"></div>
+<div class="login">
+  <div margin>Sign In</div>
+  <div class='login-box md-whiteframe-z1'>    
+    <form class="form-horizontal body">
+      <fieldset>
+        <div class="form-group">
+          <div class="">
+            <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="login.user.email">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="login.user.password">
+          </div>
+        </div>
+		<div class="form-group">
+          <div class="">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Confirm Password" ng-model="login.user.password">
+          </div>
+        </div>
+        <div class="remember-me">
+          <label for="">
+            <input type="checkbox"> Remember me
+          </label>
+        </div>
+      </fieldset>
+        <!--<a ng-click="login.signin()" href=""
+          class="btn btn-login btn-danger btn-float waves-effect waves-button waves-float">
+          <i class="zmdi zmdi-arrow-forward"></i>
+        </a>-->
+    </form>
+    <div class="form-links">
+      <div class="pull-left">
+        <a href="#/signup" class="links">Sign up</a>
+        <a href="#/password_recovery" class="links">Forgot Password</a>  
+      </div>
+      <div class="pull-right">
+        <a href="" ng-click="login.signup()" class="btn btn-success btn-login">Sign in</a>
+      </div>
+           
+    </div>
+  </div>
+  
+</div>

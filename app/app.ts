@@ -10,7 +10,7 @@ import { AuthToken, IAuthToken } from './components/shared/auth-token';
 import { AuthInterceptor } from './components/shared/auth-interceptor';
 
 //shared controllers
-import { LoginCtrl } from './components/shared/login';
+import { LoginCtrl } from './components/login/login';
 import { MasterCtrl } from './components/master/master';
 import { AppIndexController } from './components/shared/app-index-ctrl';
 import { AppFormController } from './components/shared/app-form-ctrl';
@@ -183,10 +183,15 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
 AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
+	let excludedRoutes = ['/signup', '/login', 'password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
-      if(!AuthToken.getT()) {
+		
+	if(_.contains(excludedRoutes,next.url)) {
+		return
+	};
+    if(!AuthToken.getT()) {
         $location.path('/login');
-      }
+    }
     });
 });
 

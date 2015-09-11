@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import { AuthToken } from './auth-token';
-import { AuthEvents } from './auth-events';
+import { AuthToken } from '../shared/auth-token';
+import { AuthEvents } from '../shared/auth-events';
 
 let authToken: AuthToken;
 let rootScope: angular.IRootScopeService;
@@ -27,6 +27,14 @@ class LoginCtrl {
     rootScope = _rootScope;
     location = _location; 
     authToken = _authToken;        
+  }
+
+  signup() {
+    
+  }
+  
+  recoverPassword(){
+    
   }
 
   signin(){

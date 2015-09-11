@@ -22,6 +22,13 @@ interface INav {
 	route: string;
 }
 
+interface IUser {
+	userName? : string;
+	firstName?: string;
+	lastName?: string;
+	
+}
+
 class MasterCtrl {
 
 	state: angular.ui.IStateService;
@@ -31,6 +38,7 @@ class MasterCtrl {
 	currentRouteName: string;
 	model: string;
 	pageTitle: string;
+	user: IUser;
 	
 	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'AuthToken', 'Fetcher'];
 	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, 
@@ -82,6 +90,7 @@ class MasterCtrl {
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
 			if(args && args.user){
 				this.loggedIn = true;
+				this.user = args.user;
 				this.state.go('app.dashboard');
 			}else {
 				this.loggedIn = false;
