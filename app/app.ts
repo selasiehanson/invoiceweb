@@ -183,7 +183,7 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
 AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
-	let excludedRoutes = ['/signup', '/login', 'password_recovery'];
+	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
 		
 	if(_.contains(excludedRoutes,next.url)) {
