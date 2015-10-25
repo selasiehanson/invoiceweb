@@ -1,0 +1,67 @@
+<div class="new-client clearfix">
+  <form class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label> Recipient </label>
+          <ui-select ng-model="person.selected" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
+            <ui-select-match placeholder="Select a Recipient">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="person in appForm.people">
+              <div ng-bind-html="person.name | highlight: $select.search"></div>
+              <small>
+                Email: {{ person.email }}
+                Phone: <span ng-bind-html="''+person.phoneNumber | highlight: $select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label> Invoice Date </label>
+          <input ng-model="appForm.currentInvoice.invoiceDate"
+            data-provide="datepicker"
+            data-date-format="yyyy-mm-dd"
+            data-date-enable-on-readonly="false"
+            data-date-calendar-weeks="true"
+            data-date-today-btn="true"
+            data-date-autoclose="true"
+            class="form-control">
+        </div>
+      </div>      
+  </form>
+  <div style="margin:10px 0px">
+    <a href="" class="btn btn-info btn-sm" ng-click="appForm.addItem()"> 
+      <i class="fa fa-plus"></i> Add Item</a>
+    <br>
+  </div>
+  <table class="table invoice-items table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Unit cost</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
+        <td> {{ $index + 1 }}.</td>
+        <td> <input type="text" class="form-control" ng-model="item.description"> </td>
+        <td> <input type="text" class="form-control" ng-model="item.quantity"></td>
+        <td> <input type="text" class="form-control" ng-model="item.unitCost"></td>
+        <td> {{ item.price }} </td>
+        
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button class="btn btn-warning" ng-click="appForm.preview()"> Preview </button>
+    <div class="form-actions mb-20 pull-right">    
+      <button class="btn btn-default" ng-click="appForm.cancel()"> Cancel </button>    
+      <button class="btn btn-success" ng-click="appForm.save()"> Create Invoice </button>
+    </div>
+  </div>
+  
+</div>

@@ -1,14 +1,14 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import  { Schema, IModelViewConfig, ISchema, ISchemaDefinition } from './schema';
+import { Schema, IModelViewConfig, ISchema, ISchemaDefinition } from './schema';
 //import  { Templater } from '../forms/templater';
-import  { Forms } from './model-forms';
+import { Forms } from './model-forms';
 import { IForm, IExtendFormlyObject } from './form-interfaces';
 let _ = require('lodash');
 //import  { ModelValidator } from './model_validator';
-import  { Validators } from './validators';
+import { Validators } from './validators';
 import { IAppStateParams } from './controller-interfaces';
-import  { Fetcher } from '../../services/fetcher';
+import { Fetcher } from '../../services/fetcher';
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;

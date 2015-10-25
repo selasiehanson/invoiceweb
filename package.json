@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline --port 8080 -d --content-base ./ "
+    "start": "webpack-dev-server --hot --inline --port 8090 -d --content-base ./ "
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,7 @@
     "angular-formly-templates-bootstrap": "^6.0.0",
     "angular-loading-bar": "^0.8.0",
     "angular-sanitize": "~1.3.16",
-    "angular-ui-router": "^0.2.15",
+    "angular-ui-router": "0.2.15",
     "api-check": "^7.5.0",
     "bootstrap": "^3.3.5",
     "bootstrap-datepicker": "^1.4.0",

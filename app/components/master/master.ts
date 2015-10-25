@@ -58,14 +58,14 @@ class MasterCtrl {
 				route: '/app/dashboard'
 			},
 			{
-				name: 'clients',
-				icon: 'zmdi-people',
-				route: "/app/clients"
+				name: 'Invoices',
+				icon: 'zmdi-list',
+				route: "/app/invoices"
 			},
 			{
-				name: 'jobs',
-				icon: 'zmdi-attach-money',
-				route: "/app/jobs"
+				name: 'Recipients',
+				icon: 'zmdi-people',
+				route: "/app/recipients"
 			},
 			// {
 			// 	name: 'products',
@@ -83,8 +83,7 @@ class MasterCtrl {
 			}
 		];
 
-		rootScope = _rootScope;			
-		console.log(this.stateParams);		
+		rootScope = _rootScope;						
 
 		this.loggedIn = true;
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
@@ -103,7 +102,6 @@ class MasterCtrl {
 
 		rootScope.$on('$stateChangeSuccess', (event: angular.IAngularEvent, toState: angular.ui.IStateService, 
 			toStateParams: IAppStateParams) => {
-			console.log(toStateParams);
 			if(toStateParams.url) {				
 				this.pageTitle = inflection.titleize(toStateParams.url);
 			}

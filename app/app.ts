@@ -14,6 +14,7 @@ import { LoginCtrl } from './components/login/login';
 import { MasterCtrl } from './components/master/master';
 import { AppIndexController } from './components/shared/app-index-ctrl';
 import { AppFormController } from './components/shared/app-form-ctrl';
+import { InvoiceFormCtrl } from './components/invoices/invoice_form_ctrl'
 
 //components
 import { BlockHeader } from './components/block-header/block-header';
@@ -42,6 +43,7 @@ app.controller("PeopleController", PeopleCtrl);
 app.controller("AppIndexController", AppIndexController);
 app.controller("AppFormController", AppFormController);
 app.controller("LoginCtrl", LoginCtrl);
+app.controller("InvoiceFormCtrl", InvoiceFormCtrl);
 
 app.controller('MasterCtrl', MasterCtrl);
 //directives
@@ -189,9 +191,9 @@ AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
 	if(_.contains(excludedRoutes,next.url)) {
 		return
 	};
-    if(!AuthToken.getT()) {
-        $location.path('/login');
-    }
+    // if(!AuthToken.getT()) {
+    //     $location.path('/login');
+    // }
     });
 });
 

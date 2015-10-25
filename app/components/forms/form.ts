@@ -16,7 +16,7 @@ function AxForm($compile: angular.ICompileService) {
       var linkFn = $compile(html);
       var content = linkFn(scope);
       element.append(content);
-      console.log(scope);
+      // console.log(scope);
     }
   };
 }

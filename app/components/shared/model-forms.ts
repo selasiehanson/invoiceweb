@@ -6,6 +6,7 @@ import {Shop} from './forms/shop';
 import {Supplier} from './forms/supplier';
 import {Company} from './forms/company';
 import {Warehouse} from './forms/warehouse';
+import {Invoice } from './forms/invoice';
 import { Job }  from './forms/job';
 import { IForm, IExtendFormlyObject } from './form-interfaces';
 
@@ -18,7 +19,8 @@ const Forms: IForm  = {
   warehouse: Warehouse,
   suppliers: Supplier,
   companies: Company,
-  jobs: Job
+  jobs: Job,
+  invoices: Invoice
 };
 
 export { Forms };

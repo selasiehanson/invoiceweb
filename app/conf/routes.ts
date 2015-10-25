@@ -24,6 +24,7 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
       	controller: 'LoginCtrl',
       	controllerAs: 'login'
 	})
+	
 	.state('app', {
 		url: '/:app',
 		template: require('../components/shared/main.html'),
@@ -31,7 +32,7 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 	.state('app.dashboard', {
 		url: 'app/dashboard',
 		template: require('../components/dashboard/list.html')
-	})	
+	})
     .state('app.index', {
 		url: '/:url',
 		templateUrl: function(state: ng.ui.IStateParamsService) {
@@ -39,13 +40,43 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 		},
 		controller: 'AppIndexController',
 		controllerAs: 'appIndex'
-	})
+	})	
+	// .state('app.invoices.new', {
+	// 	url: '/app/invoices/new',
+	// 	// template: require('../components/invoices/new.html'),
+	// 	controller: 'InvoiceFormCtrl',
+	// 	controllerAs: 'invoiceForm'
+	// })
 	.state('app.index.new', {
 		url: '/new?view',
 		templateUrl: function(state: ng.ui.IState) {
 			return '/app/components/shared/new.html';
 		},
-		controller: 'AppFormController',
+		// resolve: {
+		// 	controllerName:function ($stateParams: ng.ui.IStateParamsService, $timeout: angular.ITimeoutService, $q: angular.IQService){
+		// 		var deferred = $q.defer();
+		// 		$timeout(function(){
+		// 			let ctrl = ''; 
+		// 			ctrl = 'AppFormController';
+		// 			if($stateParams['url'] === 'invoices'){
+		// 				ctrl = 'InvoiceFormCtrl';
+		// 			}
+					
+		// 			deferred.resolve(ctrl);
+		
+		// 		},250);
+		// 		return deferred.promise;
+		// 	}
+		// },
+		// controllerProvider: function (controllerName: string){
+		// 	return controllerName;
+		// },
+		controllerProvider: function($stateParams: ng.ui.IStateParamsService){
+			if($stateParams['url'] === 'invoices'){
+				return 'InvoiceFormCtrl';
+			}
+			return 'AppFormController';
+		},
 		controllerAs: 'appForm'
 	})
 	.state('app.index.show', {

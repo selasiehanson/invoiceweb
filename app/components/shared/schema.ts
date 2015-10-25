@@ -21,56 +21,17 @@ interface ISchema {
 }
 
 const Schema: ISchema = {
-    clients: {
-		headers: [
-			{
-				name: 'Name',
-				field: 'name',
-				sort: true
-			},
-			{
-				name: 'Email',
-				field: 'email',
-				sort: true,
-			},
-			{
-				name: 'Address',
-				field: 'address'
-			},
-			{
-				name: 'Contact',
-				field: 'phone'
-			}
+    invoices: {
+		headers: [		
+			{	name: 'Amount', field: ''},
+			{	name: 'Recipient', field: 'recipient' },
+			{	name: 'Description', field: 'description' },
+			{	name: 'Date', field: 'date' }
 		],
-		// custom: {
-		// 	name: 'bold'
-		// },
 		views: {
-			defaultNew: true
+			defaultNew: false
 		}
-    },
-    jobs: {
-		headers: [
-			{
-				name: 'Title',
-				field: 'title',
-				sort: true
-			},
-			{
-				name: 'Client',
-				field: 'client',
-				sort: true,
-			},
-			{
-				name: '% Completion',
-				field: 'completion'
-			},
-			{
-				name: 'Status',
-				field: 'status'
-			}
-		]
-    },
+    },    
     products: {
 		headers: [
 			{
@@ -101,10 +62,12 @@ const Schema: ISchema = {
 			}
 		]
     },
-    companies: {
+    recipients: {
 		headers: [
 			{ name: "Name", field: "name" },
-			{ name: "Contact Person", field: "contactPerson" },
+			{ name: "Email", field: "email" },
+			{ name: "Address", field: "address" },
+			{ name: "Phone Number", field: "phoneNumber" }
 		]
     },
     "reports": {

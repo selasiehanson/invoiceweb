@@ -16,11 +16,29 @@ const Company: IExtendFormlyObject   = {
           }
         },
         {
-          key: 'contact_person',
+          key: 'address',
           type: 'input',
           className: 'col-xs-4',
           templateOptions: {
-            label: 'Contact Person',
+            label: 'Address',
+            required: true
+          }
+        },
+        {
+          key: 'email',
+          type: 'input',
+          className: 'col-xs-4',
+          templateOptions: {
+            label: 'Email',
+            required: true
+          }
+        },
+        {
+          key: 'phoneNumber',
+          type: 'input',
+          className: 'col-xs-4',
+          templateOptions: {
+            label: 'Phone Number',
             required: true
           }
         },

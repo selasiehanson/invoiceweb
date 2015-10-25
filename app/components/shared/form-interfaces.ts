@@ -1,12 +1,12 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 interface IExtendFormlyObject  {
-	fields: Array<AngularFormly.IFieldConfigurationObject>
-	dependencies?: Array<string>
+	fields: AngularFormly.IFieldGroup[]
+	dependencies?: string[]
 }
 
 interface IForm {
-	[key: string]: IExtendFormlyObject
+	[key: string]: any
 }
 
 interface IApiResponse {

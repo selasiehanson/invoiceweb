@@ -45,8 +45,8 @@ module.exports = {
   },
   devServer :{
     proxy: {
-      '/auth/*': 'http://localhost:3050',
-      '/api/*' : 'http://localhost:3050'
+    //   '/auth/*': 'http://localhost:8080',
+      '/api/*' : 'http://localhost:8080'
     },
   }
 }
