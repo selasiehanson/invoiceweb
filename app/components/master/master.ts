@@ -26,7 +26,6 @@ interface IUser {
 	userName? : string;
 	firstName?: string;
 	lastName?: string;
-	
 }
 
 class MasterCtrl {
@@ -67,15 +66,11 @@ class MasterCtrl {
 				icon: 'zmdi-people',
 				route: "/app/recipients"
 			},
-			// {
-			// 	name: 'products',
-			// 	icon: 'zmdi-add-shopping-cart',
-			// 	route: "/app/products"
-			// }, {
-			// 	name: 'companies',
-			// 	icon: 'zmdi-contacts',
-			// 	route: "/app/companies"
-			// },
+			{
+				name: 'Currencies',
+				icon: 'fa fa-money',
+				route: "/app/currencies"
+			},
 			{
 				name: 'reports',
 				icon: 'zmdi-trending-up',

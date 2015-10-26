@@ -23,15 +23,23 @@ interface ISchema {
 const Schema: ISchema = {
     invoices: {
 		headers: [		
-			{	name: 'Amount', field: ''},
+			{	name: 'Amount', field: 'total' },
 			{	name: 'Recipient', field: 'recipient' },
+			{ 	name: 'Tax', field: 'tax' },
 			{	name: 'Description', field: 'description' },
 			{	name: 'Date', field: 'date' }
 		],
 		views: {
 			defaultNew: false
 		}
-    },    
+    },
+	currencies: {
+		headers: [		
+			{	name: 'Name', field: 'currencyName' },
+			{	name: 'Symbol', field: 'symbol' },			
+			{ 	name: 'Code', field: 'currencyCode' }			
+		]
+	},    
     products: {
 		headers: [
 			{

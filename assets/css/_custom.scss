@@ -233,6 +233,7 @@ input[type=email], input[type=number],
 [contenteditable].form-control {
   font-size: 13px; 
 }
+
 .btn {
   padding: 6px 16px;
   line-height: 1.86;
@@ -250,4 +251,47 @@ input[type=email], input[type=number],
   tbody > tr:nth-of-type(odd) {
     background-color: #FFFFFF;
   }
+  
+  tbody {
+    input[type=text], input[type=number] {
+      padding: 0px 4px;
+      -webkit-box-shadow: none;      
+    }
+    
+    .invoice-item-icon {
+      padding-top: 9px;
+      font-size: 15px;
+    }
+  }
+ 
+  .down-this-col {
+    padding-top: 16px;
+    font-size: 12px;
+  } 
+  
+    
+}
+
+.new-invoice {
+  .total-box {
+    
+    margin-bottom: 40px;
+    margin-top: 20px;
+    label {
+      font-weight: bold;
+      font-size: 16px;    
+    }
+  }
+}
+
+.tright {
+  text-align: right
+}
+
+.tright.price {
+  width: 200px
+}
+
+.summing-box {
+  margin-top: 70px;
 }

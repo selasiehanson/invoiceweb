@@ -1,15 +1,30 @@
-<div class="new-client clearfix">
+<div class="new-invoice clearfix">
   <form class="row">
       <div class="col-sm-4">
         <div class="form-group">
           <label> Recipient </label>
-          <ui-select ng-model="person.selected" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
-            <ui-select-match placeholder="Select a Recipient">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="person in appForm.people">
+          <ui-select ng-model="appForm.currentInvoice.recipient" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
+            <ui-select-match placeholder="Select a recipient">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="person in appForm.recipients">
               <div ng-bind-html="person.name | highlight: $select.search"></div>
               <small>
                 Email: {{ person.email }}
                 Phone: <span ng-bind-html="''+person.phoneNumber | highlight: $select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label> Currency </label>
+          <ui-select ng-model="appForm.currentInvoice.currency" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
+            <ui-select-match placeholder="Select a currency">{{$select.selected.currencyCode}}</ui-select-match>
+            <ui-select-choices repeat="cur in appForm.currencies">
+              <div ng-bind-html="cur.name | highlight: $select.search"></div>
+              <small>
+                {{ cur.currencyName }} - ({{ cur.symbol}}) {{ cur.currencyCode }}
+                <!--<span ng-bind-html="''+ | highlight: $select.search"></span>-->
               </small>
             </ui-select-choices>
           </ui-select>
@@ -35,27 +50,48 @@
       <i class="fa fa-plus"></i> Add Item</a>
     <br>
   </div>
-  <table class="table invoice-items table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Unit cost</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
-        <td> {{ $index + 1 }}.</td>
-        <td> <input type="text" class="form-control" ng-model="item.description"> </td>
-        <td> <input type="text" class="form-control" ng-model="item.quantity"></td>
-        <td> <input type="text" class="form-control" ng-model="item.unitCost"></td>
-        <td> {{ item.price }} </td>
-        
-      </tr>
-    </tbody>
-  </table>
+  <div class="ax-table">    
+    <table class="table invoice-items table-striped">
+      <thead>
+        <tr>
+          <th class="ax-grid-action-1"></th>
+          <th>Item</th>
+          <th class="tright">Quantity</th>
+          <th class="tright">Unit cost</th>
+          <th class="tright price">Price</th>
+          <th class="ax-grid-action-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
+          <td class="down-this-col"> {{ $index + 1 }}.</td>
+          <td> <input type="text" class="form-control" ng-model="item.description"> </td>
+          <td> <input type="number" class="form-control tright" ng-model="item.quantity"></td>
+          <td> <input type="number" class="form-control tright" ng-model="item.unitCost"></td>
+          <td class="down-this-col tright"> {{ appForm.computeLineTotal(item.quantity, item.unitCost) }} </td>
+          <td>
+            <a href=""> <i class="fa fa-trash invoice-item-icon" ng-click="appForm.removeItem($index)"></i></a>
+          </td>          
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+  <div class="summing-box">
+    <div class="row">
+      <div class="col-sm-4 pull-right">
+        <div class="form-group">
+          <label> Tax </label>
+          <input ng-model="appForm.currentInvoice.tax" class="form-control number" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 pull-right total-box">
+        <label for="">Total: </label> 
+        <label class="pull-right"> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.computeTotal() }}</label>
+      </div>
+    </div>
+  </div>
   <div>
     <button class="btn btn-warning" ng-click="appForm.preview()"> Preview </button>
     <div class="form-actions mb-20 pull-right">    
