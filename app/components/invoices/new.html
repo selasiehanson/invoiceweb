@@ -78,15 +78,15 @@
   </div>
   <div class="summing-box">
     <div class="row">
-      <div class="col-sm-4 pull-right">
+      <div class="col-sm-3 pull-right">
         <div class="form-group">
-          <label> Tax </label>
-          <input ng-model="appForm.currentInvoice.tax" class="form-control number" />
+          <label class="down-this-col"> Tax (%)</label>
+          <label class="pull-right"> <input ng-model="appForm.currentInvoice.tax" type="number" class="form-control tright" /> </label>          
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4 pull-right total-box">
+      <div class="col-sm-3 pull-right total-box">
         <label for="">Total: </label> 
         <label class="pull-right"> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.computeTotal() }}</label>
       </div>

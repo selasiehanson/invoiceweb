@@ -234,6 +234,11 @@ input[type=email], input[type=number],
   font-size: 13px; 
 }
 
+@mixin downit{
+  padding-top: 16px !important;
+  font-size: 12px !important;
+}
+
 .btn {
   padding: 6px 16px;
   line-height: 1.86;
@@ -255,22 +260,23 @@ input[type=email], input[type=number],
   tbody {
     input[type=text], input[type=number] {
       padding: 0px 4px;
-      -webkit-box-shadow: none;      
+      -webkit-box-shadow: none;    
+      
+      .down-this-col {
+        @include downit
+      }  
     }
     
     .invoice-item-icon {
       padding-top: 9px;
       font-size: 15px;
     }
-  }
- 
-  .down-this-col {
-    padding-top: 16px;
-    font-size: 12px;
   } 
-  
-    
 }
+
+.down-this-col, td.down-this-col {
+    @include downit
+} 
 
 .new-invoice {
   .total-box {

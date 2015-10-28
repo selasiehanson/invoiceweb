@@ -19,11 +19,14 @@ interface InvoiceItem {
 }
 
 interface IInvoice {
-	invoiceDate: Date
-	recipient: number
-	tax: number
-	total: number
-	invoiceItems: InvoiceItem[]
+	invoiceDate?: Date
+	recipient?: IRecipient
+	currency?: ICurrency
+	recipientId?: number
+	currencyId?: number
+	tax?: number
+	total?: number | string
+	invoiceItems?: InvoiceItem[]
 	notes?: string
 }
 
@@ -31,9 +34,11 @@ interface  ICurrency{
 	currencyName: string
 	currencyCode: string
 	symbol: string
+	id: number
 }
 
 interface IRecipient {
+	id: number;
 	name: string
 	email: string
 	phoneNumber: string
@@ -50,7 +55,7 @@ class InvoiceFormCtrl extends AppFormController{
 		fetcher = _fetcher;
 		super(_state, _stateParams,_fetcher);				
 		
-		this.currentInvoice = <IInvoice>{};
+		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
 		
 		fetcher.query('currencies').then((response) => {
@@ -79,14 +84,17 @@ class InvoiceFormCtrl extends AppFormController{
 	}	
 	
 	computeTotal(){
-		return this.currentInvoice.invoiceItems
+		let total = this.currentInvoice.invoiceItems
 			.map((x) => {
 				if(x.unitCost && x.quantity){
-					return x.unitCost * x.quantity
+					return x.unitCost * x.quantity;
 				}
 				return 0;
 			})
 			.reduce((prev: number, curr: number) => prev + curr, 0);
+	
+		let tax = this.currentInvoice.tax / 100.0;
+		return (total * tax ) + total;
 	}
 	
 	performRemoveItem(){
@@ -94,7 +102,14 @@ class InvoiceFormCtrl extends AppFormController{
 	}
 	
 	save(){
-		console.log(this.currentInvoice);
+		this.currentInvoice.recipientId = this.currentInvoice.recipient.id;
+		this.currentInvoice.currencyId = this.currentInvoice.currency.id;
+		let data = angular.copy(this.currentInvoice)
+		delete data.currency
+		delete data.recipient
+		fetcher.save('invoices',data).then((res) => {
+			console.log(res)
+		});		
 	}
 
 	

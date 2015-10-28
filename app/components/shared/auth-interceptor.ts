@@ -5,19 +5,47 @@ import { AuthToken } from './auth-token';
 import { AuthEvents } from './auth-events';
 import { IHttpStatus } from './controller-interfaces';
 let _ = require('lodash');
+let inflection = require('inflection');
 
 let _injector : angular.auto.IInjectorService;
 let _q: angular.IQService;
+let _stateParams: angular.ui.IStateParamsService;
 
 
-function buildMessage(res: angular.IHttpPromiseCallbackArg<any>) {
-  if (res.data.success) {
+function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, statParams: angular.ui.IStateParamsService) {
+  console.log(_stateParams['url']);
+  let model = inflection.titleize(inflection.singularize(_stateParams['url']));
+  if (_.contains([200, 201],res.status)) {
     if (res.data.message) return res.data.message;
-    return (res.config.method === "DELETE") ? "Record deleted successfully." : "Record saved successfully.";
+    
+    switch(res.config.method){
+      case "DELETE":
+        return `${model} deleted successfully.`;
+      case "PUT":
+        return `${model} updated successfully.`;
+      case "POST": 
+        return `${model} created successfully.`;
+      case 'GET':
+        if(_stateParams['id']) {
+          return `${model} with id ${_stateParams['id']} loaded successfully `;
+        }else {
+          let modelP = inflection.titleize(inflection.pluralize(_stateParams['url']));
+          return `${modelP} loaded successfully`;
+        }
+    }
   } else {
     return res.data.message || "Error in performing operation. Check system logs for more details";
   }
 }
+
+ function showNotification(res: angular.IHttpPromiseCallbackArg<any>, message: string){
+    if(_.contains([200,201], res.status)){
+      MsgBox.success(message);  
+    }else {
+      MsgBox.error(message);
+    }
+    
+  }
 
 interface IHttpPromiseWithAuthArg<T> extends angular.IHttpPromiseCallbackArg<T> {
   // headers
@@ -25,10 +53,11 @@ interface IHttpPromiseWithAuthArg<T> extends angular.IHttpPromiseCallbackArg<T> 
 
 class AuthInterceptor {
 
-  static $inject = ['$q', '$injector'];
-  constructor(q:angular.IQService, injector: angular.auto.IInjectorService) {
+  static $inject = ['$q', '$injector', '$stateParams'];
+  constructor(q:angular.IQService, injector: angular.auto.IInjectorService, stateParams: angular.ui.IStateParamsService) {
     _injector = injector;
     _q = q;
+    _stateParams = stateParams;
   }
 
   request(config: angular.IRequestConfig): angular.IRequestConfig | angular.IPromise<angular.IRequestConfig> {
@@ -42,14 +71,19 @@ class AuthInterceptor {
   }
 
   response(res: angular.IHttpPromiseCallbackArg<any>) {
-    if (res.status === 200 && _.startsWith(res.config.url,'/api')) {
-      var message = buildMessage(res);
-      if (res.headers()['content-type'] === 'application/json') {
-        MsgBox.success(message);
+    
+    if(_.startsWith(res.config.url,'/api')) {
+      console.log(res)  
+      var message = buildMessage(res, _stateParams);
+      let contentType = res.headers()['content-type'];      
+      if (_.contains(contentType, 'application/json')) {        
+        showNotification(res, message);
       }
     }
     return res || _q.when(res);
   }
+
+ 
 
   requestError(errorRequest:angular.IHttpPromiseCallbackArg<any>) {
     return _q.reject(errorRequest);

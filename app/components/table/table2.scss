@@ -63,6 +63,15 @@ $tableFontSize: 14px;
           border-color: $cell-border-color;
           font-size: $tableFontSize;
         }
+        
+        
+        .ax-table-td-more {
+          // max-width: 72px;
+          // width: 72px;
+          // padding: 16px;
+          padding-right: 40px;
+          text-align: right;
+        }
       }
     }
   }
