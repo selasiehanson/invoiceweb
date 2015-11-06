@@ -111,9 +111,6 @@ class InvoiceFormCtrl extends AppFormController{
 			console.log(res)
 		});		
 	}
-
-	
-			
 }
 
 export { InvoiceFormCtrl };

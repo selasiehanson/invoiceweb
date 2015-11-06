@@ -10,6 +10,10 @@ class Fetcher {
 	query(resource: string) {
 		return this.http.get(`/api/${resource}`);
 	}
+	
+	findOne(resource: string, id: number | string) {
+		return this.http.get(`/api/${resource}/ id`);
+	}
 			
 	remove(resource: string, id: number) {
 		return this.http.delete(`/api/${resource}/${id}`);
@@ -20,8 +24,7 @@ class Fetcher {
 			return this.http.put(`/api/${resource}/${args.id}`, args);	
 		}else {
 			return this.http.post(`/api/${resource}`, args);
-		}
-			
+		}			
 	}
 	
 }

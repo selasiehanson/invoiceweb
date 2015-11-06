@@ -12,9 +12,8 @@ let _q: angular.IQService;
 let _stateParams: angular.ui.IStateParamsService;
 
 
-function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, statParams: angular.ui.IStateParamsService) {
-  console.log(_stateParams['url']);
-  let model = inflection.titleize(inflection.singularize(_stateParams['url']));
+function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, stateParams: angular.ui.IStateParamsService) {
+  let model = inflection.titleize(inflection.singularize(stateParams['url']));
   if (_.contains([200, 201],res.status)) {
     if (res.data.message) return res.data.message;
     
@@ -26,10 +25,12 @@ function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, statParams: ang
       case "POST": 
         return `${model} created successfully.`;
       case 'GET':
-        if(_stateParams['id']) {
-          return `${model} with id ${_stateParams['id']} loaded successfully `;
+        if(stateParams['id']) {
+          return `${model} with id ${stateParams['id']} loaded successfully `;
         }else {
-          let modelP = inflection.titleize(inflection.pluralize(_stateParams['url']));
+          //todo: cache inflection for all models so lets say we have function that 
+          //when passed a model can give us all the pluralize, singulaize and humanized values  
+          let modelP = inflection.titleize(inflection.pluralize(stateParams['url']));
           return `${modelP} loaded successfully`;
         }
     }
@@ -47,10 +48,6 @@ function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, statParams: ang
     
   }
 
-interface IHttpPromiseWithAuthArg<T> extends angular.IHttpPromiseCallbackArg<T> {
-  // headers
-}
-
 class AuthInterceptor {
 
   static $inject = ['$q', '$injector', '$stateParams'];
@@ -65,15 +62,17 @@ class AuthInterceptor {
     var token = authToken.getT();
     //config.headers = config.headers || {};
     if (token) {
-      config.headers.Authorization = "Bearer " + token;
+      // config.headers.Authorization = "Bearer " + token;
+      config.headers['X-AUTH-TOKEN'] = token;
     }
     return config || _q.when(config);
   }
 
   response(res: angular.IHttpPromiseCallbackArg<any>) {
+    let excludedRoutes = ['/api/login', '/api/users/current', '/login', '/password_recovery'];
+    let url = res.config.url;
     
-    if(_.startsWith(res.config.url,'/api')) {
-      console.log(res)  
+    if(_.startsWith(url,'/api') && !_.contains(excludedRoutes,url) ) { 
       var message = buildMessage(res, _stateParams);
       let contentType = res.headers()['content-type'];      
       if (_.contains(contentType, 'application/json')) {        

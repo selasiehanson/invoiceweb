@@ -188,12 +188,16 @@ AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
 	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
 		
-	if(_.contains(excludedRoutes,next.url)) {
-		return
-	};
-    // if(!AuthToken.getT()) {
-    //     $location.path('/login');
-    // }
+		if(AuthToken.getT()){
+			$location.path('/');
+		}
+		
+		if(_.contains(excludedRoutes,next.url)) {
+			return
+		};
+		if(!AuthToken.getT()) {
+			$location.path('/login');
+		}
     });
 });
 

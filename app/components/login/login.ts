@@ -8,8 +8,12 @@ let rootScope: angular.IRootScopeService;
 let location: angular.ILocationService;
 
 interface IUser {
-	username: string;
-	password: string;
+  id?: number;
+  user?: string;
+	username?: string;
+	password?: string;
+  expires?: number;
+  roles?: string [];
 }
 
 class LoginCtrl {
@@ -40,11 +44,14 @@ class LoginCtrl {
   signin(){
     let data = this.user;
     console.log(data);
-    this.http.post('/api/auth/sign_in',{ user: data} ).then((response: angular.IHttpPromiseCallbackArg<any>) => {
+    this.http.post('/api/login', data ).then((response: angular.IHttpPromiseCallbackArg<any>) => {
     console.log(response);
-     if(response.status === 200 && response.data.token) {
-       authToken.setT(response.data.token);
-       rootScope.$broadcast(AuthEvents.loginSuccess, response.data);
+     if(response.status === 200) {
+       let token = response.headers("x-auth-token");
+       if(token){
+          authToken.setT(token);
+          this.fetchUser();
+       }       
       //this.scope.$emit('login:state', {user: true});
      } else if(response.status === 401) {
        rootScope.$broadcast(AuthEvents.notAuthorized);
@@ -52,6 +59,14 @@ class LoginCtrl {
       rootScope.$broadcast(AuthEvents.loginFailed);
      }
    });
+  }
+  
+  fetchUser() {
+    this.http.get('/api/users/current').then((response: angular.IHttpPromiseCallbackArg<IUser>) => {
+      console.log(response.data);
+      rootScope.$broadcast(AuthEvents.loginSuccess, response.data);  
+    });
+    
   }  
 }
 

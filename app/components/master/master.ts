@@ -8,7 +8,8 @@ import { AuthToken } from '../shared/auth-token';
 let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams } from '../shared/controller-interfaces';
-import { Fetcher } from '../../services/fetcher'
+import { Fetcher } from '../../services/fetcher';
+
 
 let http : angular.IHttpService;
 let client = Object;
@@ -23,7 +24,7 @@ interface INav {
 }
 
 interface IUser {
-	userName? : string;
+	username? : string;
 	firstName?: string;
 	lastName?: string;
 }
@@ -82,9 +83,11 @@ class MasterCtrl {
 
 		this.loggedIn = true;
 		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
-			if(args && args.user){
+			
+			if(args){
+				authToken.putObject('user', args);				
 				this.loggedIn = true;
-				this.user = args.user;
+				this.user = args.username;
 				this.state.go('app.dashboard');
 			}else {
 				this.loggedIn = false;
@@ -101,6 +104,8 @@ class MasterCtrl {
 				this.pageTitle = inflection.titleize(toStateParams.url);
 			}
 		});
+		
+		this.user = <IUser> authToken.getObject('user');
 		
 		// this.handleDelete();
 	}
