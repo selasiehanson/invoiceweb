@@ -187,11 +187,7 @@ app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationServ
 AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
 	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
-		
-		if(AuthToken.getT()){
-			$location.path('/');
-		}
-		
+
 		if(_.contains(excludedRoutes,next.url)) {
 			return
 		};

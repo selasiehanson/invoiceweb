@@ -24,7 +24,12 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
       	controller: 'LoginCtrl',
       	controllerAs: 'login'
 	})
-	
+	.state('/settings', {
+		url: '/settings',
+		template: require('../components/settings/setting.html'),
+		controller: 'SettingsController',
+		controllerAs: 'settings'
+	})
 	.state('app', {
 		url: '/:app',
 		template: require('../components/shared/main.html'),

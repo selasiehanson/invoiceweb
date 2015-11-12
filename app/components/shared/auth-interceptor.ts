@@ -39,14 +39,13 @@ function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, stateParams: an
   }
 }
 
- function showNotification(res: angular.IHttpPromiseCallbackArg<any>, message: string){
+function showNotification(res: angular.IHttpPromiseCallbackArg<any>, message: string){
     if(_.contains([200,201], res.status)){
       MsgBox.success(message);  
     }else {
       MsgBox.error(message);
-    }
-    
-  }
+    }    
+ }
 
 class AuthInterceptor {
 
@@ -82,15 +81,13 @@ class AuthInterceptor {
     return res || _q.when(res);
   }
 
- 
-
   requestError(errorRequest:angular.IHttpPromiseCallbackArg<any>) {
     return _q.reject(errorRequest);
   }
 
   responseError(response: angular.IHttpPromiseCallbackArg<any>) {
     // var authEvents = <AuthEvents>_injector.get('AuthEvents');
-    var matchesAuthenticatePath = response.config && response.config.url.match(new RegExp('/api/singin'));
+    var matchesAuthenticatePath = response.config && response.config.url.match(new RegExp('/api/login'));
     let HttpStatus : IHttpStatus = {
         401: AuthEvents.notAuthenticated,
         403: AuthEvents.notAuthorized,
@@ -106,6 +103,5 @@ class AuthInterceptor {
     return _q.reject(response);
   }
 }
-
 
 export { AuthInterceptor };

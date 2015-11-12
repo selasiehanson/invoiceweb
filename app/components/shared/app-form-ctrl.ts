@@ -64,10 +64,11 @@ class AppFormController {
   }
 
   save(){
-    if(this.form.$valid){            
+    console.log(this.form);
+    if(this.form.$valid){                  
         fetcher.save(`${this.model}`, this.record).then((res:any) => this.state.go('^'));             
     }else {
-      //todo: show errors
+      // todo: show errors
     }
   }
 

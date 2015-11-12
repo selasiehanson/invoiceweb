@@ -49,11 +49,16 @@ class InvoiceFormCtrl extends AppFormController{
 	recipients: Object[]
 	currentInvoice: IInvoice; 
 	currencies: ICurrency[]; 
+	invoiceUrl: string;
+	previewHtml: string = '';
+	showPreview = true;
 	
-	static $inject = ['$state', '$stateParams', 'Fetcher'];
-	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, _fetcher: Fetcher) {
+	static $inject = ['$state', '$stateParams', 'Fetcher', '$http'];
+	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
+		_fetcher: Fetcher, _http: angular.IHttpService) {
+		super(_state, _stateParams,_fetcher);	
 		fetcher = _fetcher;
-		super(_state, _stateParams,_fetcher);				
+		http = _http;						
 		
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
@@ -64,8 +69,9 @@ class InvoiceFormCtrl extends AppFormController{
 		
 		fetcher.query('recipients').then((response) => {
 			this.recipients = <IRecipient[]>response.data;
-		});		
+		});	
 		
+		this.invoiceUrl = '';			
 	}
 	
 	addItem(){
@@ -99,6 +105,14 @@ class InvoiceFormCtrl extends AppFormController{
 	
 	performRemoveItem(){
 		
+	}
+	
+	preview(){
+		let url = '/templates/invoices/preview';
+		http.get(url).then((response) =>{
+			this.previewHtml = <string>response.data;
+			this.showPreview = true;	
+		});
 	}
 	
 	save(){

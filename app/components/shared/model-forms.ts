@@ -1,4 +1,5 @@
 import {Clients} from './forms/client';
+import { Recipients } from './forms/recipient';
 import {Product} from './forms/product';
 import {Purchase} from './forms/purchase';
 import {ProductCategory} from './forms/product_category';
@@ -20,7 +21,8 @@ const Forms: IForm  = {
   suppliers: Supplier,
   companies: Company,
   jobs: Job,
-  invoices: Invoice
+  invoices: Invoice,
+  recipients: Recipients
 };
 
 export { Forms };
