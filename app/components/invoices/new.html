@@ -18,8 +18,8 @@
           border: 0px;
         }
         .invoice-preview {
-          font-size: 12px !important;
-          padding: 25px;
+          /*font-size: 12px !important;*/
+          padding: 0px 25px;
         }
 
         .invoice-preview table td {
@@ -78,8 +78,10 @@
                         <td> 11th Nov, 2015</td>
                     </tr>
                     <tr>
-                        <td>Amount Due</td>
-                        <td>$80,100.99</td>
+                        <td><b> Amount Due </b></td>
+                        <td>
+                          <b>{{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }}</b>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -122,15 +124,17 @@
           <div class="row">
             <div class="col-sm-3 pull-right">
               <div class="form-group">
-                <label class=""> Tax (%)</label>
+                <label class=""> Tax (%):</label>
                 <label class="pull-right"> {{ appForm.currentInvoice.tax }} </label>          
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-3 pull-right total-box">
-              <label for="">Total: </label> 
-              <label class="pull-right"> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.computeTotal() }}</label>
+              <label for=""> <b>Total: </b> </label> 
+              <label class="pull-right"> 
+                <b> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }} </b>
+              </label>
             </div>
           </div>
         </div>

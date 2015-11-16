@@ -122,6 +122,7 @@ class InvoiceFormCtrl extends AppFormController{
 		http.get(url).then((response) =>{
 			this.previewHtml = <string>response.data;
 			this.showPreview = true;	
+			this.currentInvoice.total = this.computeTotal();
 		});
 	}
 	
