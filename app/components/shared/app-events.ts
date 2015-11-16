@@ -11,4 +11,8 @@ let AuthEvents = {
   notAuthorized: 'auth:not-authorized'
 };
 
-export  { AuthEvents };
+
+let RecordEvents = {
+  recordLoaded:  'record:loaded'
+}
+export  { AuthEvents, RecordEvents };

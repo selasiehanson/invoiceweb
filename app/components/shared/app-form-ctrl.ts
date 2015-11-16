@@ -9,9 +9,12 @@ let _ = require('lodash');
 import { Validators } from './validators';
 import { IAppStateParams } from './controller-interfaces';
 import { Fetcher } from '../../services/fetcher';
+import { RecordEvents} from './app-events';
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;
+let rootSccope: angular.IRootScopeService;
+
 class AppFormController {
   
   record: any;  
@@ -25,15 +28,16 @@ class AppFormController {
   operation: string;
   handlerText: string;
     
-  static $inject = ['$state', '$stateParams', 'Fetcher'];
+  static $inject = ['$state', '$stateParams', 'Fetcher', '$rootScope'];
   constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
-    _fetcher: Fetcher){
+    _fetcher: Fetcher, _rootScope: angular.IRootScopeService){
     this.record = {};
     fetcher = _fetcher;
     this.state = _state;
     this.stateParams = _stateParams;
     let modelProps: ISchemaDefinition = Schema[this.stateParams.url];
     this.model = this.stateParams.url;
+    rootSccope = _rootScope;
     let viewProps = {
       defaultNew: true
     };
@@ -56,6 +60,7 @@ class AppFormController {
       this.handlerText = "Update";
       fetcher.query(`${this.model}/${this.stateParams.id}`).then((res: angular.IHttpPromiseCallbackArg<{}>) => {
         this.record = res.data;
+        rootSccope.$broadcast(RecordEvents.recordLoaded, this.record);
       });
     }else {
       this.operation = 'New';

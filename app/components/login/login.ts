@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 import { AuthToken } from '../shared/auth-token';
-import { AuthEvents } from '../shared/auth-events';
+import { AuthEvents } from '../shared/app-events';
 
 let authToken: AuthToken;
 let rootScope: angular.IRootScopeService;

@@ -48,18 +48,19 @@ interface IRecipient {
 class InvoiceFormCtrl extends AppFormController{
 	recipients: Object[]
 	currentInvoice: IInvoice; 
+	previewInvoice: IInvoice;
 	currencies: ICurrency[]; 
 	invoiceUrl: string;
 	previewHtml: string = '';
-	showPreview = true;
+	showPreview = false;
 	
-	static $inject = ['$state', '$stateParams', 'Fetcher', '$http'];
+	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope"];
 	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
-		_fetcher: Fetcher, _http: angular.IHttpService) {
-		super(_state, _stateParams,_fetcher);	
+		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService) {
+		super(_state, _stateParams,_fetcher, rootScope);	
 		fetcher = _fetcher;
 		http = _http;						
-		
+				
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
 		
@@ -71,7 +72,10 @@ class InvoiceFormCtrl extends AppFormController{
 			this.recipients = <IRecipient[]>response.data;
 		});	
 		
-		this.invoiceUrl = '';			
+		this.invoiceUrl = '';	
+		rootScope.$on('record:loaded', (ev, invoice) => {
+			this.currentInvoice  = invoice;
+		});				
 	}
 	
 	addItem(){
@@ -88,6 +92,10 @@ class InvoiceFormCtrl extends AppFormController{
 	removeItem(index: number){
 		this.currentInvoice.invoiceItems.splice(index, 1);
 	}	
+	
+	endPreview(){
+		this.showPreview = false;		
+	}
 	
 	computeTotal(){
 		let total = this.currentInvoice.invoiceItems
@@ -108,6 +116,8 @@ class InvoiceFormCtrl extends AppFormController{
 	}
 	
 	preview(){
+		this.showPreview = true;
+		return
 		let url = '/templates/invoices/preview';
 		http.get(url).then((response) =>{
 			this.previewHtml = <string>response.data;

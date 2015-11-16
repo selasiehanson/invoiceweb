@@ -128,7 +128,8 @@ $primaryFontColor: #536E7A;
 
   .app-form {
     margin-bottom: 32px;
-
+    margin-top: 20px;
+    
     .form-header {
       background: $headerBackground;
       font-weight: 400;
@@ -299,4 +300,10 @@ input[type=email], input[type=number],
 
 .summing-box {
   margin-top: 70px;
+}
+
+.end-preview-button {
+    position: absolute;
+    right: 15px;
+    top: 10px;
 }

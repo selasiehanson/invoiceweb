@@ -1,38 +1,61 @@
-
+<div class="clearfix" ng-show="appForm.showPreview">
+  <a class="btn btn-danger pull-right end-preview-button" href="" ng-click="appForm.endPreview()">    
+   <i class="fa fa-close"></i> End Preview
+   </a>
+</div>
 <div class="preview row" ng-show="appForm.showPreview">
     <style>
 
         .mid-box {
-        width: 350px;
+          width: 350px;
         }
         .lil-box {
-        width: 250px;
+          width: 250px;
+        }
+        
+        .mid-box table > tbody > tr > td, .lil-box table > tbody > tr > td {
+          padding: 0px;
+          border: 0px;
         }
         .invoice-preview {
-        font-size: 12px !important;
+          font-size: 12px !important;
+          padding: 25px;
         }
 
         .invoice-preview table td {
-        font-size: 12px;
+          font-size: 12px;
+        }
+        
+        .invoice-preview .table > thead > tr > th {
+          border-width: 1px; 
         }
 
         .invoice-preview .invoice-title {
         /*color: aqua;*/
+        }
+        
+        .origin-destination-marker {
+          border-bottom: 1px solid #dedede;
+          /*font-weight: bold;*/
+          width: 100%; 
+        }
+        .invoice-preview .invoice-items-container {
+          margin-top: 30px;
         }
     </style>
     <div class="invoice-preview">
 
         <div class="clearfix">
             <div class="mid-box pull-left">
-                <h1>Logo</h1>
-                <h1>Company Name</h1>
+                <h1>Name / Logo</h1>
 
             </div>
             <div class="lil-box pull-right">
                 <h2 class="invoice-title">Service Invoice</h2>
                 <div class="">
-                    <table class="table table-bordered">
-                        <tr><td> Company Name </td></tr>
+                    <label for="" class="origin-destination-marker"> From </label>
+                    <table class="table">
+                        <tr><td> <b>Company Name</b> </td></tr>
                         <tr><td> company address</td></tr>
                         <tr><td> company-email@mail.com</td></tr>
                         <tr><td> +122 898 782 9098</td></tr>
@@ -43,7 +66,8 @@
 
         <div class="clearfix">
             <div class="mid-box pull-left">
-                <table class="table table-bordered">
+                <label for="" class="origin-destination-marker">Summary</label>
+                <table class="table">
                     <tbody>
                     <tr>
                         <td>Invoice No:</td>
@@ -61,9 +85,10 @@
                 </table>
             </div>
             <div class="customer-details lil-box pull-right">
-                <table class="table table-bordered">
+                <table class="table">
+                  <label for="" class="origin-destination-marker">To</label>
                     <tbody>
-                        <tr><td> Bill Smith and Sons </td></tr>
+                        <tr><td> <b>Bill Smith and Sons</b> </td></tr>
                         <tr><td> 123 555 some cool street</td></tr>
                         <tr><td> billsmith@smithandsons.com</td></tr>
                         <tr><td> +122 898 782 9098</td></tr>
@@ -71,7 +96,7 @@
                 </table>
             </div>
         </div>
-        <div>
+        <div class="invoice-items-container">
             <table class="table invoice-items table-striped">
                 <thead>
                     <tr>
@@ -79,23 +104,35 @@
                         <th>Item</th>
                         <th class="tright">Quantity</th>
                         <th class="tright">Unit cost</th>
-                        <th class="tright price">Price</th>
-                        <th class="ax-grid-action-1"></th>
+                        <th class="tright price">Price</th>                        
                     </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
-                    <td class="down-this-col"> {{ $index + 1 }}.</td>
-                    <td> <input type="text" class="form-control" ng-model="item.description" /> </td>
-                    <td> <input type="number" class="form-control tright" ng-model="item.quantity" /></td>
-                    <td> <input type="number" class="form-control tright" ng-model="item.unitCost" /></td>
-                    <td class="down-this-col tright"> {{ appForm.computeLineTotal(item.quantity, item.unitCost) }} </td>
-                    <td>
-                        <a href=""> <i class="fa fa-trash invoice-item-icon" ng-click="appForm.removeItem($index)"></i></a>
-                    </td>
+                    <td> {{ $index + 1 }}. </td>
+                    <td> {{ item.description }} </td>
+                    <td class="tright"> {{ item.quantity }} </td>
+                    <td class="tright"> {{ item.unitCost }} </td>
+                    <td class="tright"> {{ appForm.computeLineTotal(item.quantity, item.unitCost) }} </td>                  
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="summing-box">
+          <div class="row">
+            <div class="col-sm-3 pull-right">
+              <div class="form-group">
+                <label class=""> Tax (%)</label>
+                <label class="pull-right"> {{ appForm.currentInvoice.tax }} </label>          
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3 pull-right total-box">
+              <label for="">Total: </label> 
+              <label class="pull-right"> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.computeTotal() }}</label>
+            </div>
+          </div>
         </div>
     </div>
     <div ng-bind-html="appForm.previewHtml"></div>
@@ -147,11 +184,7 @@
         </div>
       </div>      
   </form>
-  <div style="margin:10px 0px">
-    <a href="" class="btn btn-info btn-sm" ng-click="appForm.addItem()"> 
-      <i class="fa fa-plus"></i> Add Item</a>
-    <br>
-  </div>
+  
   <div class="ax-table">    
     <table class="table invoice-items table-striped">
       <thead>
@@ -177,6 +210,11 @@
         </tr>
       </tbody>
     </table>    
+  </div>
+  <div style="margin:10px 0px">
+    <a href="" class="btn btn-info btn-sm" ng-click="appForm.addItem()"> 
+      <i class="fa fa-plus"></i> Add Item</a>
+    <br>
   </div>
   <div class="summing-box">
     <div class="row">

@@ -2,7 +2,7 @@
 
 import { MsgBox } from './msg-box';
 import { AuthToken } from './auth-token';
-import { AuthEvents } from './auth-events';
+import { AuthEvents } from './app-events';
 import { IHttpStatus } from './controller-interfaces';
 let _ = require('lodash');
 let inflection = require('inflection');

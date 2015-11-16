@@ -7,11 +7,12 @@
 
 .card .card-header {
   position: relative;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 @media screen and (min-width: 768px) {
   .card .card-header:not(.ch-alt) {
-    padding: 23px 26px;
+    padding: 20px 26px;
   }
 }
 

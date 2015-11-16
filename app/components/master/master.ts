@@ -3,7 +3,7 @@
 //import { AuthEvents } from '../components/shared/auth_events';
 // import { AuthToken }  from '../components/shared/auth_token';
 
-import { AuthEvents } from '../shared/auth-events';
+import { AuthEvents } from '../shared/app-events';
 import { AuthToken } from '../shared/auth-token';
 let _ = require('lodash');
 let inflection = require('inflection');
@@ -56,6 +56,11 @@ class MasterCtrl {
 				name: 'home',
 				icon: 'zmdi-home',
 				route: '/app/dashboard'
+			},
+			{
+				name: 'Quotes',
+				icon: 'zmdi-list',
+				route: "/app/quotes"
 			},
 			{
 				name: 'Invoices',
