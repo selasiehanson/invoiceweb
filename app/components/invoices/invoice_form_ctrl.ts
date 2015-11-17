@@ -19,7 +19,8 @@ interface InvoiceItem {
 }
 
 interface IInvoice {
-	invoiceDate?: Date
+	invoiceDate?: Date,
+	dueDate?: Date
 	recipient?: IRecipient
 	currency?: ICurrency
 	recipientId?: number
@@ -63,19 +64,23 @@ class InvoiceFormCtrl extends AppFormController{
 				
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
-		
-		fetcher.query('currencies').then((response) => {
-			this.currencies = <ICurrency[]>response.data;
-		});
-		
-		fetcher.query('recipients').then((response) => {
-			this.recipients = <IRecipient[]>response.data;
-		});	
+				
 		
 		this.invoiceUrl = '';	
 		rootScope.$on('record:loaded', (ev, invoice) => {
 			this.currentInvoice  = invoice;
-		});				
+			fetcher.query('currencies').then((response) => {
+				this.currencies = <ICurrency[]>response.data;
+				this.currentInvoice.currency =  _.find(this.currencies, ((x: ICurrency) => x.id === this.currentInvoice.currencyId));			
+			});
+			
+			fetcher.query('recipients').then((response) => {
+				this.recipients = <IRecipient[]>response.data;
+				this.currentInvoice.recipient = _.find(this.recipients,((x: IRecipient) => x.id === this.currentInvoice.recipientId));
+			});
+		});	
+		
+					
 	}
 	
 	addItem(){
@@ -90,7 +95,16 @@ class InvoiceFormCtrl extends AppFormController{
 	}	
 	
 	removeItem(index: number){
-		this.currentInvoice.invoiceItems.splice(index, 1);
+		let toBeRmoved = this.currentInvoice.invoiceItems[index]
+		if(toBeRmoved.id){
+			//remove from server side first
+			fetcher.remove('invoice-items', toBeRmoved.id).then((res) => {
+				this.currentInvoice.invoiceItems.splice(index, 1);	
+			});
+		}else {
+			this.currentInvoice.invoiceItems.splice(index, 1);
+		}
+		
 	}	
 	
 	endPreview(){
@@ -130,8 +144,8 @@ class InvoiceFormCtrl extends AppFormController{
 		this.currentInvoice.recipientId = this.currentInvoice.recipient.id;
 		this.currentInvoice.currencyId = this.currentInvoice.currency.id;
 		let data = angular.copy(this.currentInvoice)
-		delete data.currency
-		delete data.recipient
+		delete data.currency;
+		delete data.recipient;		
 		fetcher.save('invoices',data).then((res) => {
 			console.log(res)
 		});		

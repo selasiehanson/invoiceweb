@@ -1,5 +1,10 @@
-<div class="clearfix" ng-show="appForm.showPreview">
-  <a class="btn btn-danger pull-right end-preview-button" href="" ng-click="appForm.endPreview()">    
+<div class="clearfix" ng-hide="appForm.showPreview">
+  <a class="btn btn-default pull-right preview-button" href="" ng-click="appForm.preview()"> 
+    <i class="fa fa-eye"></i> Preview Invoice
+   </a>
+</div>
+<div class="clearfix" ng-show="appForm.showPreview">  
+  <a class="btn btn-danger pull-right preview-button" href="" ng-click="appForm.endPreview()">    
    <i class="fa fa-close"></i> End Preview
    </a>
 </div>
@@ -75,7 +80,7 @@
                     </tr>
                     <tr>
                         <td>Date</td>
-                        <td> 11th Nov, 2015</td>
+                        <td> {{ appForm.currentInvoice.invoiceDate }} -  {{ appForm.currentInvoice.dueDate }} </td>
                     </tr>
                     <tr>
                         <td><b> Amount Due </b></td>
@@ -141,21 +146,25 @@
     </div>
     <div ng-bind-html="appForm.previewHtml"></div>
 </div>
+<!--Main invoice form-->
 <div class="new-invoice clearfix" ng-hide="appForm.showPreview">  
   <form class="row" >
       <div class="col-sm-4">
         <div class="form-group">
           <label> Recipient </label>
-          <ui-select ng-model="appForm.currentInvoice.recipient" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
-            <ui-select-match placeholder="Select a recipient">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="person in appForm.recipients">
-              <div ng-bind-html="person.name | highlight: $select.search"></div>
-              <small>
-                Email: {{ person.email }}
-                Phone: <span ng-bind-html="''+person.phoneNumber | highlight: $select.search"></span>
-              </small>
-            </ui-select-choices>
-          </ui-select>
+          <ui-select ng-model="appForm.currentInvoice.recipient" 
+              theme="bootstrap" 
+              ng-disabled="disabled" style="min-width: 300px;">
+              <ui-select-match placeholder="Select a recipient">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices 
+                repeat="person in appForm.recipients">
+                <div ng-bind-html="person.name | highlight: $select.search"></div>
+                <small>
+                  Email: {{ person.email }}
+                  Phone: <span ng-bind-html="''+person.phoneNumber | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+           </ui-select>
         </div>
       </div>
       <div class="col-sm-4">
@@ -174,10 +183,23 @@
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-2">
         <div class="form-group">
           <label> Invoice Date </label>
           <input ng-model="appForm.currentInvoice.invoiceDate"
+            data-provide="datepicker"
+            data-date-format="yyyy-mm-dd"
+            data-date-enable-on-readonly="false"
+            data-date-calendar-weeks="true"
+            data-date-today-btn="true"
+            data-date-autoclose="true"
+            class="form-control">
+        </div>
+      </div>      
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label> Due Date </label>
+          <input ng-model="appForm.currentInvoice.dueDate"
             data-provide="datepicker"
             data-date-format="yyyy-mm-dd"
             data-date-enable-on-readonly="false"
@@ -236,11 +258,10 @@
       </div>
     </div>
   </div>
-  <div>
-    <button class="btn btn-warning" ng-click="appForm.preview()"> Preview </button>
+  <div>    
     <div class="form-actions mb-20 pull-right">    
       <button class="btn btn-default" ng-click="appForm.cancel()"> Cancel </button>    
-      <button class="btn btn-success" ng-click="appForm.save()"> Create Invoice </button>
+      <button class="btn btn-success" ng-click="appForm.save()"> {{ appForm.handlerText }} {{ appIndex.titleSingular }}  </button>
     </div>
   </div>
 </div>
