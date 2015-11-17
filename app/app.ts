@@ -1,7 +1,5 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import { PeopleCtrl } from "./controllers/people";
-import { UserService } from "./services/people";
 import { Fetcher } from './services/fetcher';
 import { Routes } from "./conf/routes";
 
@@ -22,6 +20,7 @@ import { Card } from './components/card/card';
 import { AxForm } from './components/forms/form';
 import { CustomElement} from './components/forms/custom_elements';
 import { MsgBox } from './components/shared/msg-box';
+import { AxBindHtmlCompile } from './components/directives/bindHtmlCompile';
 
 var app = angular.module("sample", [
     'ui.router',
@@ -33,13 +32,11 @@ var app = angular.module("sample", [
 	'angular-loading-bar'
 ]);
 
-app.service("app.services.UserService", UserService);
 app.service("RouteFinder", RouteFinder);
 app.service("AuthToken", AuthToken);
 app.service("MsgBox", MsgBox);
 app.service('AuthInterceptor', AuthInterceptor);
 app.service('Fetcher',Fetcher);
-app.controller("PeopleController", PeopleCtrl);
 app.controller("AppIndexController", AppIndexController);
 app.controller("AppFormController", AppFormController);
 app.controller("LoginCtrl", LoginCtrl);
@@ -50,6 +47,7 @@ app.controller('MasterCtrl', MasterCtrl);
 app.directive('axBlockHeader', () => new BlockHeader());
 app.directive('axCard', () =>  new Card() );
 app.directive('axForm', AxForm );
+app.directive('bindHtmlCompile', AxBindHtmlCompile);
 
 interface ITableScope extends angular.IScope{
     headers: any,

@@ -27,4 +27,4 @@ class Card {
 
 Card.$inject = [];
 
-export { Card};
+export { Card };

@@ -8,6 +8,106 @@ let _ = require('lodash');
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;
+let sce: angular.ISCEService;
+let templateCache: angular.ITemplateCacheService;
+
+let templateHtml = `
+<div class="invoice-preview">
+
+    <div class="clearfix">
+        <div class="mid-box pull-left">
+            <h1>Name / Logo</h1>
+        </div>
+        <div class="lil-box pull-right">
+            <h2 class="invoice-title">Service Invoice</h2>
+            <div class="">
+                <label for="" class="origin-destination-marker"> From </label>
+                <table class="table">
+                    <tr><td> <b>Company Name</b> </td></tr>
+                    <tr><td> company address</td></tr>
+                    <tr><td> company-email@mail.com</td></tr>
+                    <tr><td> +122 898 782 9098</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix">
+        <div class="mid-box pull-left">
+            <label for="" class="origin-destination-marker">Summary</label>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>Invoice No:</td>
+                    <td> SNDLBZ1237888 </td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td> {{ appForm.currentInvoice.invoiceDate }} -  {{ appForm.currentInvoice.dueDate }} </td>
+                </tr>
+                <tr>
+                    <td><b> Amount Due </b></td>
+                    <td>
+                        <b>{{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }}</b>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="customer-details lil-box pull-right">
+            <table class="table">
+                <label for="" class="origin-destination-marker">To</label>
+                <tbody>
+                <tr><td> <b> {{ appForm.currentInvoice.recipient.name }}</b> </td></tr>
+                <tr><td> {{ appForm.currentInvoice.recipient.address }}</td></tr>
+                <tr><td> {{ appForm.currentInvoice.recipient.email }}</td></tr>
+                <tr><td> {{ appForm.currentInvoice.recipient.phoneNumber }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="invoice-items-container">
+        <table class="table invoice-items table-striped">
+            <thead>
+            <tr>
+                <th class="ax-grid-action-1"></th>
+                <th>Item</th>
+                <th class="tright">Quantity</th>
+                <th class="tright">Unit cost</th>
+                <th class="tright price">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
+                <td> {{ $index + 1 }}. </td>
+                <td> {{ item.description }} </td>
+                <td class="tright"> {{ item.quantity }} </td>
+                <td class="tright"> {{ item.unitCost }} </td>
+                <td class="tright"> {{ appForm.computeLineTotal(item.quantity, item.unitCost) }} </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="summing-box">
+        <div class="row">
+            <div class="col-sm-3 pull-right">
+                <div class="form-group">
+                    <label class=""> Tax (%):</label>
+                    <label class="pull-right"> {{ appForm.currentInvoice.tax }} </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 pull-right total-box">
+                <label for=""> <b>Total: </b> </label>
+                <label class="pull-right">
+                    <b> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }} </b>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+`;
 
 interface InvoiceItem {
 	id?: number
@@ -55,12 +155,15 @@ class InvoiceFormCtrl extends AppFormController{
 	previewHtml: string = '';
 	showPreview = false;
 	
-	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope"];
+	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope" , '$sce', "$templateCache"];
 	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
-		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService) {
+		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService, _sce: angular.ISCEService, _templateCache : angular.ITemplateCacheService) {
+			
 		super(_state, _stateParams,_fetcher, rootScope);	
 		fetcher = _fetcher;
 		http = _http;						
+		sce = _sce;
+		templateCache = _templateCache;
 				
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
@@ -89,7 +192,8 @@ class InvoiceFormCtrl extends AppFormController{
 			});
 		});	
 		
-					
+		// this.previewHtml = templateHtml;
+		// this.previewHtml = sce.trustAsHtml(this.previewHtml);	
 	}
 	
 	addItem(){
@@ -139,11 +243,12 @@ class InvoiceFormCtrl extends AppFormController{
 	}
 	
 	preview(){
-		this.showPreview = true;
-		return
+		// this.showPreview = true;		
+		// return;
+		
 		let url = '/templates/invoices/preview';
-		http.get(url).then((response) =>{
-			this.previewHtml = <string>response.data;
+		http.get(url, {cache: templateCache}).then((response) =>{
+			this.previewHtml = <string>response.data;						
 			this.showPreview = true;	
 			this.currentInvoice.total = this.computeTotal();
 		});
