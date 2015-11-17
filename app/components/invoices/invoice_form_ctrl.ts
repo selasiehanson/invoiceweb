@@ -64,7 +64,16 @@ class InvoiceFormCtrl extends AppFormController{
 				
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
-				
+		
+		if(!this.stateParams.id){
+			fetcher.query('currencies').then((response) => {
+				this.currencies = <ICurrency[]>response.data;
+			});
+			
+			fetcher.query('recipients').then((response) => {
+				this.recipients = <IRecipient[]>response.data;
+			});
+		}		
 		
 		this.invoiceUrl = '';	
 		rootScope.$on('record:loaded', (ev, invoice) => {

@@ -28,8 +28,8 @@ const Schema: ISchema = {
 			{ name: "Currency", field: 'currencyName' },
 			{ name: 'Amount', field: 'total' },			
 			{ name: 'Tax', field: 'tax' },
-			{ name: 'Date', field: 'invoiceDate' },
-			{ name: 'Due Date', field: 'dueDate'}
+			{ name: 'Invoiced on', field: 'invoiceDate' },
+			{ name: 'Valid until', field: 'dueDate'}
 		],
 		views: {
 			defaultNew: false

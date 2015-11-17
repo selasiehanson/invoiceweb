@@ -95,10 +95,10 @@
                 <table class="table">
                   <label for="" class="origin-destination-marker">To</label>
                     <tbody>
-                        <tr><td> <b>Bill Smith and Sons</b> </td></tr>
-                        <tr><td> 123 555 some cool street</td></tr>
-                        <tr><td> billsmith@smithandsons.com</td></tr>
-                        <tr><td> +122 898 782 9098</td></tr>
+                        <tr><td> <b> {{ appForm.currentInvoice.recipient.name }}</b> </td></tr>
+                        <tr><td> {{ appForm.currentInvoice.recipient.address }}</td></tr>
+                        <tr><td> {{ appForm.currentInvoice.recipient.email }}</td></tr>
+                        <tr><td> {{ appForm.currentInvoice.recipient.phoneNumber }}</td></tr>
                     </tbody>
                 </table>
             </div>
