@@ -13,6 +13,8 @@ import { MasterCtrl } from './components/master/master';
 import { AppIndexController } from './components/shared/app-index-ctrl';
 import { AppFormController } from './components/shared/app-form-ctrl';
 import { InvoiceFormCtrl } from './components/invoices/invoice_form_ctrl'
+import { SettingsController }  from  './components/settings/settings'
+
 
 //components
 import { BlockHeader } from './components/block-header/block-header';
@@ -41,6 +43,7 @@ app.controller("AppIndexController", AppIndexController);
 app.controller("AppFormController", AppFormController);
 app.controller("LoginCtrl", LoginCtrl);
 app.controller("InvoiceFormCtrl", InvoiceFormCtrl);
+app.controller("SettingsController", SettingsController);
 
 app.controller('MasterCtrl', MasterCtrl);
 //directives

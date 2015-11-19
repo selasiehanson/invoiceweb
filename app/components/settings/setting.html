@@ -1,0 +1,57 @@
+<ax-block-header title="Settings"></ax-block-header>
+<div class="settings">
+	<ax-card title="">
+
+	<div class="row">
+		<div class="col-xs-2">
+			<div class="page-higlights"> <label class="label label-info">Profile</label> </div>			
+		</div>
+		<div class="col-xs-10">
+			<form name="settings.profileForm" novalidate ng-submit="settings.updateProfile()">
+				<formly-form model="settings.profileRecord" fields="settings.profileFields" form="settings.profileForm">
+				<div class="form-actions mb-20 pull-right">
+					<button type="submit" class="btn btn-success"> Update Profile </button>
+				</div>
+				</formly-form>
+			</form>
+		</div>
+	</div>				
+			
+	<div class="row">
+		<div class="col-xs-2"> 
+			<div class="page-higlights"> <label class="label label-info">Company Details</label> </div>
+		</div>
+		<div class="col-xs-10">
+			<form name="settings.companyForm" novalidate ng-submit="settings.updateCompanyInfo()">
+				<formly-form model="settings.companyRecord" fields="settings.companyFields" form="settings.companyForm">
+				<div class="form-actions mb-20 pull-right">
+					<button type="submit" class="btn btn-success"> Update Company Details </button>
+				</div>
+				</formly-form>
+			</form>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col-sm-3"> 
+			<div class="page-higlights"> <label class="label label-info">Company Logo</label> </div>
+		</div>
+		<div class="col-xs-9">
+			<div class="clearfix">
+				<div class="well image-box  pull-right"></div>
+			</div>
+			<div class="clearfix">
+				<div class="form-actions mb-20 pull-right">
+					<button class="btn btn-success">Upload Logo</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col-sm-3"> 
+			<div class="page-higlights"> <label class="label label-info">Tax Registration</label> </div>
+		</div>
+		<div class="col-sm-9"></div>
+	</div>					
+</ax-card>
+</div>
+

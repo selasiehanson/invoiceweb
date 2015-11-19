@@ -11,104 +11,6 @@ let fetcher: Fetcher;
 let sce: angular.ISCEService;
 let templateCache: angular.ITemplateCacheService;
 
-let templateHtml = `
-<div class="invoice-preview">
-
-    <div class="clearfix">
-        <div class="mid-box pull-left">
-            <h1>Name / Logo</h1>
-        </div>
-        <div class="lil-box pull-right">
-            <h2 class="invoice-title">Service Invoice</h2>
-            <div class="">
-                <label for="" class="origin-destination-marker"> From </label>
-                <table class="table">
-                    <tr><td> <b>Company Name</b> </td></tr>
-                    <tr><td> company address</td></tr>
-                    <tr><td> company-email@mail.com</td></tr>
-                    <tr><td> +122 898 782 9098</td></tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="clearfix">
-        <div class="mid-box pull-left">
-            <label for="" class="origin-destination-marker">Summary</label>
-            <table class="table">
-                <tbody>
-                <tr>
-                    <td>Invoice No:</td>
-                    <td> SNDLBZ1237888 </td>
-                </tr>
-                <tr>
-                    <td>Date</td>
-                    <td> {{ appForm.currentInvoice.invoiceDate }} -  {{ appForm.currentInvoice.dueDate }} </td>
-                </tr>
-                <tr>
-                    <td><b> Amount Due </b></td>
-                    <td>
-                        <b>{{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }}</b>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="customer-details lil-box pull-right">
-            <table class="table">
-                <label for="" class="origin-destination-marker">To</label>
-                <tbody>
-                <tr><td> <b> {{ appForm.currentInvoice.recipient.name }}</b> </td></tr>
-                <tr><td> {{ appForm.currentInvoice.recipient.address }}</td></tr>
-                <tr><td> {{ appForm.currentInvoice.recipient.email }}</td></tr>
-                <tr><td> {{ appForm.currentInvoice.recipient.phoneNumber }}</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="invoice-items-container">
-        <table class="table invoice-items table-striped">
-            <thead>
-            <tr>
-                <th class="ax-grid-action-1"></th>
-                <th>Item</th>
-                <th class="tright">Quantity</th>
-                <th class="tright">Unit cost</th>
-                <th class="tright price">Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in appForm.currentInvoice.invoiceItems">
-                <td> {{ $index + 1 }}. </td>
-                <td> {{ item.description }} </td>
-                <td class="tright"> {{ item.quantity }} </td>
-                <td class="tright"> {{ item.unitCost }} </td>
-                <td class="tright"> {{ appForm.computeLineTotal(item.quantity, item.unitCost) }} </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="summing-box">
-        <div class="row">
-            <div class="col-sm-3 pull-right">
-                <div class="form-group">
-                    <label class=""> Tax (%):</label>
-                    <label class="pull-right"> {{ appForm.currentInvoice.tax }} </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3 pull-right total-box">
-                <label for=""> <b>Total: </b> </label>
-                <label class="pull-right">
-                    <b> {{ appForm.currentInvoice.currency.symbol }} {{ appForm.currentInvoice.total }} </b>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
-`;
-
 interface InvoiceItem {
 	id?: number
 	name?: string
@@ -121,9 +23,9 @@ interface InvoiceItem {
 interface IInvoice {
 	invoiceDate?: Date,
 	dueDate?: Date
-	recipient?: IRecipient
+	client?: IClient
 	currency?: ICurrency
-	recipientId?: number
+	clientId?: number
 	currencyId?: number
 	tax?: number
 	total?: number | string
@@ -138,7 +40,7 @@ interface  ICurrency{
 	id: number
 }
 
-interface IRecipient {
+interface IClient {
 	id: number;
 	name: string
 	email: string
@@ -147,7 +49,7 @@ interface IRecipient {
 }
 
 class InvoiceFormCtrl extends AppFormController{
-	recipients: Object[]
+	clients: Object[]
 	currentInvoice: IInvoice; 
 	previewInvoice: IInvoice;
 	currencies: ICurrency[]; 
@@ -169,31 +71,31 @@ class InvoiceFormCtrl extends AppFormController{
 		this.currentInvoice.invoiceItems = [];
 		
 		if(!this.stateParams.id){
-			fetcher.query('currencies').then((response) => {
-				this.currencies = <ICurrency[]>response.data;
-			});
-			
-			fetcher.query('recipients').then((response) => {
-				this.recipients = <IRecipient[]>response.data;
-			});
+			this.fetchLookupFields(false);
 		}		
 		
 		this.invoiceUrl = '';	
 		rootScope.$on('record:loaded', (ev, invoice) => {
 			this.currentInvoice  = invoice;
-			fetcher.query('currencies').then((response) => {
-				this.currencies = <ICurrency[]>response.data;
-				this.currentInvoice.currency =  _.find(this.currencies, ((x: ICurrency) => x.id === this.currentInvoice.currencyId));			
-			});
-			
-			fetcher.query('recipients').then((response) => {
-				this.recipients = <IRecipient[]>response.data;
-				this.currentInvoice.recipient = _.find(this.recipients,((x: IRecipient) => x.id === this.currentInvoice.recipientId));
-			});
-		});	
+			this.fetchLookupFields(true);
+		});		
+	}
+	
+	fetchLookupFields(isRecordLoaded: boolean){
+		fetcher.query('currencies').then((response) => {
+			this.currencies = <ICurrency[]>response.data;
+			if(isRecordLoaded){
+				this.currentInvoice.currency =  _.find(this.currencies, ((x: ICurrency) => x.id === this.currentInvoice.currencyId));	
+			}
+						
+		});
 		
-		// this.previewHtml = templateHtml;
-		// this.previewHtml = sce.trustAsHtml(this.previewHtml);	
+		fetcher.query('clients').then((response) => {
+			this.clients = <IClient[]>response.data;
+			if(isRecordLoaded){
+				this.currentInvoice.client = _.find(this.clients,((x: IClient) => x.id === this.currentInvoice.clientId));
+			}
+		});
 	}
 	
 	addItem(){
@@ -255,11 +157,11 @@ class InvoiceFormCtrl extends AppFormController{
 	}
 	
 	save(){
-		this.currentInvoice.recipientId = this.currentInvoice.recipient.id;
+		this.currentInvoice.clientId = this.currentInvoice.client.id;
 		this.currentInvoice.currencyId = this.currentInvoice.currency.id;
-		let data = angular.copy(this.currentInvoice)
+		let data = angular.copy(this.currentInvoice);
 		delete data.currency;
-		delete data.recipient;		
+		delete data.client;		
 		fetcher.save('invoices',data).then((res) => {
 			console.log(res)
 		});		

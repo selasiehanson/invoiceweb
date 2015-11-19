@@ -1,6 +1,8 @@
+<!--place holder for child view to be injected. typicically new/edit views-->
 <ui-view></ui-view>
 
 <ax-block-header title="{{ ap.pageTitle }}"></ax-block-header>
+<!--using the default view-->
 <ax-card title="" ng-if="!appIndex.templateUrl">
   <!--<div class="card-left-padding">
     <a class="action-new" href="#/app/{{ appIndex.model }}/new"> Add </a>
@@ -22,6 +24,7 @@
   </nav>
 </ax-card>
 
+<!--bringing in your own view-->
 <ax-card title="" ng-if="appIndex.templateUrl">
   <div ng-include src="appIndex.templateUrl"></div>
 </ax-card>

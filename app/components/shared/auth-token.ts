@@ -32,6 +32,10 @@ class AuthToken implements IAuthToken{
   destroyT(): void {
     localStorage.removeItem(tokenName);
   }
+  
+  destroyAll(): void {
+    localStorage.clear();
+  }
 }
 
 AuthToken.$inject = [];

@@ -29,12 +29,11 @@ $primaryFontColor: #536E7A;
     z-index: 0;
   }
 
-  body{
+  body {
     color: #667;
     font-family: roboto ;
     font-size: 13px;
     background-color: #EDECEC;
-    // padding-top: 56px;
     
     .login-top-bar {
       height: 5px;
@@ -307,4 +306,11 @@ input[type=email], input[type=number],
     position: absolute;
     right: 15px;
     top: 10px;
+}
+
+.page-higlights {
+  margin: 10px 0px 25px;
+  label {
+    padding: 5px 7px;
+  }
 }

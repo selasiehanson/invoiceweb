@@ -9,6 +9,7 @@ import {Company} from './forms/company';
 import {Warehouse} from './forms/warehouse';
 import {Invoice } from './forms/invoice';
 import { Job }  from './forms/job';
+import { SettingsProfile, SettingsCompanyDetails } from './forms/settings'
 import { IForm, IExtendFormlyObject } from './form-interfaces';
 
 
@@ -22,7 +23,8 @@ const Forms: IForm  = {
   companies: Company,
   jobs: Job,
   invoices: Invoice,
-  recipients: Recipients
+  settingsProfile: SettingsProfile,
+  settingsCompany: SettingsCompanyDetails
 };
 
 export { Forms };

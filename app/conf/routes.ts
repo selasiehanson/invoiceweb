@@ -30,13 +30,7 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 		template:  require('../components/login/password_recovery.html'),
       	controller: 'LoginCtrl',
       	controllerAs: 'login'
-	})
-	.state('/settings', {
-		url: '/settings',
-		template: require('../components/settings/setting.html'),
-		controller: 'SettingsController',
-		controllerAs: 'settings'
-	})
+	})	
 	.state('app', {
 		url: '/:app',
 		template: require('../components/shared/main.html'),
@@ -44,6 +38,12 @@ let Routes = ($stateProvider: ng.ui.IStateProvider,
 	.state('app.dashboard', {
 		url: 'app/dashboard',
 		template: require('../components/dashboard/list.html')
+	})
+	.state('app.settings', {
+		url: 'app/settings',
+		template: require('../components/settings/setting.html'),
+		controller: 'SettingsController',
+		controllerAs: 'settings'
 	})
     .state('app.index', {
 		url: '/:url',

@@ -8,61 +8,22 @@
    <i class="fa fa-close"></i> End Preview
    </a>
 </div>
-<div class="preview row" ng-show="appForm.showPreview">
-    <style>
-
-        .mid-box {
-          width: 350px;
-        }
-        .lil-box {
-          width: 250px;
-        }
-        
-        .mid-box table > tbody > tr > td, .lil-box table > tbody > tr > td {
-          padding: 0px;
-          border: 0px;
-        }
-        .invoice-preview {
-          /*font-size: 12px !important;*/
-          padding: 0px 25px;
-        }
-
-        .invoice-preview table td {
-          font-size: 12px;
-        }
-        
-        .invoice-preview .table > thead > tr > th {
-          border-width: 1px; 
-        }
-
-        .invoice-preview .invoice-title {
-        /*color: aqua;*/
-        }
-        
-        .origin-destination-marker {
-          border-bottom: 1px solid #dedede;
-          /*font-weight: bold;*/
-          width: 100%; 
-        }
-        .invoice-preview .invoice-items-container {
-          margin-top: 30px;
-        }
-    </style>
-    
+<div class="preview row" ng-show="appForm.showPreview">    
     <div bind-html-compile="appForm.previewHtml"></div>
 </div>
 <!--Main invoice form-->
 <div class="new-invoice clearfix" ng-hide="appForm.showPreview">  
+  <div class="page-higlights"> <label class="label label-info">Customer & Dates</label> </div>
   <form class="row" >
       <div class="col-sm-4">
         <div class="form-group">
-          <label> Recipient </label>
-          <ui-select ng-model="appForm.currentInvoice.recipient" 
+          <label> Client </label>
+          <ui-select ng-model="appForm.currentInvoice.client" 
               theme="bootstrap" 
               ng-disabled="disabled" style="min-width: 300px;">
-              <ui-select-match placeholder="Select a recipient">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match placeholder="Select a client">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices 
-                repeat="person in appForm.recipients">
+                repeat="person in appForm.clients">
                 <div ng-bind-html="person.name | highlight: $select.search"></div>
                 <small>
                   Email: {{ person.email }}
@@ -115,7 +76,7 @@
         </div>
       </div>      
   </form>
-  
+  <div class="page-higlights"> <label class="label label-info">Invoice Lines</label> </div>
   <div class="ax-table">    
     <table class="table invoice-items table-striped">
       <thead>
@@ -143,7 +104,7 @@
     </table>    
   </div>
   <div style="margin:10px 0px">
-    <a href="" class="btn btn-info btn-sm" ng-click="appForm.addItem()"> 
+    <a href="" class="btn btn-default btn-sm" ng-click="appForm.addItem()"> 
       <i class="fa fa-plus"></i> Add Item</a>
     <br>
   </div>

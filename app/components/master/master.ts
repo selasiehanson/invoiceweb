@@ -9,6 +9,7 @@ let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams } from '../shared/controller-interfaces';
 import { Fetcher } from '../../services/fetcher';
+import { IUser, IUserCompany} from '../user/user';
 
 
 let http : angular.IHttpService;
@@ -23,11 +24,7 @@ interface INav {
 	route: string;
 }
 
-interface IUser {
-	username? : string;
-	firstName?: string;
-	lastName?: string;
-}
+
 
 class MasterCtrl {
 
@@ -59,18 +56,18 @@ class MasterCtrl {
 			},
 			{
 				name: 'Quotes',
-				icon: 'zmdi-list',
+				icon: 'fa fa-calculator',
 				route: "/app/quotes"
 			},
 			{
 				name: 'Invoices',
-				icon: 'zmdi-list',
+				icon: 'fa fa-table',
 				route: "/app/invoices"
 			},
 			{
-				name: 'Recipients',
+				name: 'Clients',
 				icon: 'zmdi-people',
-				route: "/app/recipients"
+				route: "/app/clients"
 			},
 			{
 				name: 'Currencies',
@@ -81,16 +78,23 @@ class MasterCtrl {
 				name: 'reports',
 				icon: 'zmdi-trending-up',
 				route: "/app/reports"
+			},
+			{
+				name: 'settings',
+				icon: 'fa fa-cog',
+				route: '/app/settings'
 			}
 		];
 
 		rootScope = _rootScope;						
 
 		this.loggedIn = true;
-		rootScope.$on(AuthEvents.loginSuccess, (ev, args) => {
+		rootScope.$on(AuthEvents.loginSuccess, (ev: any, args: IUser) => {
 			
 			if(args){
-				authToken.putObject('user', args);				
+				authToken.putObject('user', args);
+				authToken.putObject('userCompany', args.userCompany);	
+				authToken.putObject('profile', {username: args.username, email: args.email });		
 				this.loggedIn = true;
 				this.user = args.username;
 				this.state.go('app.dashboard');
@@ -116,8 +120,8 @@ class MasterCtrl {
 	}
 	
 
-	signout() {
-		authToken.destroyT();
+	signout() {		
+		authToken.destroyAll();
 		rootScope.$broadcast(AuthEvents.logoutSuccess);
 	}	
 	

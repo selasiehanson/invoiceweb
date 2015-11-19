@@ -57,36 +57,16 @@ const Schema: ISchema = {
 		]
 	},    
     products: {
-		headers: [
-			{
-				name: "Code",
-				field: 'code'
-			},
-			{
-				name: 'Name',
-				field: 'name',
-				sort: true
-			},
-			{
-				name: 'Category',
-				field: 'category',
-				sort: true
-			},
-			{
-				name: 'Selling Price',
-				field: 'sellingPrice'
-			},
-			{
-				name: 'Re-Order Level',
-				field: 'reorderLevel'
-			},
-			{
-				name: "Maximum Stock",
-				field: 'maximumStock'
-			}
+		headers: [ 
+			{ name: "Code", field: 'code' },
+			{	name: 'Name', field: 'name', sort: true  },
+			{	name: 'Category', field: 'category', sort: true },
+			{	name: 'Selling Price', field: 'sellingPrice' },
+			{	name: 'Re-Order Level', field: 'reorderLevel' },
+			{	name: "Maximum Stock",	field: 'maximumStock' }
 		]
     },
-    recipients: {
+    clients: {
 		headers: [
 			{ name: "Name", field: "name" },
 			{ name: "Email", field: "email" },
