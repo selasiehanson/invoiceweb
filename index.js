@@ -12,6 +12,7 @@ require('angular-formly');
 require('angular-sanitize');
 require('angular-formly-templates-bootstrap');
 require('ui-select');
+require('ng-file-upload');
 
 require('./assets/js/libs/bootstrap-growl.js');
 require('./assets/js/libs/pnotify.custom.js')

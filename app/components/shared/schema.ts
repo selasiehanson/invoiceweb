@@ -24,7 +24,7 @@ const Schema: ISchema = {
     invoices: {
 		headers: [		
 			{ name: 'Invoice ID', field: 'invoiceID'},
-			{ name: 'Recipient', field: 'recipientName' },
+			{ name: 'Client', field: 'clientName' },
 			{ name: "Currency", field: 'currencyName' },
 			{ name: 'Amount', field: 'total' },			
 			{ name: 'Tax', field: 'tax' },
@@ -38,7 +38,7 @@ const Schema: ISchema = {
 	quotes: {
 		headers: [		
 			{ name: 'Quote Number', field: 'quoteNumber'},
-			{ name: 'Client', field: 'recipientName' },
+			{ name: 'Client', field: 'clientName' },
 			{ name: "Currency", field: 'currencyName' },
 			{ name: 'Amount', field: 'total' },			
 			{ name: 'Tax', field: 'tax' },			

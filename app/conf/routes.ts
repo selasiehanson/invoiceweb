@@ -9,6 +9,13 @@ let newEditController = function($stateParams: ng.ui.IStateParamsService){
 	return 'AppFormController';
 }
 
+let sharedIndexController = function($stateParams: ng.ui.IStateParamsService) {
+	if($stateParams['url'] === 'settings') {
+		return 'SettingsController';
+	}
+	return 'AppIndexController';
+}
+
 let Routes = ($stateProvider: ng.ui.IStateProvider, 
 	$urlRouterProvider: ng.ui.IUrlRouterProvider, 
 	$httpProvider: angular.IHttpProvider) => {

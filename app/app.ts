@@ -31,7 +31,8 @@ var app = angular.module("sample", [
 	'formlyBootstrap',
 	'ngSanitize',
     'ng-mfb',
-	'angular-loading-bar'
+	'angular-loading-bar', 
+	'ngFileUpload'
 ]);
 
 app.service("RouteFinder", RouteFinder);

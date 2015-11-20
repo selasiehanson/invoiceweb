@@ -10,8 +10,7 @@ class RouteFinder{
     routes = {};
   }
 
-  put(key: string, name: string): void{
-    
+  put(key: string, name: string): void{    
     routes[key] = name;
   }
 

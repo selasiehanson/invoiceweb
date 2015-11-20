@@ -13,6 +13,10 @@ let _stateParams: angular.ui.IStateParamsService;
 
 
 function buildMessage(res: angular.IHttpPromiseCallbackArg<any>, stateParams: angular.ui.IStateParamsService) {
+  if(!stateParams['url']){
+    return;
+  }
+  
   let model = inflection.titleize(inflection.singularize(stateParams['url']));
   if (_.contains([200, 201],res.status)) {
     if (res.data.message) return res.data.message;

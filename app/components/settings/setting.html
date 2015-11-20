@@ -36,12 +36,35 @@
 			<div class="page-higlights"> <label class="label label-info">Company Logo</label> </div>
 		</div>
 		<div class="col-xs-9">
-			<div class="clearfix">
-				<div class="well image-box  pull-right"></div>
+			<div class="clearfix">				
+				<!--<div 
+					ngf-drop ngf-select 
+					ng-model="settings.file" class="drop-box well image-box  pull-right" 
+					ngf-drag-over-class="'dragover'" 
+					ngf-multiple="false" 
+					ngf-allow-dir="true"
+					accept="image/*" 
+					ngf-pattern="'image/*'">Drop an image here or click to upload</div>		-->
+					
+				<div class="drop-box image-box  pull-right">
+					<!--<img ngf-src="!files.$error && files" ng-src="{{settings.logoImage}}">-->
+					<img ng-src="{{settings.logoImage}}"  ng-show="settings.showUploaded">
+					<img
+					 	ngf-resize="{width: 150, height: 150}" 
+						ngf-src="!settings.file.$error && settings.file" ng-hide="!settings.showUploaded">				
+				</div>					
 			</div>
 			<div class="clearfix">
 				<div class="form-actions mb-20 pull-right">
-					<button class="btn btn-success">Upload Logo</button>
+					<button class="btn btn-default" 
+						ngf-select 
+						ng-model="settings.file"
+						ngf-multiple="false"
+						ngf-allow-dir="true"
+						accept="image/*" 
+						ngf-pattern="'.jpeg,.jpg,.png'"
+					>Select Image</button>
+					<button class="btn btn-success" ng-click="settings.uploadLogo()">Upload Logo</button>
 				</div>
 			</div>
 		</div>

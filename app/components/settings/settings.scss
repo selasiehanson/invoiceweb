@@ -2,6 +2,7 @@
 	.row {
 		padding: 10px 0px;
 		margin: 0px 15px;
+		margin-bottom: 15px;
 		border-bottom: 1px solid #efefef;
 		h3 {
 			font-weight: normal;
@@ -12,6 +13,10 @@
 	.image-box {
 		width: 150px;
 		height: 150px;
-		border: dotted 3px lightgray;		
+		// border: dotted 3px lightgray;		
+	}
+	
+	.dragover {
+		border: 5px dashed orange;
 	}
 }
