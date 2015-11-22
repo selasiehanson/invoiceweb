@@ -48,7 +48,7 @@
 					
 				<div class="drop-box image-box  pull-right">
 					<!--<img ngf-src="!files.$error && files" ng-src="{{settings.logoImage}}">-->
-					<img ng-src="{{settings.logoImage}}"  ng-show="settings.showUploaded">
+					<img width="150" height="150" ng-src="{{settings.logoImage}}"  ng-show="settings.showUploaded">
 					<img
 					 	ngf-resize="{width: 150, height: 150}" 
 						ngf-src="!settings.file.$error && settings.file" ng-hide="!settings.showUploaded">				
