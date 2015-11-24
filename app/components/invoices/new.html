@@ -23,7 +23,7 @@
               ng-disabled="disabled" style="min-width: 300px;">
               <ui-select-match placeholder="Select a client">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices 
-                repeat="person in appForm.clients">
+                repeat="person in appForm.clients | propsFilter: {email: $select.search, phoneNumber: $select.search}">
                 <div ng-bind-html="person.name | highlight: $select.search"></div>
                 <small>
                   Email: {{ person.email }}
@@ -38,7 +38,7 @@
           <label> Currency </label>
           <ui-select ng-model="appForm.currentInvoice.currency" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
             <ui-select-match placeholder="Select a currency">{{$select.selected.currencyCode}}</ui-select-match>
-            <ui-select-choices repeat="cur in appForm.currencies">
+            <ui-select-choices repeat="cur in appForm.currencies | propsFilter: {currencyName: $select.search, currencyCode: $select.search} ">
               <div ng-bind-html="cur.name | highlight: $select.search"></div>
               <small>
                 {{ cur.currencyName }} - ({{ cur.symbol}}) {{ cur.currencyCode }}

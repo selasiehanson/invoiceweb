@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.5",
     "bootstrap-datepicker": "^1.4.0",
     "bootstrap-sass": "^3.3.5",
+    "extract-text-webpack-plugin": "^0.9.1",
     "font-awesome": "^4.4.0",
     "inflection": "^1.7.1",
     "jquery": "^2.1.4",

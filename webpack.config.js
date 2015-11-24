@@ -1,5 +1,6 @@
 'use strict';
 var webpack = require("webpack");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {  
   entry: [
     // "bootstrap-sass!./assets/js/bootstrap-sass-config.js",
@@ -29,7 +30,8 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery"
-    })
+    }),
+    new ExtractTextPlugin("[name].css")
   ],  
   module: {
     loaders: [
@@ -38,6 +40,8 @@ module.exports = {
       { test: /\.html/, loader: 'raw' },
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.scss$/,loader: 'style!css!sass' },
+      // { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader!css-loader") },
+      // { test: /\.scss$/,loader: ExtractTextPlugin.extract('style!css!sass') },
       { test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader?name=res/[name].[ext]?[hash]'
       },

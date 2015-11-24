@@ -78,8 +78,9 @@ class AuthInterceptor {
     if(_.startsWith(url,'/api') && !_.contains(excludedRoutes,url) ) { 
       var message = buildMessage(res, _stateParams);
       let contentType = res.headers()['content-type'];      
-      if (_.contains(contentType, 'application/json')) {        
-        showNotification(res, message);
+      if (_.contains(contentType, 'application/json')) { 
+        if(message) showNotification(res, message);       
+          
       }
     }
     return res || _q.when(res);
