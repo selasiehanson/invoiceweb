@@ -13,7 +13,7 @@ import { RecordEvents} from './app-events';
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;
-let rootSccope: angular.IRootScopeService;
+let rootScope: angular.IRootScopeService;
 
 class AppFormController {
   
@@ -37,7 +37,7 @@ class AppFormController {
     this.stateParams = _stateParams;
     let modelProps: ISchemaDefinition = Schema[this.stateParams.url];
     this.model = this.stateParams.url;
-    rootSccope = _rootScope;
+    rootScope = _rootScope;
     let viewProps = {
       defaultNew: true
     };
@@ -60,7 +60,7 @@ class AppFormController {
       this.handlerText = "Update";
       fetcher.query(`${this.model}/${this.stateParams.id}`).then((res: angular.IHttpPromiseCallbackArg<{}>) => {
         this.record = res.data;
-        rootSccope.$broadcast(RecordEvents.recordLoaded, this.record);
+        rootScope.$broadcast(RecordEvents.recordLoaded, this.record);
       });
     }else {
       this.operation = 'New';

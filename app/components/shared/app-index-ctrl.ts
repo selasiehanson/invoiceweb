@@ -6,11 +6,14 @@ let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams,IModelEventArgs } from './controller-interfaces';
 import { Fetcher} from '../../services/fetcher'
-import { EditStates} from './edit-states'
+import { EditStates} from './edit-states';
+import { RecordEvents} from './app-events';
+import { Store } from './store';
 
 let rootScope: angular.IRootScopeService;
 let fetcher: Fetcher;
 let state: angular.ui.IStateService;
+let store: Store;
 
 class AppIndexController {
 
@@ -26,9 +29,9 @@ class AppIndexController {
   titleSingular: string;
   templateUrl: string;
 
-  static $inject = ['$rootScope', '$state', '$stateParams', '$http', 'Fetcher'];
+  static $inject = ['$rootScope', '$state', '$stateParams', '$http', 'Fetcher', 'Store'];
   constructor( _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService,
-    _stateParams: IAppStateParams, _http: angular.IHttpService, _fetcher: Fetcher) {
+    _stateParams: IAppStateParams, _http: angular.IHttpService, _fetcher: Fetcher, _store: Store) {
       
     this.http = _http;
     state = _state;
@@ -39,6 +42,7 @@ class AppIndexController {
     this.sortable = [];
     rootScope = _rootScope;
     fetcher = _fetcher;
+    store = _store;
     
     if (this.headers) {
       this.sortable = _.pluck(this.headers.filter((h: ITableHeader) => { return h.sort; }), 'field');
@@ -64,7 +68,20 @@ class AppIndexController {
   getRecords() {
     this.http.get(`/api/${this.model}`).then((res: angular.IHttpPromiseCallbackArg<any[]>) => {
       this.records = res.data;
+      let data = {
+        model: `${this.model}`,
+        count: this.records.length,        
+      };
+      store.putObject(`${this.model}` ,data);   
+      // this.publishRecordsLoaded(data);
     });
+  }
+  
+  publishRecordsLoaded(data: Object){      
+      // rootScope.$broadcast(RecordEvents.recordLoaded, data);
+      //instead of publishing we decided to store instead. 
+      //Probably later in the future we might consider storing if necessary
+      
   }
   
   goToNew() {

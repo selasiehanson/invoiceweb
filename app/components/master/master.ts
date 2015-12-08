@@ -4,7 +4,7 @@
 // import { AuthToken }  from '../components/shared/auth_token';
 
 import { AuthEvents } from '../shared/app-events';
-import { AuthToken } from '../shared/auth-token';
+import { Store } from '../shared/store';
 let _ = require('lodash');
 let inflection = require('inflection');
 import { IAppStateParams } from '../shared/controller-interfaces';
@@ -15,7 +15,7 @@ import { IUser, IUserCompany} from '../user/user';
 let http : angular.IHttpService;
 let client = Object;
 let rootScope: angular.IRootScopeService;
-let authToken: AuthToken;
+let store: Store;
 let fetcher: Fetcher;
 
 interface INav {
@@ -23,8 +23,6 @@ interface INav {
 	icon: string;
 	route: string;
 }
-
-
 
 class MasterCtrl {
 
@@ -37,15 +35,15 @@ class MasterCtrl {
 	pageTitle: string;
 	user: IUser;
 	
-	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'AuthToken', 'Fetcher'];
+	static $inject = ['$http', '$rootScope', '$state', '$stateParams', 'Store', 'Fetcher'];
 	constructor(_http:angular.IHttpService, _rootScope: angular.IRootScopeService, 
 		_state: angular.ui.IStateService, _stateParams: angular.ui.IStateParamsService, 
-		_authToken: AuthToken, _fetcher: Fetcher) {
+		_store: Store, _fetcher: Fetcher) {
 			
 		http = _http;
 		this.state = _state;
 		this.stateParams = _stateParams;		
-		authToken = _authToken;
+		store = _store;
 		fetcher = _fetcher;
 
 		this.navs = [
@@ -92,9 +90,9 @@ class MasterCtrl {
 		rootScope.$on(AuthEvents.loginSuccess, (ev: any, args: IUser) => {
 			
 			if(args){
-				authToken.putObject('user', args);
-				authToken.putObject('userCompany', args.userCompany);	
-				authToken.putObject('profile', {username: args.username, email: args.email });		
+				store.putObject('user', args);
+				store.putObject('userCompany', args.userCompany);	
+				store.putObject('profile', {username: args.username, email: args.email });		
 				this.loggedIn = true;
 				this.user = args.username;
 				this.state.go('app.dashboard');
@@ -114,14 +112,14 @@ class MasterCtrl {
 			}
 		});
 		
-		this.user = <IUser> authToken.getObject('user');
+		this.user = <IUser> store.getObject('user');
 		
 		// this.handleDelete();
 	}
 	
 
 	signout() {		
-		authToken.destroyAll();
+		store.destroyAll();
 		rootScope.$broadcast(AuthEvents.logoutSuccess);
 	}	
 	

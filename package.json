@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline --port 8090 -d --content-base ./ "
+    "start": "webpack-dev-server --hot --inline --port 8091 -d --content-base ./ "
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +29,9 @@
     "lodash": "^3.10.1",
     "ng-bs-daterangepicker": "0.0.3",
     "ng-material-floating-button": "^0.6.1",
-    "ui-select": "^0.11.2"
+    "string": "^3.3.1",
+    "ui-select": "^0.11.2",
+    "underscore.string": "^3.2.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^0.11.3",

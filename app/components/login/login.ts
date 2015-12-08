@@ -1,9 +1,9 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import { AuthToken } from '../shared/auth-token';
+import { Store } from '../shared/store';
 import { AuthEvents } from '../shared/app-events';
 
-let authToken: AuthToken;
+let authToken: Store;
 let rootScope: angular.IRootScopeService;
 let location: angular.ILocationService;
 
@@ -22,7 +22,7 @@ class LoginCtrl {
 	http: angular.IHttpService;
 	user: IUser
   	constructor(_rootScope: angular.IRootScopeService, _http: angular.IHttpService, 
-	  _location: angular.ILocationService, _authToken: AuthToken){
+	  _location: angular.ILocationService, _authToken: Store){
     this.notLoggedIn = true;
     this.scope = _rootScope.$new();
     this.scope.$emit('login:state', {user: false});
@@ -49,7 +49,7 @@ class LoginCtrl {
      if(response.status === 200) {
        let token = response.headers("x-auth-token");
        if(token){
-          authToken.setT(token);
+          authToken.setToken(token);
           this.fetchUser();
        }       
       //this.scope.$emit('login:state', {user: true});

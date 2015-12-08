@@ -2,8 +2,12 @@
   <a class="btn btn-default pull-right preview-button" href="" ng-click="appForm.preview()"> 
     <i class="fa fa-eye"></i> Preview Invoice
    </a>
+   <a class="btn btn-default pull-right preview-button" style="right: 180px;" href="" ng-click="appForm.sendEmail()" ng-show="appForm.showEmail">    
+    <i class="fa fa-envelope"></i> Email Invoice
+   </a>
 </div>
-<div class="clearfix" ng-show="appForm.showPreview">  
+
+<div class="clearfix" ng-show="appForm.showPreview">    
   <a class="btn btn-danger pull-right preview-button" href="" ng-click="appForm.endPreview()">    
    <i class="fa fa-close"></i> End Preview
    </a>
@@ -15,12 +19,18 @@
 <div class="new-invoice clearfix" ng-hide="appForm.showPreview">  
   <div class="page-higlights"> <label class="label label-info">Customer & Dates</label> </div>
   <form class="row" >
-      <div class="col-sm-4">
+    <div class="col-sm-2">
+        <div class="form-group">
+          <label> Invoice Number </label>
+          <input ng-model="appForm.currentInvoice.invoiceNumber" class="form-control">
+        </div>
+      </div>      
+      <div class="col-sm-3">
         <div class="form-group">
           <label> Client </label>
           <ui-select ng-model="appForm.currentInvoice.client" 
               theme="bootstrap" 
-              ng-disabled="disabled" style="min-width: 300px;">
+              ng-disabled="disabled" style="min-width: 200px;">
               <ui-select-match placeholder="Select a client">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices 
                 repeat="person in appForm.clients | propsFilter: {email: $select.search, phoneNumber: $select.search}">
@@ -33,10 +43,10 @@
            </ui-select>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <div class="form-group">
           <label> Currency </label>
-          <ui-select ng-model="appForm.currentInvoice.currency" theme="bootstrap" ng-disabled="disabled" style="min-width: 300px;">
+          <ui-select ng-model="appForm.currentInvoice.currency" theme="bootstrap" ng-disabled="disabled" style="min-width: 200px;">
             <ui-select-match placeholder="Select a currency">{{$select.selected.currencyCode}}</ui-select-match>
             <ui-select-choices repeat="cur in appForm.currencies | propsFilter: {currencyName: $select.search, currencyCode: $select.search} ">
               <div ng-bind-html="cur.name | highlight: $select.search"></div>

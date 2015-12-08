@@ -28,9 +28,15 @@
     },
     "angular-formly/angular-formly.d.ts": {
       "commit": "5109e1269d6ab8e8e73b1a5e85d8ceb836d3099f"
-    }, 
-    "jquery.pnotify/jquery.pnotify.d.ts" : {
+    },
+    "jquery.pnotify/jquery.pnotify.d.ts": {
       "commit": "d271513e241397c9e334d679a6c53d7c4d7b6fbd"
+    },
+    "underscore/underscore.d.ts": {
+      "commit": "17dd34132c2a1a4d6a8bf1816effcff3ec922034"
+    },
+    "string/string.d.ts": {
+      "commit": "17dd34132c2a1a4d6a8bf1816effcff3ec922034"
     }
   }
 }

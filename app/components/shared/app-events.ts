@@ -13,6 +13,7 @@ let AuthEvents = {
 
 
 let RecordEvents = {
-  recordLoaded:  'record:loaded'
+  recordLoaded:  'record:loaded',
+  recordsLoaded:  'records:loaded',
 }
 export  { AuthEvents, RecordEvents };

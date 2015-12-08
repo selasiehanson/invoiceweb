@@ -1,23 +1,23 @@
 let tokenName = "app_token";
 
-interface IAuthToken {
-  setT(value: string):void;  
-  getT(): string;
-  destroyT(): void;
+interface ILocalStore {
+  setToken(value: string):void;  
+  getToken(): string;
+  destroyToken(): void;
   putObject(key: string, value: Object): void;
   getObject(key: string): Object;
 }
 
-class AuthToken implements IAuthToken{
+class Store implements ILocalStore{
   
   constructor() {
   }
 
-  setT(value: string){
+  setToken(value: string){
     localStorage.setItem(tokenName, value);
   }
 
-  getT(): string {
+  getToken(): string {
     return localStorage.getItem(tokenName);
   }
   
@@ -29,7 +29,7 @@ class AuthToken implements IAuthToken{
     return JSON.parse(localStorage.getItem(key));
   }
 
-  destroyT(): void {
+  destroyToken(): void {
     localStorage.removeItem(tokenName);
   }
   
@@ -38,5 +38,5 @@ class AuthToken implements IAuthToken{
   }
 }
 
-AuthToken.$inject = [];
-export { AuthToken , IAuthToken};
+Store.$inject = [];
+export { Store , ILocalStore};

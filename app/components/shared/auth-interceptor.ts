@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 import { MsgBox } from './msg-box';
-import { AuthToken } from './auth-token';
+import { Store } from './store';
 import { AuthEvents } from './app-events';
 import { IHttpStatus } from './controller-interfaces';
 let _ = require('lodash');
@@ -61,8 +61,8 @@ class AuthInterceptor {
   }
 
   request(config: angular.IRequestConfig): angular.IRequestConfig | angular.IPromise<angular.IRequestConfig> {
-    var authToken = <AuthToken>_injector.get("AuthToken");
-    var token = authToken.getT();
+    var store = <Store>_injector.get("Store");
+    var token = store.getToken();
     //config.headers = config.headers || {};
     if (token) {
       // config.headers.Authorization = "Bearer " + token;

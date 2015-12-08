@@ -5,11 +5,15 @@ import { IAppStateParams } from '../shared/controller-interfaces';
 import { Forms } from '../shared/model-forms';
 import { AppFormController } from "../shared/app-form-ctrl"
 let _ = require('lodash');
+import S =  require('string') ;
+import { Store } from '../shared/store';
+import { RecordEvents} from '../shared/app-events';
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;
 let sce: angular.ISCEService;
 let templateCache: angular.ITemplateCacheService;
+let store: Store;
 
 interface InvoiceItem {
 	id?: number
@@ -31,21 +35,26 @@ interface IInvoice {
 	total?: number | string
 	invoiceItems?: InvoiceItem[]
 	notes?: string
+	invoiceNumber? : string
 }
 
+interface InvoiceMetaData {
+	count: number;	
+};
+
 interface  ICurrency{
-	currencyName: string
-	currencyCode: string
+	currencyName: string;
+	currencyCode: string;
 	symbol: string
 	id: number
 }
 
 interface IClient {
-	id: number;
-	name: string
-	email: string
-	phoneNumber: string
-	address: string
+	id?: number;
+	name?: string
+	email?: string
+	phoneNumber?: string
+	address?: string
 }
 
 class InvoiceFormCtrl extends AppFormController{
@@ -56,29 +65,40 @@ class InvoiceFormCtrl extends AppFormController{
 	invoiceUrl: string;
 	previewHtml: string = '';
 	showPreview = false;
+	showEmail = true;
 	
-	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope" , '$sce', "$templateCache"];
+	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope" , '$sce', "$templateCache", 'Store'];
 	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
-		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService, _sce: angular.ISCEService, _templateCache : angular.ITemplateCacheService) {
+		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService, _sce: angular.ISCEService, _templateCache : angular.ITemplateCacheService, _store: Store) {
 			
 		super(_state, _stateParams,_fetcher, rootScope);	
 		fetcher = _fetcher;
 		http = _http;						
 		sce = _sce;
 		templateCache = _templateCache;
+		store = _store;
 				
 		this.currentInvoice = <IInvoice>{tax: 0, total: ""};
 		this.currentInvoice.invoiceItems = [];
 		
 		if(!this.stateParams.id){
 			this.fetchLookupFields(false);
+			this.generateInvoiceNumber();
 		}		
 		
 		this.invoiceUrl = '';	
-		rootScope.$on('record:loaded', (ev, invoice) => {
+		rootScope.$on(RecordEvents.recordLoaded, (ev, invoice) => {
 			this.currentInvoice  = invoice;
 			this.fetchLookupFields(true);
+			this.generateInvoiceNumber();
 		});		
+	}
+	
+	generateInvoiceNumber(){
+		if(!this.currentInvoice.invoiceNumber){
+			let invoicesMetaData = <InvoiceMetaData>store.getObject(`${this.model}`);
+			this.currentInvoice.invoiceNumber = S(invoicesMetaData.count + 1).padLeft(4, 0).toString();	
+		}		
 	}
 	
 	fetchLookupFields(isRecordLoaded: boolean){

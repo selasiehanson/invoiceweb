@@ -4,7 +4,7 @@ import { Fetcher } from './services/fetcher';
 import { Routes } from "./conf/routes";
 
 import { RouteFinder } from './components/shared/route-finder';
-import { AuthToken, IAuthToken } from './components/shared/auth-token';
+import { Store, ILocalStore } from './components/shared/store';
 import { AuthInterceptor } from './components/shared/auth-interceptor';
 
 //shared controllers
@@ -23,6 +23,7 @@ import { AxForm } from './components/forms/form';
 import { CustomElement} from './components/forms/custom_elements';
 import { MsgBox } from './components/shared/msg-box';
 import { AxBindHtmlCompile } from './components/directives/bindHtmlCompile';
+let _ = require('lodash');
 
 var app = angular.module("sample", [
     'ui.router',
@@ -36,7 +37,7 @@ var app = angular.module("sample", [
 ]);
 
 app.service("RouteFinder", RouteFinder);
-app.service("AuthToken", AuthToken);
+app.service("Store", Store);
 app.service("MsgBox", MsgBox);
 app.service('AuthInterceptor', AuthInterceptor);
 app.service('Fetcher',Fetcher);
@@ -85,12 +86,12 @@ app.filter('propsFilter', function() {
 });
 
 interface ITableScope extends angular.IScope{
-    headers: any,
-    content: any,
-    sortable: any,
-    numPages: number,
-    tablePage: number,
-    count: number,
+  headers: any,
+  content: any,
+  sortable: any,
+  numPages: number,
+  tablePage: number,
+  count: number,
 	idField: string;
 	actions: {};
 	model: string;
@@ -217,14 +218,14 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 });
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
-AuthToken: IAuthToken, $stateParams: angular.ui.IStateParamsService) =>{
+Store: ILocalStore, $stateParams: angular.ui.IStateParamsService) =>{
 	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
 
 		if(_.contains(excludedRoutes,next.url)) {
 			return
 		};
-		if(!AuthToken.getT()) {
+		if(!Store.getToken()) {
 			$location.path('/login');
 		}
     });

@@ -25,8 +25,7 @@ class Fetcher {
 		}else {
 			return this.http.post(`/api/${resource}`, args);
 		}			
-	}
-	
+	}	
 }
 
 export { Fetcher };

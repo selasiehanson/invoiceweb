@@ -2,7 +2,7 @@
 import { IAppStateParams } from '../shared/controller-interfaces';
 import { Fetcher } from '../../services/fetcher';
 import { Forms } from '../shared/model-forms';
-import { AuthToken } from '../shared/auth-token'
+import { Store } from '../shared/store'
 import { IUser, IUserCompany} from '../user/user';
 
 interface ISettingsProfile {
@@ -20,7 +20,7 @@ interface IFileUpload {
 }
 
 let fetcher: Fetcher;
-let authToken: AuthToken;
+let store: Store;
 let Upload: any;
 
 const URLS = {
@@ -41,12 +41,12 @@ class SettingsController {
 	logoImage: any;
 	showUploaded: boolean = true;
 	
-	static $inject = ['$state', '$stateParams', 'Fetcher', 'AuthToken', 'Upload', '$scope'];
+	static $inject = ['$state', '$stateParams', 'Fetcher', 'Store', 'Upload', '$scope'];
 	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
-    _fetcher: Fetcher, _authToken: AuthToken, _Upload: any, scope: angular.IScope ){
+    _fetcher: Fetcher, _store: Store, _Upload: any, scope: angular.IScope ){
 		
 		fetcher = _fetcher;
-		authToken = _authToken;
+		store = _store;
 		Upload = _Upload;
 		this.state = _state;
 		this.stateParams = _stateParams;
@@ -68,8 +68,8 @@ class SettingsController {
 	
 	
 	loadDetails(){
-		this.companyRecord = authToken.getObject('userCompany');
-		this.profileRecord = authToken.getObject('profile');		
+		this.companyRecord = store.getObject('userCompany');
+		this.profileRecord = store.getObject('profile');		
 	}
 	
 	getLogo(){
@@ -96,7 +96,7 @@ class SettingsController {
 	}
 	
 	upload(file: any){
-		let user = <IUser> authToken.getObject('profile');
+		let user = <IUser> store.getObject('profile');
 		Upload.upload({
 			url: URLS.uploadURL,
 			file: file,
