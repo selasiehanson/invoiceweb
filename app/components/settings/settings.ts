@@ -10,6 +10,19 @@ interface ISettingsProfile {
 	email?: string;
 }
 
+interface ISettingsCompany {
+	name?: string;
+	email?: string;
+	address?: string,
+	phoneNumber?: string;
+	website?: string
+}
+
+interface ISettingsCurrency {
+	username?: string;
+	email?: string;
+}
+
 interface IFileParams {
 	url: string;
 	data: Object;
@@ -32,12 +45,19 @@ class SettingsController {
   	stateParams: IAppStateParams;
 	file: string;
 	title: string;
+	
 	profileForm: any;
 	profileRecord: ISettingsProfile;
 	profileFields: AngularFormly.IFieldConfigurationObject
+	
 	companyForm: any;
 	companyRecord: ISettingsProfile;
 	companyFields: AngularFormly.IFieldConfigurationObject
+	
+	currencyForm: any;
+	currencyRecord: ISettingsCurrency;
+	currencyFields: AngularFormly.IFieldConfigurationObject
+	
 	logoImage: any;
 	showUploaded: boolean = true;
 	
@@ -52,6 +72,7 @@ class SettingsController {
 		this.stateParams = _stateParams;
 		this.profileFields = Forms['settingsProfile'].fields;
 		this.companyFields = Forms['settingsCompany'].fields;
+		this.currencyFields = Forms['settingsCurrency'].fields
 		
 		//todo: fetch settings
 		this.loadDetails();	
@@ -87,8 +108,13 @@ class SettingsController {
 	updateCompanyInfo(){	
 		let data = angular.copy(this.companyRecord);	
 		fetcher.save('users/company-details', data).then((res)=> {
-			console.log(res.data);
+			// todo: show message /tick for success in updating company data
+			// console.log(res.data);
 		});
+	}
+	
+	updateCurrencies(){
+		console.log('updating currencies');
 	}
 	
 	uploadLogo(){

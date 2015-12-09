@@ -1,14 +1,14 @@
 <div class="clearfix" ng-hide="appForm.showPreview">
-  <a class="btn btn-default pull-right preview-button" href="" ng-click="appForm.preview()"> 
-    <i class="fa fa-eye"></i> Preview Invoice
+  <a class="btn btn-default pull-right action-button" href="" ng-click="appForm.preview()"> 
+    <i class="fa fa-eye"></i>
    </a>
-   <a class="btn btn-default pull-right preview-button" style="right: 180px;" href="" ng-click="appForm.sendEmail()" ng-show="appForm.showEmail">    
-    <i class="fa fa-envelope"></i> Email Invoice
+   <a class="btn btn-default pull-right action-button" style="right: 80px" href="" ng-click="appForm.sendEmail()" ng-show="appForm.showEmail">    
+    <i class="fa fa-envelope"></i>
    </a>
 </div>
 
 <div class="clearfix" ng-show="appForm.showPreview">    
-  <a class="btn btn-danger pull-right preview-button" href="" ng-click="appForm.endPreview()">    
+  <a class="btn btn-danger pull-right end-preiview-button" href="" ng-click="appForm.endPreview()">    
    <i class="fa fa-close"></i> End Preview
    </a>
 </div>

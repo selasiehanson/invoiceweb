@@ -35,11 +35,32 @@ let datePicker = `
     class="form-control">
 `;
 
+let multiSelectTemplate = `
+  <ui-select multiple 
+    ng-model="model[options.key]" 
+    theme="bootstrap" ng-required="{{to.required}}" 
+    ng-disabled="{{to.disabled}}" reset-search-input="false"> 
+      <ui-select-match placeholder="{{to.placeholder}}"> 
+        {{$item[to.labelProp || 'name']}} 
+      </ui-select-match> 
+      <ui-select-choices 
+        group-by="to.groupBy" 
+        repeat="option[to.valueProp || 'value'] as option in to.options | filter: $select.search"> 
+          <div ng-bind-html="option[to.labelProp || 'name'] | highlight: $select.search"></div> 
+      </ui-select-choices> 
+   </ui-select>
+`;
+
 const CustomElement: ICustonElement = {
   UISelect: {
     extends: 'select',
     name: 'ui-select',
     template: selectTemplate  
+  },
+  UIMultiSelect: {
+    extends: 'ui-select',
+    name: 'ui-multi-select',
+    template: multiSelectTemplate
   },
   DatePicker: {
     name: 'datepicker',

@@ -214,17 +214,20 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 	console.log(CustomElement);
 	formlyConfig.setType(CustomElement['UISelect']);
 	formlyConfig.setType(CustomElement['DatePicker']);
+	formlyConfig.setType(CustomElement['UIMultiSelect']);
     console.log("Application Started");
 });
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
-Store: ILocalStore, $stateParams: angular.ui.IStateParamsService) =>{
+	Store: ILocalStore, $stateParams: angular.ui.IStateParamsService) =>{
+		
 	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
 
 		if(_.contains(excludedRoutes,next.url)) {
 			return
 		};
+		
 		if(!Store.getToken()) {
 			$location.path('/login');
 		}
