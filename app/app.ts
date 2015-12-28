@@ -220,7 +220,10 @@ app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	
 	Store: ILocalStore, $stateParams: angular.ui.IStateParamsService) =>{
-		
+	let p = <any>window;
+	if(p['passThrough']){
+		return;
+	}		
 	let excludedRoutes = ['/signup', '/login', '/password_recovery'];
     $rootScope.$on('$stateChangeStart', function (event, next) {
 

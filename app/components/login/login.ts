@@ -70,6 +70,6 @@ class LoginCtrl {
   }  
 }
 
-LoginCtrl.$inject = ['$rootScope', '$http', '$location', 'AuthToken'];
+LoginCtrl.$inject = ['$rootScope', '$http', '$location', 'Store'];
 
 export  { LoginCtrl };

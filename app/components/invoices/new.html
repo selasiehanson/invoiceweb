@@ -1,10 +1,9 @@
-<div class="clearfix" ng-hide="appForm.showPreview">
-  <a class="btn btn-default pull-right action-button" href="" ng-click="appForm.preview()"> 
-    <i class="fa fa-eye"></i>
-   </a>
-   <a class="btn btn-default pull-right action-button" style="right: 80px" href="" ng-click="appForm.sendEmail()" ng-show="appForm.showEmail">    
-    <i class="fa fa-envelope"></i>
-   </a>
+<div class="clearfix" ng-hide="appForm.showPreview">  
+   <div class="btn-group pull-right" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" ng-click="appForm.preview()"> <i class="fa fa-eye"></i> </button>
+    <button type="button" class="btn btn-default" ng-click="appForm.sendEmail()"> <i class="fa fa-envelope"></i> </button>
+    <button type="button" class="btn btn-default" ng-click="appForm.viewAsPdf(appForm.currentInvoice.id)"> <i class="fa fa-download"></i> </button>
+   </div>
 </div>
 
 <div class="clearfix" ng-show="appForm.showPreview">    

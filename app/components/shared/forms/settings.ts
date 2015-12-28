@@ -101,7 +101,8 @@ interface ICurrency {
 let fetchCurrencies = function($scope: IUISelectTemplateScope, fetcher: Fetcher) {
 	fetcher.query('currencies').then((res: angular.IHttpPromiseCallbackArg<Array<any>>) => {
     $scope.to.options = <any[]>res.data.map((x: ICurrency) => {
-      x.name = `(${x.symbol})${x.currencyName} - ${x.country}` ;
+      if(x.symbol) x.name = `(${x.symbol})${x.currencyName} - ${x.country}` ;
+      else x.name = `${x.currencyName} - ${x.country}` ;
       return x;
     });
 	});												
@@ -113,7 +114,7 @@ const SettingsCurrencies = {
       className : 'row',
       fieldGroup: [
         {
-          key: 'name',
+          key: 'currencyIds',
           type: 'ui-multi-select',
           className: 'col-xs-12',
           templateOptions:<IUISelectTemplateOptions> {

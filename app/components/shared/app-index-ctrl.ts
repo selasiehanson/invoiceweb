@@ -28,6 +28,7 @@ class AppIndexController {
   records: Array<any>;
   titleSingular: string;
   templateUrl: string;
+  customActions: Array<any> = [];
 
   static $inject = ['$rootScope', '$state', '$stateParams', '$http', 'Fetcher', 'Store'];
   constructor( _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService,

@@ -19,8 +19,7 @@ interface ISettingsCompany {
 }
 
 interface ISettingsCurrency {
-	username?: string;
-	email?: string;
+	currencyIds?: Array<number>;
 }
 
 interface IFileParams {
@@ -84,6 +83,7 @@ class SettingsController {
 		});
 		
 		this.getLogo();
+		this.getUserCurrencies();
 	}
 	
 	
@@ -101,6 +101,12 @@ class SettingsController {
 		})
 	}
 	
+	getUserCurrencies(){
+		fetcher.query('user-currencies').then((res: any) => {
+			console.log(res.data);
+		});
+	}
+	
 	updateProfile() {
 		
 	}
@@ -114,7 +120,9 @@ class SettingsController {
 	}
 	
 	updateCurrencies(){
-		console.log('updating currencies');
+		fetcher.save('user-currencies', {currencyIds: this.currencyRecord.currencyIds}).then((x) => {
+			console.log(x);
+		})
 	}
 	
 	uploadLogo(){

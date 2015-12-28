@@ -25,7 +25,8 @@ interface InvoiceItem {
 }
 
 interface IInvoice {
-	invoiceDate?: Date,
+	id?: number;
+	invoiceDate?: Date;
 	dueDate?: Date
 	client?: IClient
 	currency?: ICurrency
@@ -58,15 +59,14 @@ interface IClient {
 }
 
 class InvoiceFormCtrl extends AppFormController{
-	clients: Object[]
+	clients: Object[];
 	currentInvoice: IInvoice; 
 	previewInvoice: IInvoice;
 	currencies: ICurrency[]; 
 	invoiceUrl: string;
 	previewHtml: string = '';
 	showPreview = false;
-	showEmail = true;
-	
+	showEmail = true;	
 	static $inject = ['$state', '$stateParams', 'Fetcher', '$http', "$rootScope" , '$sce', "$templateCache", 'Store'];
 	constructor(_state: angular.ui.IStateService, _stateParams: IAppStateParams, 
 		_fetcher: Fetcher, _http: angular.IHttpService, rootScope: angular.IRootScopeService, _sce: angular.ISCEService, _templateCache : angular.ITemplateCacheService, _store: Store) {
@@ -138,8 +138,7 @@ class InvoiceFormCtrl extends AppFormController{
 			});
 		}else {
 			this.currentInvoice.invoiceItems.splice(index, 1);
-		}
-		
+		}		
 	}	
 	
 	endPreview(){
@@ -164,12 +163,9 @@ class InvoiceFormCtrl extends AppFormController{
 		
 	}
 	
-	preview(){
-		// this.showPreview = true;		
-		// return;
-		
-		let url = '/templates/invoices/preview';
-		http.get(url, {cache: templateCache}).then((response) =>{
+	preview(){		
+		let url = `/templates/invoices/preview?invoiceId=${this.currentInvoice.id}`;
+		http.get(url).then((response) =>{
 			this.previewHtml = <string>response.data;						
 			this.showPreview = true;	
 			this.currentInvoice.total = this.computeTotal();
@@ -185,6 +181,27 @@ class InvoiceFormCtrl extends AppFormController{
 		fetcher.save('invoices',data).then((res) => {
 			console.log(res)
 		});		
+	}
+	
+	viewAsPdf(id: number){		
+		let url =`/api/invoices/aspdf?invoiceId=${id}`;
+		 http.get(url)
+			.then(function (res: any) {
+				
+				var fileURL = 'data:application/pdf;base64,' + res.data.pdf;
+				var pdfURI = sce.trustAsResourceUrl(fileURL);     
+				var downloadLink = angular.element('<a></a>');
+				downloadLink.attr('href', pdfURI);
+				downloadLink.attr('download',  'invoice.pdf');
+				downloadLink[0].click();
+			})
+			.finally(function () {
+				//vm.action.generating = false;
+			}); 
+		// window.open(`http://localhost:8091/api/invoices/aspdf?invoiceId=${id}`)
+		// http.get(url).then((response) =>{
+			
+		// });
 	}
 }
 

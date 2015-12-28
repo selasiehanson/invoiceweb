@@ -22,8 +22,7 @@ const Clients: IExtendFormlyObject = {
             label: 'Email',
             required: true
           }
-        },
-
+        }
       ]
     },
     {
