@@ -31,7 +31,7 @@ const Clients: IExtendFormlyObject = {
 		{
           key: 'address',
           type: 'input',
-          className: 'col-xs-8',
+          className: 'col-xs-6',
           templateOptions: {
             label: 'Address',
             required: true
@@ -40,7 +40,7 @@ const Clients: IExtendFormlyObject = {
         {
           key: 'phoneNumber',
           type: 'input',
-          className: 'col-xs-4',
+          className: 'col-xs-6',
           templateOptions: {
             label: 'Phone Number',
             required: true

@@ -38,4 +38,11 @@ interface IApiResponse {
 	}
 }
 
-export { IExtendFormlyObject, IForm, IUISelectTemplateScope, IUISelectTemplateOptions }
+interface ICustomTableAction{
+	name?: string
+	hint?: string
+	onClick?: Function
+	icon?: string
+}
+
+export { IExtendFormlyObject, IForm, IUISelectTemplateScope, IUISelectTemplateOptions, ICustomTableAction }

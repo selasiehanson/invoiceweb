@@ -1,6 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import { Schema }  from './schema';
+import { Schema, IModelViewConfig, ISchemaDefinition }  from './schema';
 import { ITableHeader }  from './schema';
 let _ = require('lodash');
 let inflection = require('inflection');
@@ -28,7 +28,9 @@ class AppIndexController {
   records: Array<any>;
   titleSingular: string;
   templateUrl: string;
+  views: IModelViewConfig;
   customActions: Array<any> = [];
+  tranformer: Function = null;
 
   static $inject = ['$rootScope', '$state', '$stateParams', '$http', 'Fetcher', 'Store'];
   constructor( _rootScope: angular.IRootScopeService, _state: angular.ui.IStateService,
@@ -40,11 +42,14 @@ class AppIndexController {
     this.model = this.stateParams.url;    
     this.headers = Schema[this.model].headers;
     this.custom = Schema[this.model].custom;
+    this.tranformer = Schema[this.model].transformer;
+    
     this.sortable = [];
     rootScope = _rootScope;
     fetcher = _fetcher;
     store = _store;
     
+    this.extractPermissions(Schema[this.model]);
     if (this.headers) {
       this.sortable = _.pluck(this.headers.filter((h: ITableHeader) => { return h.sort; }), 'field');
     }
@@ -66,9 +71,28 @@ class AppIndexController {
     this.setupListeners();   
   }
     
+  extractPermissions(model: ISchemaDefinition){
+     this.views = {
+      add: true,
+      edit: true,
+      remove: true
+    };
+    
+    if(model && model.views){
+       this.views.add = (model.views.add === false) ? false : true;
+       this.views.edit = (model.views.edit === false) ? false : true;
+       this.views.remove = (model.views.remove === false) ? false : true;
+    }    
+  }
+    
   getRecords() {
     this.http.get(`/api/${this.model}`).then((res: angular.IHttpPromiseCallbackArg<any[]>) => {
-      this.records = res.data;
+      
+      if(this.tranformer){
+        this.records = this.tranformer(res.data);  
+      }else {
+        this.records = res.data;
+      }
       let data = {
         model: `${this.model}`,
         count: this.records.length,        

@@ -8,6 +8,7 @@ let _ = require('lodash');
 import S =  require('string') ;
 import { Store } from '../shared/store';
 import { RecordEvents} from '../shared/app-events';
+import {IInvoice, ICurrency, IClient, IInvoiceItem, IInvoiceMetaData} from '../shared/model-interfaces'
 
 let http: angular.IHttpService;
 let fetcher: Fetcher;
@@ -15,48 +16,6 @@ let sce: angular.ISCEService;
 let templateCache: angular.ITemplateCacheService;
 let store: Store;
 
-interface InvoiceItem {
-	id?: number
-	name?: string
-	description?: string
-	unitCost?: number
-	price?: number
-	quantity?: number
-}
-
-interface IInvoice {
-	id?: number;
-	invoiceDate?: Date;
-	dueDate?: Date
-	client?: IClient
-	currency?: ICurrency
-	clientId?: number
-	currencyId?: number
-	tax?: number
-	total?: number | string
-	invoiceItems?: InvoiceItem[]
-	notes?: string
-	invoiceNumber? : string
-}
-
-interface InvoiceMetaData {
-	count: number;	
-};
-
-interface  ICurrency{
-	currencyName: string;
-	currencyCode: string;
-	symbol: string
-	id: number
-}
-
-interface IClient {
-	id?: number;
-	name?: string
-	email?: string
-	phoneNumber?: string
-	address?: string
-}
 
 class InvoiceFormCtrl extends AppFormController{
 	clients: Object[];
@@ -96,7 +55,7 @@ class InvoiceFormCtrl extends AppFormController{
 	
 	generateInvoiceNumber(){
 		if(!this.currentInvoice.invoiceNumber){
-			let invoicesMetaData = <InvoiceMetaData>store.getObject(`${this.model}`);
+			let invoicesMetaData = <IInvoiceMetaData>store.getObject(`${this.model}`);
 			this.currentInvoice.invoiceNumber = S(invoicesMetaData.count + 1).padLeft(4, 0).toString();	
 		}		
 	}
@@ -119,7 +78,7 @@ class InvoiceFormCtrl extends AppFormController{
 	}
 	
 	addItem(){
-		this.currentInvoice.invoiceItems.push(<InvoiceItem>{});
+		this.currentInvoice.invoiceItems.push(<IInvoiceItem>{});
 	}
 	
 	computeLineTotal(quantity: number, unitCost: number) : string | number{

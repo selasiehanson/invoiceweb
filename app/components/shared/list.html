@@ -1,12 +1,15 @@
 <!--place holder for child view to be injected. typicically new/edit views-->
 <ui-view></ui-view>
 
-<ax-block-header title="{{ ap.pageTitle }}"></ax-block-header>
+<ax-block-header title="{{ ap.pageTitle }}">
+  
+  <a ng-show="appIndex.views.add" class="btn btn-default pull-right" href="#/app/{{ appIndex.model }}/new"> <i class="fa fa-plus"></i> New {{ appIndex.titleSingular }} </a> 
+ </ax-block-header>
 <!--using the default view-->
 <ax-card title="" ng-if="!appIndex.templateUrl">
   <!--<div class="card-left-padding">
     <a class="action-new" href="#/app/{{ appIndex.model }}/new"> Add </a>
-  </div>-->    
+  </div>-->
   <ax-table 
     headers="appIndex.headers" 
     content="appIndex.records" 
@@ -14,14 +17,16 @@
     filters="ap.search" 
     custom-class="ap.custom"
     model="appIndex.model"
-    count="appIndex.count">
+    count="appIndex.count"
+    custom-actions="appIndex.customActions"
+    permissions="appIndex.views">
   </ax-table>
-  <nav mfb-menu position="br" effect="zoomin" label="" 
+  <!--<nav mfb-menu position="br" effect="zoomin" label="" 
     active-icon="fa fa-pencil" 
     resting-icon="fa fa-plus" toggling-method="click">
     <button mfb-button icon="fa fa-pencil" label="New {{ appIndex.titleSingular }}" 
       ng-click="appIndex.goToNew()"></button>
-  </nav>
+  </nav>-->
 </ax-card>
 
 <!--bringing in your own view-->

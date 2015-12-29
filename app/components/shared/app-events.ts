@@ -16,4 +16,9 @@ let RecordEvents = {
   recordLoaded:  'record:loaded',
   recordsLoaded:  'records:loaded',
 }
-export  { AuthEvents, RecordEvents };
+
+const ModelEvents = {
+  preEdit: 'model:pre-edit',
+  preDelete: 'model:pre-delete'
+}
+export  { AuthEvents, RecordEvents, ModelEvents };

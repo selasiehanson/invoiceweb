@@ -6,6 +6,8 @@ import { Routes } from "./conf/routes";
 import { RouteFinder } from './components/shared/route-finder';
 import { Store, ILocalStore } from './components/shared/store';
 import { AuthInterceptor } from './components/shared/auth-interceptor';
+import { ICustomTableAction } from './components/shared/form-interfaces';
+import {ModelEvents } from './components/shared/app-events';
 
 //shared controllers
 import { LoginCtrl } from './components/login/login';
@@ -107,6 +109,8 @@ interface ITableScope extends angular.IScope{
     order(predicate:boolean, direction:boolean):void ;
     goToPage(page: number):void
     getNumber(num: number): Array<any>;
+	customActions: Array<ICustomTableAction>;
+	handleCustomAction(action: ICustomTableAction, c: Object): void
 }
 app.directive('axTable', function() {
 	return {
@@ -122,45 +126,56 @@ app.directive('axTable', function() {
 			count: '=',
 			showActions: '@',
 			permissions: '=',
-			idField: '@'
+			idField: '@',
+			customActions: '=?'
 		},
-		controller: function($scope : ITableScope, $filter: angular.IFilterService, $window: angular.IWindowService) {
+		controller: function($scope: ITableScope, $filter: angular.IFilterService, $window: angular.IWindowService) {
+			// console.log($scope)
 			var orderBy = $filter('orderBy');
 			$scope.content = $scope.content || [];
+			$scope.sortable = $scope.sortable || [];
+			
+			$scope.customActions = $scope.customActions || [];
 			$scope.numPages = 0;
 			$scope.tablePage = 0;
 			$scope.idField = $scope.idField || 'id';
-			$scope.actions = $scope.actions ||  {};
-      		$scope._showActions = ($scope.showActions) === 'false' ? false : true;
-
+			$scope.actions = $scope.actions || {};
+			$scope._showActions = ($scope.showActions) === 'false' ? false : true;			
+				
 			$scope.$watch('content', function(val: Array<any>) {
 				if (val) {
 					$scope.numPages = Math.ceil(val.length / $scope.count);
 				}
-			});
+			});			
 			
+			//default actions
 			$scope.actionPermissions = {};
 			var perm = $scope.permissions || {};
 			$scope.actionPermissions.edit = (perm.edit === false) ? false : true;
 			$scope.actionPermissions.remove = (perm.remove === false) ? false : true;
-		
-			$scope.edit =  function (record){
-				$scope.$emit('model:pre-edit', {
-					model: $scope.model,
-					data: record,
-					id: record[$scope.idField]
-				});
-			};
-		
-			$scope.trash =  function (record){
-				$scope.$emit('model:pre-delete', {
+
+			$scope.edit = function(record) {
+				$scope.$emit(ModelEvents.preEdit, {
 					model: $scope.model,
 					data: record,
 					id: record[$scope.idField]
 				});
 			};
 
-			$scope.nbOfPages = function():number {
+			$scope.trash = function(record) {
+				$scope.$emit(ModelEvents.preDelete, {
+					model: $scope.model,
+					data: record,
+					id: record[$scope.idField]
+				});
+			};
+			
+			//custom actions
+			$scope.handleCustomAction = function(action: ICustomTableAction, record: Object) {
+				action.onClick(record);
+			}
+
+			$scope.nbOfPages = function(): number {
 				if (!$scope.content) {
 					return 0;
 				}
@@ -174,25 +189,25 @@ app.directive('axTable', function() {
 					return false;
 				}
 			};
-            
-			$scope.order = function(predicate:boolean, reverse:boolean) {
+
+			$scope.order = function(predicate: any, reverse: boolean) {
 				$scope.content = orderBy($scope.content, predicate, reverse);
 				$scope.predicate = predicate;
 			};
 
-			if($scope.sortable.length > 0 ){
+			if ($scope.sortable.length > 0) {
 				$scope.order($scope.sortable[0], false);
 			}
 
 			$scope.getNumber = function(num: number) {
 				return new Array(num);
 			};
-            
+
 			$scope.goToPage = function(page: number) {
 				$scope.tablePage = page;
-			};
+			};			
 		},
-		templateUrl: '/app/components/table/table.html'
+		template: require('./components/table/table.html')
 	};
 })
 

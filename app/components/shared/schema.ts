@@ -1,3 +1,5 @@
+import {IInvoice, ICurrency, IClient, IInvoiceItem, IInvoiceMetaData} from '../shared/model-interfaces'
+
 interface ITableHeader {
 	name: string;
 	field: string;
@@ -8,12 +10,16 @@ interface IModelViewConfig {
 	defaultNew?: boolean;
 	defaultList?: boolean;
 	defaultEdit?: boolean;
+	add? : boolean;
+	remove?: boolean;
+	edit?: boolean;
 }
 
 interface ISchemaDefinition {
-	headers?: Array<ITableHeader>
-	views?: IModelViewConfig,
-	custom?: any
+	headers?: Array<ITableHeader>;
+	views?: IModelViewConfig;
+	custom?: any;
+	transformer?: Function;
 }
 
 interface ISchema {
@@ -25,7 +31,7 @@ const Schema: ISchema = {
 		headers: [		
 			{ name: 'Invoice ID', field: 'invoiceNumber'},
 			{ name: 'Client', field: 'clientName' },
-			{ name: "Currency", field: 'currencyName' },
+			// { name: "Currency", field: 'currencyName' },
 			{ name: 'Amount', field: 'total' },			
 			{ name: 'Tax', field: 'tax' },
 			{ name: 'Invoiced on', field: 'invoiceDate' },
@@ -33,13 +39,19 @@ const Schema: ISchema = {
 		],
 		views: {
 			defaultNew: false
+		},
+		transformer: (records: Array<any>) : Array<IInvoice> => {
+			return records.map(x => {
+				x.total = `${x.currencySymbol} ${x.total}`;
+				return x;	
+			});
 		}
     },
 	quotes: {
 		headers: [		
 			{ name: 'Quote Number', field: 'quoteNumber'},
 			{ name: 'Client', field: 'clientName' },
-			{ name: "Currency", field: 'currencyName' },
+			// { name: "Currency", field: 'currencyName' },
 			{ name: 'Amount', field: 'total' },			
 			{ name: 'Tax', field: 'tax' },			
 			{ name: 'Date', field: 'quoteDate' },
@@ -54,7 +66,12 @@ const Schema: ISchema = {
 			{	name: 'Name', field: 'currencyName' },
 			{	name: 'Symbol', field: 'symbol' },			
 			{ 	name: 'Code', field: 'currencyCode' }			
-		]
+		],
+		views: {
+			add: false,
+			remove: false,
+			edit: false				
+		},
 	},    
     products: {
 		headers: [ 
