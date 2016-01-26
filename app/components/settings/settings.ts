@@ -95,7 +95,6 @@ class SettingsController {
 	
 	getLogo(){
 		fetcher.query('users/logo').then((res: any) => {
-			console.log(res.data);	
 			this.logoImage = res.data.logo;	
 			this.showUploaded = true;		
 		})
@@ -103,7 +102,7 @@ class SettingsController {
 	
 	getUserCurrencies(){
 		fetcher.query('user-currencies').then((res: any) => {
-			console.log(res.data);
+			// console.log(res.data);
 		});
 	}
 	
@@ -121,7 +120,7 @@ class SettingsController {
 	
 	updateCurrencies(){
 		fetcher.save('user-currencies', {currencyIds: this.currencyRecord.currencyIds}).then((x) => {
-			console.log(x);
+			// console.log(x);
 		})
 	}
 	

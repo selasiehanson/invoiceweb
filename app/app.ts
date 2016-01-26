@@ -226,11 +226,9 @@ app.config(['cfpLoadingBarProvider', (cfpLoadingBarProvider:any) => {
 }])
 
 app.run((formlyConfig: AngularFormly.IFormlyConfig ) => {
-	console.log(CustomElement);
 	formlyConfig.setType(CustomElement['UISelect']);
 	formlyConfig.setType(CustomElement['DatePicker']);
-	formlyConfig.setType(CustomElement['UIMultiSelect']);
-    console.log("Application Started");
+	formlyConfig.setType(CustomElement['UIMultiSelect']);    
 });
 
 app.run(($rootScope: angular.IRootScopeService, $location: angular.ILocationService, 	

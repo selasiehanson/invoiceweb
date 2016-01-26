@@ -43,7 +43,7 @@ const Schema: ISchema = {
 		transformer: (records: Array<any>) : Array<IInvoice> => {
 			return records.map(x => {
 				x.total = `${x.currencySymbol} ${x.total}`;
-				return x;	
+				return x;
 			});
 		}
     },

@@ -45,14 +45,14 @@
     </span>
     <span ng-hide="numPages == 0" class="pull-right ax-pager">
       <a ng-disabled="tablePage==0" ng-click="tablePage=tablePage-1" aria-label="Previous Page" class="btn round-button">
-        <i style="font-size:16px;" class="md md-chevron-left"></i>
+        <i style="font-size:16px;" class="fa fa-chevron-left"></i>
       </a>
       <a ng-class="{ 'table-active-page': tablePage==$index}" class="btn round-button" href="" ng-repeat="i in getNumber(numPages) track by $index"
          ng-click="goToPage($index)" class="ax-primary ax-hue-2 ax-table-footer-item">
           <span >{{$index+1}}</span>
       </a>
       <a  ng-disabled="tablePage==numPages-1" ng-click="tablePage=tablePage+1" aria-label="Next Page" class="btn round-button">
-        <i style="font-size:16px;" class="md md-chevron-right"></i>
+        <i style="font-size:16px;" class="fa fa-chevron-right"></i>
       </a>
     </span>
   </div>

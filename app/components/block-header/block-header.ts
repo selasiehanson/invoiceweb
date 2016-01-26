@@ -1,8 +1,8 @@
 /* jshint esnext: true */
 let template = `
-    <div class="block-header">
-      <h2> {{ title }} </h2>
-      <div class="clearfix" ng-transclude></div>
+    <div class="block-header clearfix">
+      <h2 class="pull-left"> {{ title }} </h2>
+      <div class="" ng-transclude></div>
     </div>
   `;
 

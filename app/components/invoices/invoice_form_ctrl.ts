@@ -16,7 +16,6 @@ let sce: angular.ISCEService;
 let templateCache: angular.ITemplateCacheService;
 let store: Store;
 
-
 class InvoiceFormCtrl extends AppFormController{
 	clients: Object[];
 	currentInvoice: IInvoice; 
@@ -145,8 +144,7 @@ class InvoiceFormCtrl extends AppFormController{
 	viewAsPdf(id: number){		
 		let url =`/api/invoices/aspdf?invoiceId=${id}`;
 		 http.get(url)
-			.then(function (res: any) {
-				
+			.then(function (res: any) {				
 				var fileURL = 'data:application/pdf;base64,' + res.data.pdf;
 				var pdfURI = sce.trustAsResourceUrl(fileURL);     
 				var downloadLink = angular.element('<a></a>');

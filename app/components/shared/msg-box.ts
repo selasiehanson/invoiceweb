@@ -14,7 +14,6 @@ class MsgBox {
         history: false,
         stack: false
     });
-    console.log(status);
   }
 
   static success(message: string) {
